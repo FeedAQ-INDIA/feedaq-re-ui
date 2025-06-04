@@ -49,7 +49,7 @@ function HomePageSearch({ type }) {
               //   coordinates?.lng
               // }&address=${encodeURIComponent(selectedAddress)}`}
               disabled={!isValid}
-              className="  rounded bg-rose-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-rose-700 active:bg-rose-500 sm:w-auto"
+              className="  rounded bg-rose-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-rose-700 active:bg-rose-500 sm:w-auto mt-2"
           >
             Get Started
           </Button>

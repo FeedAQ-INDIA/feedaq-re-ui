@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
- import {Play, Plus} from "lucide-react";
+ import {Play, Plus, Power} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
  import React from "react";
@@ -17,10 +17,10 @@ function Header() {
 
 
   return (
-      <header className="flex h-16 items-center justify-between bg-white px-4 shadow-md border-b">
+      <header className="flex h-14 items-center justify-between bg-white px-4 shadow-sm border-b">
           {/* Logo */}
           <a
-              className="text-2xl sm:text-3xl font-medium text-black"
+              className="text-2xl sm:text-3xl font-bold text-rose-500 tracking-wide"
               href="/"
               style={{
                   fontFamily: [
@@ -42,8 +42,9 @@ function Header() {
           {/* Right-side button */}
           <div className="hidden md:flex items-center gap-2 ml-auto">
               <a href={`/signin`}>
-                  <Button variant="secondary" className="">
-                    LOG IN
+                  <Button variant="secondary" className="flex gap-2 items-center cursor-pointer">
+                      <Power />
+                      <span>GET STARTED</span>
                   </Button>
               </a>
           </div>
@@ -51,8 +52,10 @@ function Header() {
           {/* Mobile Hamburger */}
           <div className="flex md:hidden ml-auto">
               <a href={`/signin`}>
-                  <Button variant="secondary">
-LOGIN                  </Button>
+                  <Button variant="secondary" className="flex gap-2 items-center cursor-pointer">
+                      <Power />
+                     <span>GET STARTED</span>
+                  </Button>
               </a>
 
           </div>
