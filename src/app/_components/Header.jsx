@@ -35,12 +35,14 @@ function Header() {
           </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-4 ml-4">
+          <div className="hidden md:flex items-center gap-4 ml-4 tracking-wider">
               {/*<NavigationMenuDemo />*/}
+
           </div>
 
           {/* Right-side button */}
           <div className="hidden md:flex items-center gap-2 ml-auto">
+
               <a href={`/signin`}>
                   <Button variant="secondary" className="flex gap-2 items-center cursor-pointer">
                       <Power />
@@ -51,12 +53,6 @@ function Header() {
 
           {/* Mobile Hamburger */}
           <div className="flex md:hidden ml-auto">
-              <a href={`/signin`}>
-                  <Button variant="secondary" className="flex gap-2 items-center cursor-pointer">
-                      <Power />
-                     <span>GET STARTED</span>
-                  </Button>
-              </a>
 
           </div>
       </header>  );

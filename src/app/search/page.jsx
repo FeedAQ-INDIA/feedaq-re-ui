@@ -21,6 +21,8 @@ export default function Search() {
     const [mapReference, setMapReference] = useState(searchParams.get("reference") || '5000067664145');
 
 
+    const [loadingSearch, setLoadingSearch] = useState(false);
+
     const router = useRouter();
 
     useEffect(() => {
@@ -35,6 +37,7 @@ export default function Search() {
 
 
     const fetchAddressByReference = async () => {
+        setLoadingSearch(true)
         const res = await fetch(
             `https://api.olamaps.io/places/v1/details?place_id=ola-platform:${mapReference}&api_key=1rCxrGlqhTlG77NQnYAmLpVkLpXR1y0Wtn5sQa4S`
         );
@@ -60,6 +63,7 @@ export default function Search() {
 
             })       // ✅ Now you can access the actual data
             .catch(err => console.error(err));     // ✅ Catch and log any errors
+        setLoadingSearch(false)
     };
 
 
@@ -102,7 +106,7 @@ export default function Search() {
 
 
             <div className="px-2 md:px-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-6 gap-4">
+                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-6 gap-4">
                     {listingData.map(a => (<ListingCard listing={a}/>))}
                     <div className="col-span-1">
                         <Image

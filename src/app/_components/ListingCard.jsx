@@ -5,6 +5,7 @@ import {CheckLine, ExternalLink, Info, X} from "lucide-react";
 import "./pg-colive.css";
 import Link from "next/link";
 import ImageCarousel from "@/app/_components/ImageCarousel";
+import { formatDistanceToNow } from 'date-fns';
 
 
 function Listing({listing, active}) {
@@ -77,6 +78,9 @@ function Listing({listing, active}) {
                                     {listing?.isVerified ?
                                         <Badge className="tracking-wider rounded-sm bg-green-600 text-white flex gap-1"><CheckLine size={14} />Verified</Badge>
                                         : <></>}
+                                    <Badge variant="outline" className="rounded-sm">
+                                        Posted {formatDistanceToNow(listing?.createdAt, { addSuffix: true })}
+                                    </Badge>
                                     <Badge variant="outline" className="rounded-sm">
                                         2400 sqft.
                                     </Badge>
