@@ -91,13 +91,12 @@ export default function Home() {
                 />
               </CardHeader>
               <CardContent className="text-center tracking-wide">
-                <h1 className="text-2xl font-bold">Lease a property</h1>
+                <h1 className="text-2xl font-bold">Sell a property</h1>
                 <p className="mt-2">
-                  List your property and connect with verified tenants through our
-                  hassle-free leasing platform.
+                  List your property with confidence and sell faster through our trusted network and expert guidance.
                 </p>
                 <Button variant="outline" className="mt-4">
-                  Start Leasing
+                  Start selling
                 </Button>
               </CardContent>
             </Card>
@@ -112,7 +111,7 @@ export default function Home() {
                 />
               </CardHeader>
               <CardContent className="text-center tracking-wide">
-                <h1 className="text-2xl font-bold">PG / Coliving</h1>
+                <h1 className="text-2xl font-bold">Find PG & Coliving</h1>
                 <p className="mt-2">
                   Discover fully-managed PGs and coliving spaces ideal for students and
                   professionals, with meals, Wi-Fi, and more.

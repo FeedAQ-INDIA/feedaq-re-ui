@@ -1,15 +1,20 @@
+"use client";
 import React from 'react'
 import Header from './_components/Header'
 import Footer from './_components/Footer'
+import {usePathname} from "next/navigation";
 
 function Provider({children}) {
-  return (
+    const pathname = usePathname();
+
+    return (
       <div className="min-h-screen flex flex-col">
-          <Header />
+          {!['/signin'].includes(pathname)?  <Header /> : <></>}
           <main className="flex-grow">
               {children}
           </main>
-          <Footer className="mb-0" />
+          {['/signin'].includes(pathname)?   <Footer className="mb-0" /> : <></>}
+
       </div>
   )
 }

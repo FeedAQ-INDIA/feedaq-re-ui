@@ -113,7 +113,7 @@ async function PGColiveDetail({params}) {
                     <p className="text-xs text-muted-foreground">Listing Id : {listing.id}</p>
                     <div className=" sm:ml-auto">
                         {listing?.isVerified ?
-                            <Badge className="tracking-wider rounded-sm bg-green-600 text-white flex gap-1"><CheckLine size={14} /><span>Verified</span></Badge>
+                            <Badge className="tracking-wider rounded-sm bg-green-600 text-white flex gap-1 animate-blink"><CheckLine size={14} /><span>Verified</span></Badge>
                         : <></>}
                     </div>
                 </div>
@@ -258,7 +258,7 @@ async function PGColiveDetail({params}) {
                             </div>
                         </div>
                     </div>
-                    <div className="">
+                    <div className="hidden lg:block">
                         <Image
                             src={'https://cdn.vectorstock.com/i/1000v/40/01/vertical-banner-04-vector-29244001.jpg'}
                             alt="Picture of the author"

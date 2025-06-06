@@ -1,26 +1,26 @@
-                 .wrapper {
-                    max-width: 100%;
-                    overflow: hidden;
-                }
+.wrapper {
+    max-width: 100%;
+    overflow: hidden;
+}
 
-                .marquee {
-                    white-space: nowrap;
-                    overflow: hidden;
-                    display: inline-block;
-                    animation: marquee 8s linear infinite;
-                }
+.marquee {
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    animation: marquee 8s linear infinite;
+}
 
-                .marquee p {
-                    display: inline-block;
-                }
+.marquee p {
+    display: inline-block;
+}
 
-                @keyframes marquee {
-                    0% {
-                        transform: translateX(100%);
-                    }
+@keyframes marquee {
+    0% {
+        transform: translateX(100%);
+    }
 
-                    100% {
-                        transform: translateX(-100%);
-                    }
-                }
+    100% {
+        transform: translateX(-100%);
+    }
+}
  

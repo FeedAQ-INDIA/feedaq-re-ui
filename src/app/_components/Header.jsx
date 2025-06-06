@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
  import {Play, Plus, Power} from "lucide-react";
 import Image from "next/image";
@@ -12,8 +13,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {useUser} from "@/lib/useUser";
 
 function Header() {
+
+    const { user, loading } = useUser();
+
+    if (loading) return <p>Loading...</p>;
+    // if (!user) return <p>Redirecting to login...</p>; // or redirect manually
 
 
   return (
@@ -43,13 +50,22 @@ function Header() {
           {/* Right-side button */}
           <div className="hidden md:flex items-center gap-2 ml-auto">
 
-              <a href={`/signin`}>
-                  <Button variant="secondary" className="flex gap-2 items-center cursor-pointer">
-                      <Power />
-                      <span>GET STARTED</span>
-                  </Button>
-              </a>
-          </div>
+
+                  {!user? <Link href={'/signin'}><Button
+                      variant="secondary"
+                      className="flex gap-2 items-center cursor-pointer"
+
+                  >
+                      <span>LOGIN / SIGNUP</span>
+                  </Button> </Link>: <Link href={'/profile'}><Button
+                      variant="secondary"
+                      className="flex gap-2 items-center cursor-pointer"
+
+                  >
+                      <span>{user?.data?.nameInitial}</span>
+                  </Button> </Link>}
+
+           </div>
 
           {/* Mobile Hamburger */}
           <div className="flex md:hidden ml-auto">

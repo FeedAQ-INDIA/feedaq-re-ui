@@ -8,6 +8,7 @@ import {Button} from "@/components/ui/button";
 import ListingCard from "@/app/_components/ListingCard";
 import Image from "next/image";
 import {CircleEllipsis, Ellipsis} from "lucide-react";
+import {apiClient} from "@/lib/apiClient.mjs";
 
 export default function Search() {
     const searchParams = useSearchParams();
@@ -38,7 +39,7 @@ export default function Search() {
 
     const fetchAddressByReference = async () => {
         setLoadingSearch(true)
-        const res = await fetch(
+        const res = await apiClient(
             `https://api.olamaps.io/places/v1/details?place_id=ola-platform:${mapReference}&api_key=1rCxrGlqhTlG77NQnYAmLpVkLpXR1y0Wtn5sQa4S`
         );
         if (!res.ok) {
@@ -55,7 +56,7 @@ export default function Search() {
 
 
     const findNearbyLocations = async (lat, lng) => {
-        fetch(`http://localhost:8080/search?transactionType=buy&centerLat=${lat}&centerLon=${lng}&radiusKm=50`)
+        apiClient(`http://localhost:8080/search?transactionType=buy&centerLat=${lat}&centerLon=${lng}&radiusKm=50`)
             .then(res => res.json())               // ✅ Parse the response and return the Promise
             .then((json) => {
                 console.log(json)
@@ -107,7 +108,7 @@ export default function Search() {
 
             <div className="px-2 md:px-6">
                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-6 gap-4">
-                    {listingData.map(a => (<ListingCard listing={a}/>))}
+                    {listingData?.map(a => (<ListingCard listing={a}/>))}
                     <div className="col-span-1">
                         <Image
                             src={'https://cdn.vectorstock.com/i/1000v/40/01/vertical-banner-04-vector-29244001.jpg'}
