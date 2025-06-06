@@ -54,7 +54,7 @@ function MyAccount() {
                     lastName: data.lastName,
                     number: data.number,
                 }),
-            })
+            },window.location.pathname)
         if(res.ok){
             console.log("user updated succesfully");
             await refreshUser();

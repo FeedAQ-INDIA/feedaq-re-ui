@@ -1,17 +1,20 @@
 import ImageCarousel from "@/app/_components/ImageCarousel";
 import {Button} from "@/components/ui/button";
 import Head from "next/head";
-import {CheckLine, MessageCircle, Phone, Share2} from "lucide-react";
+import {CheckLine, HeartPlus, MessageCircle, Phone, Share2} from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React  from "react";
 import MapMarker from "@/app/_components/MapMarker";
 import Image from "next/image";
 import {Badge} from "@/components/ui/badge";
 import UserTrackClient from "@/app/_components/UserTrackClient";
+import {apiClient} from "@/lib/apiClient.mjs";
+import FavButton from "@/app/property/[id]/_components/FavButton";
 
 
 async function PGColiveDetail({params}) {
     const {id} = params;
+
 
     const res = await fetch('http://localhost:8080/search-v2', {
         method: 'POST',
@@ -30,8 +33,9 @@ async function PGColiveDetail({params}) {
                         datasource: "Project", as: "project", required: false,
                         include: [{datasource: "Developer", as: "developer", required: false}]
                     },
-                    {datasource: "PropertyImage", as: "images", required: false}
-                ]
+                    {datasource: "PropertyImage", as: "images", required: false},
+                    {datasource: "UserFav", as: "fav", required: false}
+                 ]
             }
         }),
         cache: 'no-store', // disables static caching
@@ -73,6 +77,8 @@ async function PGColiveDetail({params}) {
         document.body.removeChild(el);
 
     };
+
+
 
 
     return (
@@ -145,10 +151,13 @@ async function PGColiveDetail({params}) {
                         <Button className="bg-pink-500 text-white hover:bg-pink-600 flex gap-1 items-center ">
                             <Phone/> Contact
                         </Button>
-
                         <Button className="bg-purple-500 text-white hover:bg-purple-600 flex gap-1 items-center ">
                             <Share2/> Share
                         </Button>
+
+
+                        <FavButton listing={listing}/>
+
                     </div>
 
 

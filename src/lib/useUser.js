@@ -10,7 +10,7 @@ export function useUser() {
         try {
             const res = await apiClient("http://localhost:8080/getUser", {
                 method: "POST",
-            });
+            }, window.location.pathname);
             if (res.ok) {
                 const data = await res.json();
                 setUser(data);

@@ -50,7 +50,7 @@ export default function Search() {
                     },],
                 },
             }),
-        })
+        }, window.location.pathname)
             .then(res => res.json())               // ✅ Parse the response and return the Promise
             .then((json) => {
                 console.log(json)

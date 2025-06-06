@@ -1,20 +1,17 @@
-// apiClient.mjs
+// apiClient.js
 
-// lib/apiClient.ts
-export async function apiClient(endpoint, options = {}) {
+export async function apiClient(endpoint, options = {}, pathname = "/") {
     const res = await fetch(endpoint, {
         ...options,
-        credentials: "include", // This sends HTTP-only cookies
+        credentials: "include",
         headers: {
             "Content-Type": "application/json",
             ...(options.headers || {}),
         },
     });
 
-
-    // Optional: refresh logic on 401/403
+    // Handle auth failures
     if (res.status === 401 || res.status === 403) {
-        // Try refresh
         const refresh = await fetch("http://localhost:8080/auth/refresh-token", {
             method: "POST",
             credentials: "include",
@@ -22,14 +19,11 @@ export async function apiClient(endpoint, options = {}) {
 
         if (refresh.ok) {
             // Retry original request
-            return await apiClient(endpoint, options);
+            return await apiClient(endpoint, options, pathname);
         } else {
-            // Redirect to login
-            console.log(!isPublicPage(window.location.pathname))
-            if (!isPublicPage(window.location.pathname)) {
-
-                window.location = "/signin" + getRedirectUri();
-                console.log("redirecting to login")
+            // Redirect only on client side
+            if (typeof window !== "undefined" && !isPublicPage(pathname)) {
+                window.location.href = "/signin" + getRedirectUri();
             }
         }
     }
@@ -37,17 +31,23 @@ export async function apiClient(endpoint, options = {}) {
     return res;
 }
 
+// Builds redirect URI from current location (CSR only)
 const getRedirectUri = () => {
-    return "?redirectUri=" + window.location.href;
-}
+    if (typeof window !== "undefined") {
+        return "?redirectUri=" + encodeURIComponent(window.location.href);
+    }
+    return "";
+};
 
+// Define publicly accessible paths
 const publicPatterns = [
-    /^\/$/,                 // exact "/"
-    /^\/signin$/,           // exact "/signin"
+    /^\/$/,                 // "/"
+    /^\/signin$/,           // "/signin"
     /^\/property(\/.*)?$/,  // "/property" and subpaths
     /^\/search(\/.*)?$/,    // "/search" and subpaths
 ];
 
+// Check if a path is public
 const isPublicPage = (pathname) => {
     return publicPatterns.some(pattern => pattern.test(pathname));
 };

@@ -69,7 +69,7 @@ function Listing({listing, active}) {
                     propertyId,
                     userId: user?.data?.userId
                 }),
-            });
+            }, window.location.pathname);
             if(res.ok){
                 console.log("user fav saved ");
                 let a = await res.json();
@@ -92,7 +92,7 @@ function Listing({listing, active}) {
                 body: JSON.stringify({
                      favId: favId
                 }),
-            });
+            }, window.location.pathname);
             if(res.ok){
                 console.log("user fav deleted successfully ")
                 setFav(null);
