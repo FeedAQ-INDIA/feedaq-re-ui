@@ -13,7 +13,7 @@ function Provider({children}) {
           <main className="flex-grow">
               {children}
           </main>
-          {['/signin'].includes(pathname)?   <Footer className="mb-0" /> : <></>}
+          {!['/signin'].includes(pathname)?   <Footer className="mb-0" /> : <></>}
 
       </div>
   )
