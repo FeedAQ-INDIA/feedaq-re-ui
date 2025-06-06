@@ -7,11 +7,11 @@ import React from "react";
 import MapMarker from "@/app/_components/MapMarker";
 import Image from "next/image";
 import {Badge} from "@/components/ui/badge";
+import UserTrackClient from "@/app/_components/UserTrackClient";
 
 
 async function PGColiveDetail({params}) {
     const {id} = params;
-
 
     const res = await fetch('http://localhost:8080/search-v2', {
         method: 'POST',
@@ -75,12 +75,12 @@ async function PGColiveDetail({params}) {
     };
 
 
-
     return (
         <>
             <Head>
 
             </Head>
+            <UserTrackClient propertyId={id} />
             <div className="px-2 md:px-6  my-3 mt-5 ">
 
 
@@ -113,8 +113,10 @@ async function PGColiveDetail({params}) {
                     <p className="text-xs text-muted-foreground">Listing Id : {listing.id}</p>
                     <div className=" sm:ml-auto">
                         {listing?.isVerified ?
-                            <Badge className="tracking-wider rounded-sm bg-green-600 text-white flex gap-1 animate-blink"><CheckLine size={14} /><span>Verified</span></Badge>
-                        : <></>}
+                            <Badge
+                                className="tracking-wider rounded-sm bg-green-600 text-white flex gap-1 animate-blink"><CheckLine
+                                size={14}/><span>Verified</span></Badge>
+                            : <></>}
                     </div>
                 </div>
                 <div className="mb-6 flex gap-2 flex-col">
@@ -132,20 +134,20 @@ async function PGColiveDetail({params}) {
 
                     <div className="flex-wrap flex items-center gap-2 my-2">
                         <Link className=" "
-                            href={`https://wa.me/9631045873?text=${"Hi ! I want detail regarding pg/colive property id 33 "}`}
-                            target="_blank">
+                              href={`https://wa.me/9631045873?text=${"Hi ! I want detail regarding pg/colive property id 33 "}`}
+                              target="_blank">
                             <Button className="bg-green-500 text-white hover:bg-green-600 flex gap-1 items-center">
-                                <MessageCircle />
+                                <MessageCircle/>
                                 Whatsapp
                             </Button>
                         </Link>
 
                         <Button className="bg-pink-500 text-white hover:bg-pink-600 flex gap-1 items-center ">
-                            <Phone /> Contact
+                            <Phone/> Contact
                         </Button>
 
                         <Button className="bg-purple-500 text-white hover:bg-purple-600 flex gap-1 items-center ">
-                            <Share2 /> Share
+                            <Share2/> Share
                         </Button>
                     </div>
 
