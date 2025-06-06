@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
  import {Play, Plus, Power} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
- import React from "react";
+ import {useState} from "react";
 
 import {
   DropdownMenu,
@@ -28,10 +28,12 @@ import {Avatar, AvatarFallback} from "@/components/ui/avatar";
 function Header() {
 
     const { user, loading } = useUser();
+    const [open, setOpen] = useState(false);
 
     if (loading) return <p>Loading...</p>;
     // if (!user) return <p>Redirecting to login...</p>; // or redirect manually
 
+    const handleClose = () => setOpen(false);
 
   return (
       <header className="flex h-14 items-center justify-between bg-white px-4 shadow-sm border-b">
@@ -68,7 +70,7 @@ function Header() {
                   >
                       <span>LOGIN / SIGNUP</span>
                   </Button> </Link>:
-                      <Sheet>
+                      <Sheet open={open} onOpenChange={setOpen}>
                           <SheetTrigger asChild>
                               <Button
                                   variant="secondary"
@@ -87,9 +89,9 @@ function Header() {
                                       <span>Hello, {user?.data?.firstName}</span></SheetTitle>
                                    <SheetDescription className="p-6">
                                     <div className="flex flex-wrap gap-4">
-                                        <Link href={"/account"}  className="w-full text-left"><Button variant="secondary" className="w-full text-left">Recently Searched Items</Button></Link>
-                                        <Link href={"/account"}  className="w-full text-left"><Button variant="secondary" className="w-full text-left">Saved Items</Button></Link>
-                                        <Link href={"/account"}  className="w-full text-left"><Button variant="secondary" className="w-full text-left">Account Settings</Button></Link>
+                                        <Link href={"/account"} onClick={handleClose} className="w-full text-left"><Button variant="secondary" className="w-full text-left">Recently Searched Items</Button></Link>
+                                        <Link href={"/account"} onClick={handleClose} className="w-full text-left"><Button variant="secondary" className="w-full text-left">Saved Items</Button></Link>
+                                        <Link href={"/account"} onClick={handleClose} className="w-full text-left"><Button variant="secondary" className="w-full text-left">Account Settings</Button></Link>
                                     </div>
                                   </SheetDescription>
                               </SheetHeader>
