@@ -17,6 +17,8 @@ function Listing({listing, active}) {
 
     const {user, refreshUser} = useUser();
 
+    const [fav, setFav] = useState(listing.fav);
+
     useEffect(() => {
         // findMinMaxPrice(listing?.roomListing)
     }, [])
@@ -69,7 +71,31 @@ function Listing({listing, active}) {
                 }),
             });
             if(res.ok){
-                console.log("user fav saved ")
+                console.log("user fav saved ");
+                let a = await res.json();
+                console.log(a?.data?.data)
+                setFav(a?.data?.data)
+            }
+        } catch (err) {
+            console.error("User tracking error", err);
+        }
+    }
+
+    const deleteUserFav = async (favId) => {
+        try {
+            const res = await apiClient("http://localhost:8080/deleteUserFav", {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                     favId: favId
+                }),
+            });
+            if(res.ok){
+                console.log("user fav deleted successfully ")
+                setFav(null);
             }
         } catch (err) {
             console.error("User tracking error", err);
@@ -161,8 +187,10 @@ function Listing({listing, active}) {
             </div>
             <div className="flex flex-wrap gap-2 mt-2">
 
-                <Button variant="secondary" className='w-full flex-1' size="sm" onClick={() => saveUserFav(listing.id)}>
-                    <HeartPlus />                </Button>
+                {user? <Button variant="secondary" className={`w-full flex-1 ${fav ? 'bg-rose-600 hover:text-black text-white':'' }`} size="sm" onClick={() => fav? deleteUserFav(fav?.id) :saveUserFav(listing.id)}>
+                    <HeartPlus />
+                </Button>:<></>}
+
                 <Link
                     href={`/property/${listing.id}`}
                     target="_blank"

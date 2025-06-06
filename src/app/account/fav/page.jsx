@@ -44,7 +44,8 @@ export default function Search() {
                             as: "project",
                             required: false,
                             include: [{datasource: "Developer", as: "developer", required: false},]
-                        }, {datasource: "PropertyImage", as: "images", required: false}]
+                        }, {datasource: "PropertyImage", as: "images", required: false},
+                            {datasource: "UserFav", as: "fav", required: false}]
 
                     },],
                 },
