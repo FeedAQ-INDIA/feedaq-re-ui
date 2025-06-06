@@ -14,6 +14,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {useUser} from "@/lib/useUser";
+import {
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from "@/components/ui/sheet"
+import {Avatar, AvatarFallback} from "@/components/ui/avatar";
+
 
 function Header() {
 
@@ -57,13 +67,34 @@ function Header() {
 
                   >
                       <span>LOGIN / SIGNUP</span>
-                  </Button> </Link>: <Link href={'/profile'}><Button
-                      variant="secondary"
-                      className="flex gap-2 items-center cursor-pointer"
+                  </Button> </Link>:
+                      <Sheet>
+                          <SheetTrigger asChild>
+                              <Button
+                                  variant="secondary"
+                                  className="flex gap-2 items-center cursor-pointer"
 
-                  >
-                      <span>{user?.data?.nameInitial}</span>
-                  </Button> </Link>}
+                              >
+                                  <span>{user?.data?.nameInitial}</span>
+                              </Button>
+                          </SheetTrigger>
+                          <SheetContent className="p-0">
+                              <SheetHeader>
+                                  <SheetTitle className="bg-rose-500 text-white p-6 flex gap-4 items-center">
+                                      <Avatar className="w-12 h-12">
+                                          <AvatarFallback className="text-xl text-rose-600">{user?.data?.nameInitial}</AvatarFallback>
+                                      </Avatar>
+                                      <span>Hello, {user?.data?.firstName}</span></SheetTitle>
+                                   <SheetDescription className="p-6">
+                                    <div className="flex flex-wrap gap-4">
+                                        <Link href={"/account"}  className="w-full text-left"><Button variant="secondary" className="w-full text-left">Recently Searched Items</Button></Link>
+                                        <Link href={"/account"}  className="w-full text-left"><Button variant="secondary" className="w-full text-left">Saved Items</Button></Link>
+                                        <Link href={"/account"}  className="w-full text-left"><Button variant="secondary" className="w-full text-left">Account Settings</Button></Link>
+                                    </div>
+                                  </SheetDescription>
+                              </SheetHeader>
+                          </SheetContent>
+                      </Sheet>  }
 
            </div>
 
