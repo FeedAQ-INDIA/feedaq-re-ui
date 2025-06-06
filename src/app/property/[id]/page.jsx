@@ -10,6 +10,7 @@ import {Badge} from "@/components/ui/badge";
 import UserTrackClient from "@/app/_components/UserTrackClient";
 import {apiClient} from "@/lib/apiClient.mjs";
 import FavButton from "@/app/property/[id]/_components/FavButton";
+import ShareButton from "@/app/property/[id]/_components/ShareButton";
 
 
 async function PGColiveDetail({params}) {
@@ -151,10 +152,8 @@ async function PGColiveDetail({params}) {
                         <Button className="bg-pink-500 text-white hover:bg-pink-600 flex gap-1 items-center ">
                             <Phone/> Contact
                         </Button>
-                        <Button className="bg-purple-500 text-white hover:bg-purple-600 flex gap-1 items-center ">
-                            <Share2/> Share
-                        </Button>
 
+<ShareButton/>
 
                         <FavButton listing={listing}/>
 
