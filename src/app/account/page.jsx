@@ -65,7 +65,7 @@ function MyAccount() {
     return (
         <>
 
-            <div className="p-3 md:p-6">
+            <div className="p-2 md:p-6">
                 <Card className="border-0 bg-rose-500">
                     <CardHeader>
                         <div className="flex flex-sm justify-items-center gap-4 items-center">

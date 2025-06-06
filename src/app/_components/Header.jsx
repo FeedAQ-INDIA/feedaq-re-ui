@@ -89,8 +89,8 @@ function Header() {
                                       <span>Hello, {user?.data?.firstName}</span></SheetTitle>
                                    <SheetDescription className="p-6">
                                     <div className="flex flex-wrap gap-4">
-                                        <Link href={"/account"} onClick={handleClose} className="w-full text-left"><Button variant="secondary" className="w-full text-left">Recently Searched Items</Button></Link>
-                                        <Link href={"/account"} onClick={handleClose} className="w-full text-left"><Button variant="secondary" className="w-full text-left">Saved Items</Button></Link>
+                                        <Link href={"/account/recent"} onClick={handleClose} className="w-full text-left"><Button variant="secondary" className="w-full text-left">Recently Viewed</Button></Link>
+                                        <Link href={"/account/fav"} onClick={handleClose} className="w-full text-left"><Button variant="secondary" className="w-full text-left">Saved Items</Button></Link>
                                         <Link href={"/account"} onClick={handleClose} className="w-full text-left"><Button variant="secondary" className="w-full text-left">Account Settings</Button></Link>
                                     </div>
                                   </SheetDescription>

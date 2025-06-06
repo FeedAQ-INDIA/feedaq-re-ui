@@ -1,17 +1,21 @@
 import React, {useEffect, useState} from "react";
 import {Badge} from "@/components/ui/badge";
 import {Button} from "@/components/ui/button";
-import {CheckLine, ExternalLink, Info, X} from "lucide-react";
+import {CheckLine, ExternalLink, HeartPlus, Info, X} from "lucide-react";
 import "./pg-colive.css";
 import Link from "next/link";
 import ImageCarousel from "@/app/_components/ImageCarousel";
 import { formatDistanceToNow } from 'date-fns';
+import {useUser} from "@/lib/useUser";
+import {apiClient} from "@/lib/apiClient.mjs";
 
 
 function Listing({listing, active}) {
     const [screenNo, setScreenNo] = useState(true);
     const [minPrice, setMinPrice] = useState(null);
     const [maxPrice, setMaxPrice] = useState(null);
+
+    const {user, refreshUser} = useUser();
 
     useEffect(() => {
         // findMinMaxPrice(listing?.roomListing)
@@ -36,22 +40,6 @@ function Listing({listing, active}) {
     };
 
 
-    const findMinMaxPrice = (array) => {
-        let minPrice = Infinity;
-        let maxPrice = -Infinity;
-
-        for (let i = 0; i < array.length; i++) {
-            const price = array[i].price;
-            if (price < minPrice) {
-                minPrice = price;
-            }
-            if (price > maxPrice) {
-                maxPrice = price;
-            }
-        }
-        setMinPrice(minPrice);
-        setMaxPrice(maxPrice)
-    }
 
     function formatIndianCurrency(value) {
         const absValue = Math.abs(value);
@@ -66,6 +54,28 @@ function Listing({listing, active}) {
             return `₹${value.toFixed(2)}`;
         }
     }
+
+    const saveUserFav = async (propertyId) => {
+        try {
+            const res = await apiClient("http://localhost:8080/saveUserFav", {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    propertyId,
+                    userId: user?.data?.userId
+                }),
+            });
+            if(res.ok){
+                console.log("user fav saved ")
+            }
+        } catch (err) {
+            console.error("User tracking error", err);
+        }    }
+
+
 
     return (
         <div className="p-2 border shadow hover:shadow-lg overflow-x-hidden rounded-md bg-white">
@@ -149,12 +159,14 @@ function Listing({listing, active}) {
                     </div>
                 )}
             </div>
-            <div className="grid grid-cols-2 gap-2 mt-2">
+            <div className="flex flex-wrap gap-2 mt-2">
 
+                <Button variant="secondary" className='w-full flex-1' size="sm" onClick={() => saveUserFav(listing.id)}>
+                    <HeartPlus />                </Button>
                 <Link
                     href={`/property/${listing.id}`}
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel="noopener noreferrer" className="flex-1"
                 >
                     <Button variant="secondary" className='w-full' size="sm">
                         <ExternalLink/>
@@ -162,11 +174,11 @@ function Listing({listing, active}) {
                 </Link>
 
                 {screenNo ? (
-                    <Button onClick={handleScreenNo} size="sm" className="cursor-pointer">
+                    <Button onClick={handleScreenNo} size="sm" className="cursor-pointer"  className="flex-1">
                         <Info/>
                     </Button>
                 ) : (
-                    <Button variant="destructive" onClick={handleScreenNo} size="sm" className="cursor-pointer">
+                    <Button variant="destructive" onClick={handleScreenNo} size="sm" className="cursor-pointer"  className="flex-1">
                         <X/>
                     </Button>
                 )}
