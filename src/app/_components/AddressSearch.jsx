@@ -98,6 +98,7 @@ function AddressSearch({ setSelectedAddress, setCoordinates , customTriggerWidth
       role="combobox"
       aria-expanded={open}
       className={`"  justify-between gap-4 ${customTriggerWidth}"`}
+      size="lg"
     >
       <LocateFixed className="shrink-0" />
       <span className="truncate">
