@@ -187,7 +187,7 @@ function Listing({listing, active}) {
             </div>
             <div className="flex flex-wrap gap-2 mt-2">
 
-                {user? <Button variant="secondary" className={`w-full flex-1 ${fav ? 'bg-rose-600 hover:text-black text-white':'' }`} size="sm" onClick={() => fav? deleteUserFav(fav?.id) :saveUserFav(listing.id)}>
+                {user? <Button variant="secondary" className={`w-full flex-1 ${fav ? 'bg-rose-600 hover:bg-rose-500 text-white':'' }`} size="sm" onClick={() => fav? deleteUserFav(fav?.id) :saveUserFav(listing.id)}>
                     <HeartPlus />
                 </Button>:<></>}
 

@@ -62,7 +62,7 @@ export default function FavButton({listing}) {
 
     return (
         <>
-            {user? <Button variant="secondary" className={` flex gap-1 items-center  ${fav ? 'bg-rose-600 hover:text-black text-white':'' }`}  onClick={() => fav? deleteUserFav(fav?.id) :saveUserFav(listing.id)}>
+            {user? <Button variant="secondary" className={` flex gap-1 items-center  ${fav ? 'bg-rose-600 hover:bg-rose-500 text-white':'' }`}  onClick={() => fav? deleteUserFav(fav?.id) :saveUserFav(listing.id)}>
                 <HeartPlus /> Save
             </Button>:<></>}
         </>

@@ -1,6 +1,6 @@
 "use client";
 import {Button} from "@/components/ui/button";
- import React, {useEffect} from "react";
+ import React  from "react";
  import {
     Card,
     CardContent,
@@ -14,26 +14,19 @@ import {
     AlertDescription,
     AlertTitle,
 } from "@/components/ui/alert"
-import {useSearchParams} from "next/navigation";
+// import {useSearchParams} from "next/navigation";
 import Link from "next/link";
 import {router} from "next/client";
 
-function SignInPage() {
+function SignInPage({
+                        searchParams,
+                    }) {
 
-    const searchParams = useSearchParams();
+    // const searchParams = useSearchParams();
 
-     const redirectUri = searchParams.get("redirectUri") || null; // e.g., ?userId=123
+     const redirectUri = searchParams?.redirectUri || null; // e.g., ?userId=123
+    // const redirectUri = searchParams.get("redirectUri") || null; // e.g., ?userId=123
 
-    //  useEffect(() => {
-    //     const token = document.cookie
-    //         .split('; ')
-    //         .find(row => row.startsWith('token='))
-    //         ?.split('=')[1];
-    //
-    //     if (!token) {
-    //         router.push('/signin');
-    //     }
-    // }, []);
 
 
 
