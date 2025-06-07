@@ -37,6 +37,7 @@ function HomePageSearch({ type }) {
             setMapReference={setMapReference}
             customTriggerWidth={"w-full   sm:w-full "}
             customContentWidth={"w-[300px]"}
+            customTriggerProps={{variant: "outline"}}
           />
         </div>
         <div className="mt-2 flex gap-2 flex-wrap">

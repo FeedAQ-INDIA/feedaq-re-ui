@@ -18,7 +18,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-function AddressSearch({ setSelectedAddress, setCoordinates , customTriggerWidth, customContentWidth, selectedAddress, setMapReference}) {
+function AddressSearch({ setSelectedAddress, setCoordinates , customTriggerWidth, customTriggerProps={}, customContentWidth, selectedAddress, setMapReference}) {
   const [open, setOpen] = useState(false);
   const [address, setAddress] = useState("");
   const [lat, setLat] = useState("");
@@ -94,11 +94,11 @@ function AddressSearch({ setSelectedAddress, setCoordinates , customTriggerWidth
  <Popover open={open} onOpenChange={setOpen}>
   <PopoverTrigger asChild>
     <Button
-      variant="outline"
       role="combobox"
       aria-expanded={open}
       className={`"  justify-between gap-4 ${customTriggerWidth}"`}
       size="lg"
+      {...(customTriggerProps)}
     >
       <LocateFixed className="shrink-0" />
       <span className="truncate">

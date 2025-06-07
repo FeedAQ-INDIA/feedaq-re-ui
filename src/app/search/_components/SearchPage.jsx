@@ -1,5 +1,6 @@
 "use client";
 import React, {useEffect, useState} from "react";
+import {Pagination, PaginationContent, PaginationItem,} from "@/components/ui/pagination"
 
 import {useRouter} from "next/navigation";
 import AddressSearch from "@/app/_components/AddressSearch";
@@ -7,16 +8,18 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/
 import {Button} from "@/components/ui/button";
 import ListingCard from "@/app/_components/ListingCard";
 import Image from "next/image";
-import {CircleEllipsis, Ellipsis} from "lucide-react";
+import {ChevronLeft, ChevronRight, CircleEllipsis, Ellipsis} from "lucide-react";
 import {apiClient} from "@/lib/apiClient.mjs";
 
-export default function SearchPage({reference}) {
+export default function SearchPage({reference, initialPage, lim}) {
 
     const [listingData, setListingData] = useState([]);
     const [selectedAddress, setSelectedAddress] = useState("");
     const [coordinates, setCoordinates] = useState({});
     const [mapReference, setMapReference] = useState(reference || 5000039876089);
-
+    const [limit, setLimit] = useState(lim || 3);
+    const [page, setPage] = useState(initialPage || 1);
+    const [totalCount, setTotalCount] = useState(0);
 
     const [loadingSearch, setLoadingSearch] = useState(false);
 
@@ -27,7 +30,7 @@ export default function SearchPage({reference}) {
         fetchAddressByReference();
 
         console.log(selectedAddress)
-    }, [mapReference]);
+    }, [mapReference, page]);
 
 
     const fetchAddressByReference = async () => {
@@ -49,12 +52,13 @@ export default function SearchPage({reference}) {
 
 
     const findNearbyLocations = async (lat, lng) => {
-        apiClient(`http://localhost:8080/search?transactionType=buy&centerLat=${lat}&centerLon=${lng}&radiusKm=50`)
+        apiClient(`http://localhost:8080/search?transactionType=buy&centerLat=${lat}&centerLon=${lng}&radiusKm=50&limit=${limit}&page=${page}`)
             .then(res => res.json())               // ✅ Parse the response and return the Promise
             .then((json) => {
                 console.log(json)
                 setListingData(json?.properties)
-
+                setPage(json?.currentPage)
+                setTotalCount(json?.totalProperties)
             })       // ✅ Now you can access the actual data
             .catch(err => console.error(err));     // ✅ Catch and log any errors
         setLoadingSearch(false)
@@ -72,8 +76,9 @@ export default function SearchPage({reference}) {
                         setCoordinates={setCoordinates}
                         selectedAddress={selectedAddress || ""}
                         setMapReference={setMapReference}
-                        customTriggerWidth="w-full max-w-[180px] sm:max-w-[220px] md:max-w-[300px] lg:max-w-[400px]"
+                        customTriggerWidth="w-full max-w-[180px] sm:max-w-[220px] md:max-w-[300px] lg:max-w-[400px] border-0"
                         customContentWidth="w-full max-w-[250px] sm:max-w-[300px] md:max-w-[350px] lg:max-w-[400px]"
+                        customTriggerProps={{variant: "ghost"}}
                     />
                 </div>
 
@@ -112,6 +117,46 @@ export default function SearchPage({reference}) {
                         />
                     </div>
                 </div>
+
+                {listingData?.length > 0 && (
+                    <div className="flex flex-row items-center">
+                        <div className="text-xs text-muted-foreground">
+                            {(page - 1) * limit + 1} to {Math.min(page * limit, totalCount)} of {totalCount} row(s) selected.
+                        </div>
+                        <Pagination className="ml-auto mr-0 w-auto">
+                            <PaginationContent>
+                                <PaginationItem>
+                                    <Button
+                                        size="icon"
+                                        variant="outline"
+                                        className="h-6 w-6"
+                                        disabled={page === 1}
+                                        onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                                    >
+                                        <ChevronLeft className="h-3.5 w-3.5" />
+                                        <span className="sr-only">Previous Page</span>
+                                    </Button>
+                                </PaginationItem>
+                                <PaginationItem>
+                                    <Button
+                                        size="icon"
+                                        variant="outline"
+                                        className="h-6 w-6"
+                                        disabled={page >= Math.ceil(totalCount / limit)}
+                                        onClick={() =>
+                                            setPage((prev) =>
+                                                prev + 1 <= Math.ceil(totalCount / limit) ? prev + 1 : prev
+                                            )
+                                        }
+                                    >
+                                        <ChevronRight className="h-3.5 w-3.5" />
+                                        <span className="sr-only">Next Page</span>
+                                    </Button>
+                                </PaginationItem>
+                            </PaginationContent>
+                        </Pagination>
+                    </div>
+                )}
             </div>
 
 
