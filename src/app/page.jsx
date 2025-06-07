@@ -37,6 +37,7 @@ export default function Home() {
           </div>
         </section>
 
+
         <section className="my-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <Card className="rounded-sm">

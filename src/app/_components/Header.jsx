@@ -89,10 +89,11 @@ function Header() {
                                       <span>Hello, {user?.data?.firstName}</span></SheetTitle>
                                    <SheetDescription className="p-6">
                                     <div className="flex flex-wrap gap-4">
-                                        <Link href={"/account/recent"} onClick={handleClose} className="w-full text-left"><Button variant="secondary" className="w-full text-left">Recently Viewed</Button></Link>
-                                        <Link href={"/account/fav"} onClick={handleClose} className="w-full text-left"><Button variant="secondary" className="w-full text-left">Saved Items</Button></Link>
-                                        <Link href={"/account"} onClick={handleClose} className="w-full text-left"><Button variant="secondary" className="w-full text-left">Account Settings</Button></Link>
-                                        <Link href={`http://localhost:8080/auth/logout?redirectUri=${window.location.href}`} onClick={handleClose} className="w-full text-left"><Button variant="secondary" className="w-full text-left">Sign Out</Button></Link>
+                                        <Link href={"/account/recent"} onClick={handleClose} className="w-full text-left cursor-pointer"><Button variant="secondary" className="w-full text-left cursor-pointer">Recently Viewed</Button></Link>
+                                        <Link href={"/account/fav"} onClick={handleClose} className="w-full text-left cursor-pointer"><Button variant="secondary" className="w-full text-left cursor-pointer">Saved Items</Button></Link>
+                                        <Link href={"/account"} onClick={handleClose} className="w-full text-left cursor-pointer"><Button variant="secondary" className="w-full text-left cursor-pointer">Account Settings</Button></Link>
+                                        {!user?.data?.isAgent ?   <Link href={"/register-as-agent"} onClick={handleClose} className="w-full text-left cursor-pointer"><Button variant="secondary" className="w-full text-left cursor-pointer">Register as Agent</Button></Link> :<></>}
+                                        <Link href={`http://localhost:8080/auth/logout?redirectUri=${window.location.href}`} onClick={handleClose} className="w-full text-left cursor-pointer"><Button variant="secondary" className="w-full text-left cursor-pointer">Sign Out</Button></Link>
                                     </div>
                                   </SheetDescription>
                               </SheetHeader>

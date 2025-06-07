@@ -94,6 +94,7 @@ function AddressSearch({ setSelectedAddress, setCoordinates , customTriggerWidth
  <Popover open={open} onOpenChange={setOpen}>
   <PopoverTrigger asChild>
     <Button
+        type={"button"}
       role="combobox"
       aria-expanded={open}
       className={`"  justify-between gap-4 ${customTriggerWidth}"`}

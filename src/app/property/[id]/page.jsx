@@ -66,20 +66,6 @@ async function PGColiveDetail({params}) {
         }
     }
 
-    const copyToClipboard = (text) => {
-        const el = document.createElement("textarea");
-        el.value = text;
-        el.setAttribute("readonly", "readonly");
-        el.style.position = "absolute";
-        el.style.left = "-9999px";
-        document.body.appendChild(el);
-        el.select();
-        document.execCommand("copy");
-        document.body.removeChild(el);
-
-    };
-
-
 
 
     return (
@@ -141,7 +127,7 @@ async function PGColiveDetail({params}) {
 
                     <div className="flex-wrap flex items-center gap-2 my-2">
                         <Link className=" "
-                              href={`https://wa.me/9631045873?text=${"Hi ! I want detail regarding pg/colive property id 33 "}`}
+                              href={`https://wa.me/9631045873?text=Hi! I want detail regarding property id ${listing.id}`}
                               target="_blank">
                             <Button className="bg-green-500 text-white hover:bg-green-600 flex gap-1 items-center">
                                 <MessageCircle/>
