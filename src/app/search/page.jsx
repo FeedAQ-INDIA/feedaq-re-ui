@@ -4,5 +4,6 @@ import SearchPage from "@/app/search/_components/SearchPage";
 
 export default function Page({ searchParams }) {
 
-    return <SearchPage searchParams={searchParams} />;
+    const reference = searchParams?.reference || null;
+     return <SearchPage reference={reference} />;
 }

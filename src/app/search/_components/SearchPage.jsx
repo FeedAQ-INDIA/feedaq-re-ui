@@ -10,16 +10,12 @@ import Image from "next/image";
 import {CircleEllipsis, Ellipsis} from "lucide-react";
 import {apiClient} from "@/lib/apiClient.mjs";
 
-export default function SearchPage({searchParams}) {
-    // const searchParams = useSearchParams();
-    const lat = searchParams.lat;
-    const lng = searchParams.lng;
-    const address = searchParams.address;
+export default function SearchPage({reference}) {
 
     const [listingData, setListingData] = useState([]);
     const [selectedAddress, setSelectedAddress] = useState("");
     const [coordinates, setCoordinates] = useState({});
-    const [mapReference, setMapReference] = useState(searchParams.reference || '5000067664145');
+    const [mapReference, setMapReference] = useState(reference || 5000039876089);
 
 
     const [loadingSearch, setLoadingSearch] = useState(false);
@@ -27,9 +23,6 @@ export default function SearchPage({searchParams}) {
     const router = useRouter();
 
     useEffect(() => {
-        console.log("Selected Address : ", decodeURIComponent(address));
-        console.log("Coordinates : ", {lat: lat, lng: lng});
-
 
         fetchAddressByReference();
 
