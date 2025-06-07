@@ -63,7 +63,7 @@ function Header() {
           <div className="hidden md:flex items-center gap-2 ml-auto">
 
 
-                  {!user? <Link href={'/signin'}><Button
+                  {!user? <Link href={`/signin?redirectUri=${window.location.href}`}><Button
                       variant="secondary"
                       className="flex gap-2 items-center cursor-pointer"
 
