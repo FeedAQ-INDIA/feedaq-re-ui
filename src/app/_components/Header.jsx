@@ -92,6 +92,7 @@ function Header() {
                                         <Link href={"/account/recent"} onClick={handleClose} className="w-full text-left"><Button variant="secondary" className="w-full text-left">Recently Viewed</Button></Link>
                                         <Link href={"/account/fav"} onClick={handleClose} className="w-full text-left"><Button variant="secondary" className="w-full text-left">Saved Items</Button></Link>
                                         <Link href={"/account"} onClick={handleClose} className="w-full text-left"><Button variant="secondary" className="w-full text-left">Account Settings</Button></Link>
+                                        <Link href={"http://localhost:8080/auth/logout"} onClick={handleClose} className="w-full text-left"><Button variant="secondary" className="w-full text-left">Sign Out</Button></Link>
                                     </div>
                                   </SheetDescription>
                               </SheetHeader>
