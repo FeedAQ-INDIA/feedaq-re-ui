@@ -11,7 +11,7 @@ import Image from "next/image";
 import {ChevronLeft, ChevronRight, CircleEllipsis, Ellipsis} from "lucide-react";
 import {apiClient} from "@/lib/apiClient.mjs";
 
-export default function SearchPage({reference, initialPage, lim}) {
+export default function ProjectSearchPage({reference, initialPage, lim}) {
 
     const [listingData, setListingData] = useState([]);
     const [selectedAddress, setSelectedAddress] = useState("");
@@ -52,7 +52,7 @@ export default function SearchPage({reference, initialPage, lim}) {
 
 
     const findNearbyLocations = async (lat, lng) => {
-        apiClient(`http://localhost:8080/search?transactionType=buy&centerLat=${lat}&centerLon=${lng}&radiusKm=50&limit=${limit}&page=${page}`)
+        apiClient(`http://localhost:8080/searchProject?lat=${lat}&lng=${lng}&radius=50&limit=${limit}&page=${page}`)
             .then(res => res.json())               // ✅ Parse the response and return the Promise
             .then((json) => {
                 console.log(json)
@@ -82,25 +82,6 @@ export default function SearchPage({reference, initialPage, lim}) {
                     />
                 </div>
 
-                <div className="flex-grow max-w-[140px]">
-                    <Select>
-                        <SelectTrigger className="w-full min-w-[80px]">
-                            <SelectValue placeholder="Select Type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="Buy">Buy</SelectItem>
-                            <SelectItem value="Rent">Rent</SelectItem>
-                            <SelectItem value="Lease">Lease</SelectItem>
-                            <SelectItem value="PG/Coliving">PG/Coliving</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
-
-                <div className="ml-auto">
-                    <Button size="sm" className="min-w-[40px] px-2">
-                        <Ellipsis />
-                    </Button>
-                </div>
             </header>
 
 

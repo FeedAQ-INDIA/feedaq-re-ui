@@ -1,9 +1,10 @@
 // app/signin/page.jsx
 
-import SearchPage from "@/app/search/_components/SearchPage";
+
+import ProjectSearchPage from "@/app/project/_components/ProjectSearchPage";
 
 export default function Page({ searchParams }) {
 
     const reference = searchParams?.reference || null;
-     return <SearchPage reference={reference} />;
+     return <ProjectSearchPage reference={reference} />;
 }

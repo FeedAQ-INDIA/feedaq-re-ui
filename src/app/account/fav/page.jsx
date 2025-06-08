@@ -2,7 +2,7 @@
 import React, {useEffect, useState} from "react";
 import {apiClient} from "@/lib/apiClient.mjs";
 import {useUser} from "@/lib/useUser";
-import ListingCard from "@/app/_components/ListingCard";
+import ListingCard from "@/app/_components/PropertyListingCard";
 import Image from "next/image";
 import {Card, CardHeader} from "@/components/ui/card";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar";
