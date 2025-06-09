@@ -83,7 +83,7 @@ function Header() {
                           <SheetContent className="p-0">
                               <SheetHeader>
                                   <SheetTitle className="bg-rose-500 text-white p-6 flex gap-4 items-center">
-                                      <Avatar className="w-12 h-12">
+                                      <Avatar className="w-12 h-12 shadow">
                                           <AvatarFallback className="text-xl text-rose-600">{user?.data?.nameInitial}</AvatarFallback>
                                       </Avatar>
                                       <span>Hello, {user?.data?.firstName}</span></SheetTitle>

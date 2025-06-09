@@ -8,6 +8,8 @@ import ShareButton from "@/app/property/[id]/_components/ShareButton";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar";
 import "./pg-colive.css"
 import {Card, CardHeader} from "@/components/ui/card";
+import Image from "next/image";
+import MapMarker from "@/app/_components/MapMarker";
 
 async function AgentDetail({params}) {
     const {id} = params;
@@ -47,8 +49,10 @@ async function AgentDetail({params}) {
             <Head>
 
             </Head>
-            <div className="px-2 md:px-6  my-3 mt-5 ">
+            <div className="px-2 md:px-6  my-3 mt-6 ">
 
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 my-4">
+                    <div className=" lg:col-span-3">
                 <Card className="rounded-sm bg-muted/50 border-none">
                     <CardHeader>
                         <div className="flex overflow-x-auto gap-2">
@@ -157,8 +161,21 @@ async function AgentDetail({params}) {
 
                     </CardHeader>
                 </Card>
+                    </div>
+                    <div className="hidden lg:block">
+                        <MapMarker
+                            lat={listing?.geom?.coordinates?.[0]}
+                            lng={listing?.geom?.coordinates?.[1]}
+                            detail={listing?.title}
+                            cutsomClassName={"w-full h-[290px] rounded-md"} // Fully rounded corners
+                        />
+                    </div>
+                </div>
 
-                <Card className="rounded-sm bg-muted/50 border-none my-6">
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 my-4">
+                    <div className=" lg:col-span-3">
+
+                <Card className="rounded-sm bg-muted/50 border-none mb-6">
                     <CardHeader>  <h2 className="font-bold text-xl tracking-wide">Overview</h2>
                         <p className="my-2 whitespace-pre w-full overflow-hidden  ">{listing?.agentBio}</p>
                     </CardHeader>
@@ -202,8 +219,17 @@ async function AgentDetail({params}) {
                     </CardHeader>
 
                 </Card>
-
-
+                    </div>
+                    <div className="hidden lg:block">
+                        <Image
+                            src={'https://cdn.vectorstock.com/i/1000v/40/01/vertical-banner-04-vector-29244001.jpg'}
+                            alt="Picture of the author"
+                            width={200}
+                            height={800}
+                            className="w-full h-full rounded-md"
+                        />
+                    </div>
+                </div>
             </div>
 
         </>
