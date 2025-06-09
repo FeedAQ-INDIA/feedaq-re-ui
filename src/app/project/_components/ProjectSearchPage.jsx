@@ -10,6 +10,7 @@ import ListingCard from "@/app/_components/PropertyListingCard";
 import Image from "next/image";
 import {ChevronLeft, ChevronRight, CircleEllipsis, Ellipsis} from "lucide-react";
 import {apiClient} from "@/lib/apiClient.mjs";
+import ProjectListingCard from "@/app/_components/ProjectListingCard";
 
 export default function ProjectSearchPage({reference, initialPage, lim}) {
 
@@ -56,9 +57,9 @@ export default function ProjectSearchPage({reference, initialPage, lim}) {
             .then(res => res.json())               // ✅ Parse the response and return the Promise
             .then((json) => {
                 console.log(json)
-                setListingData(json?.properties)
+                setListingData(json?.data)
                 setPage(json?.currentPage)
-                setTotalCount(json?.totalProperties)
+                setTotalCount(json?.total)
             })       // ✅ Now you can access the actual data
             .catch(err => console.error(err));     // ✅ Catch and log any errors
         setLoadingSearch(false)
@@ -87,7 +88,7 @@ export default function ProjectSearchPage({reference, initialPage, lim}) {
 
             <div className="px-2 md:px-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-6 gap-4">
-                    {listingData?.map(a => (<ListingCard listing={a}/>))}
+                    {listingData?.map(a => (<ProjectListingCard listing={a}/>))}
                     <div className="col-span-1">
                         <Image
                             src={'https://cdn.vectorstock.com/i/1000v/40/01/vertical-banner-04-vector-29244001.jpg'}

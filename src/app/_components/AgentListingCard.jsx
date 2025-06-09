@@ -46,7 +46,7 @@ function AgentListingCard({listing, active}) {
                         </div>
 
                         <div className="p-0 tracking-wide text-center mt-2">
-                            <Link href={`/property/${listing?.id}`}>
+                            <Link href={`/agent/${listing?.agentId}`}>
                                 <h2 className="font-semibold text-lg line-clamp-1">{listing?.agentAgencyName}</h2>
                                 <h2 className="font-medium text-muted-foreground text-md line-clamp-1">{listing?.user?.firstName +' '+listing?.user?.lastName}</h2>
 
