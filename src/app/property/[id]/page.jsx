@@ -34,7 +34,7 @@ async function PGColiveDetail({params}) {
                         datasource: "Project", as: "project", required: false,
                         include: [{datasource: "Developer", as: "developer", required: false}]
                     },
-                    {datasource: "PropertyImage", as: "images", required: false},
+                    {datasource: "PropertyAttachment", as: "attachment", required: false},
                     {datasource: "UserFav", as: "fav", required: false}
                  ]
             }
@@ -103,7 +103,7 @@ async function PGColiveDetail({params}) {
 
                 </div>
                 <div className="mt-6 mb-2 flex flex-wrap gap-2 items-center">
-                    <p className="text-xs text-muted-foreground">Listing Id : {listing.id}</p>
+                    <p className="text-xs text-muted-foreground">Listing Id : {listing?.id}</p>
                     <div className=" sm:ml-auto">
                         {listing?.isVerified ?
                             <Badge
