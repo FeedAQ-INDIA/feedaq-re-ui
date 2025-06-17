@@ -103,14 +103,14 @@ async function PGColiveDetail({params}) {
 
                 </div>
                 <div className="mt-6 mb-2 flex flex-wrap gap-2 items-center">
-                    <p className="text-xs text-muted-foreground">Listing Id : {listing?.id}</p>
-                    <div className=" sm:ml-auto">
+                    {/*<p className="text-xs text-muted-foreground">Listing Id : {listing?.id}</p>*/}
+                    {/*<div className=" sm:ml-auto">*/}
                         {listing?.isVerified ?
                             <Badge
                                 className="tracking-wider rounded-sm bg-green-600 text-white flex gap-1 animate-blink"><CheckLine
                                 size={14}/><span>Verified</span></Badge>
                             : <></>}
-                    </div>
+                    {/*</div>*/}
                 </div>
                 <div className="mb-6 flex gap-2 flex-col">
                     <div className="tracking-wider">
@@ -160,6 +160,7 @@ async function PGColiveDetail({params}) {
                         <div
                             className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-0 border border-gray-200 rounded-md overflow-hidden mb-4">
                             {[
+                                {label: "Property Code", value: listing?.id},
                                 {label: "Transaction Type", value: listing?.transactionType},
                                 {label: "BHK Type", value: listing?.bhkType},
                                 {label: "No. of Bedrooms", value: listing?.bedrooms},

@@ -45,6 +45,8 @@ const publicPatterns = [
     /^\/signin$/,           // "/signin"
     /^\/property(\/.*)?$/,  // "/property" and subpaths
     /^\/search(\/.*)?$/,    // "/search" and subpaths
+    /^\/agent(\/.*)?$/,    // "/search" and subpaths
+    /^\/project(\/.*)?$/,    // "/search" and subpaths
 ];
 
 // Check if a path is public

@@ -52,8 +52,7 @@ export default function Home() {
               <CardContent className="text-center tracking-wide">
                 <h1 className="text-2xl font-bold">Buy a property</h1>
                 <p className="mt-2">
-                  Find your place with an immersive photo experience and the most
-                  listings, including things you won’t find anywhere else.
+                  Find your dream home with ease — verified listings, smart filters, and trusted agents. Your next address is here.
                 </p>
                 <Button variant="outline" className="mt-4">
                   Browse
@@ -73,8 +72,7 @@ export default function Home() {
               <CardContent className="text-center tracking-wide">
                 <h1 className="text-2xl font-bold">Rent a property</h1>
                 <p className="mt-2">
-                  We’re creating a seamless online experience – from shopping on the
-                  largest rental network, to applying, to paying rent.
+                  From budget flats to luxury rentals — browse verified homes, connect instantly, and move in without hassle or hidden fees.
                 </p>
                 <Button variant="outline" className="mt-4">
                   Find Rentals
@@ -94,8 +92,7 @@ export default function Home() {
               <CardContent className="text-center tracking-wide">
                 <h1 className="text-2xl font-bold">Sell a property</h1>
                 <p className="mt-2">
-                  List your property with confidence and sell faster through our trusted network and expert guidance.
-                </p>
+                  List your property fast, reach genuine buyers, and close deals smarter. Sell confidently with our trusted real estate platform.                </p>
                 <Button variant="outline" className="mt-4">
                   Start selling
                 </Button>
@@ -114,8 +111,7 @@ export default function Home() {
               <CardContent className="text-center tracking-wide">
                 <h1 className="text-2xl font-bold">Find PG & Coliving</h1>
                 <p className="mt-2">
-                  Discover fully-managed PGs and coliving spaces ideal for students and
-                  professionals, with meals, Wi-Fi, and more.
+                  Flexible PGs and stylish coliving spaces for students and professionals — fully furnished, affordable, and ready to move in.
                 </p>
                 <Button variant="outline" className="mt-4">
                   Explore PGs
