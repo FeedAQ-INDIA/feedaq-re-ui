@@ -41,20 +41,21 @@ function HomePageSearch({ type }) {
           />
         </div>
         <div className="mt-2 flex gap-2 flex-wrap">
-          {/*<Link href={`/search?lat=${coordinates?.lat}&lng=${coordinates?.lng}`} >*/}
 
-          <Link             href={`/search?reference=${mapReference}`}
-          >
-          <Button
-              // href={`/pg-colive?lat=${coordinates?.lat}&lng=${
-              //   coordinates?.lng
-              // }&address=${encodeURIComponent(selectedAddress)}`}
-              disabled={!isValid}
-              className="  rounded bg-rose-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-rose-700 active:bg-rose-500 sm:w-auto mt-2"
-          >
-            Get Started
-          </Button>
-          </Link>
+          {isValid ? (
+              <Link href={`/search?reference=${mapReference}`}>
+                <Button className="rounded bg-rose-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-rose-700 active:bg-rose-500 sm:w-auto mt-2 cursor-pointer">
+                  Get Started
+                </Button>
+              </Link>
+          ) : (
+              <Button
+                  disabled
+                  className="rounded bg-gray-400 px-12 py-3 text-sm font-medium text-white shadow sm:w-auto mt-2 cursor-not-allowed"
+              >
+                Get Started
+              </Button>
+          )}
         </div>
 
       </div>

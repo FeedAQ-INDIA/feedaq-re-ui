@@ -29,8 +29,7 @@ async function PGColiveDetail({params}) {
                 where: {id: id},
                 include: [
                     {datasource: "PropertyFeature", as: "features", required: false},
-                    {datasource: "Location", as: "locatedIn", required: true},
-                    {
+                     {
                         datasource: "Project", as: "project", required: false,
                         include: [{datasource: "Developer", as: "developer", required: false}]
                     },
@@ -94,8 +93,8 @@ async function PGColiveDetail({params}) {
                     </div>
                     <div className="hidden lg:block">
                         <MapMarker
-                            lat={listing?.locatedIn?.geom?.coordinates?.[0]}
-                            lng={listing?.locatedIn?.geom?.coordinates?.[1]}
+                            lat={listing?.geom?.coordinates?.[0]}
+                            lng={listing?.geom?.coordinates?.[1]}
                             detail={listing?.title}
                             cutsomClassName={"w-full h-[400px] rounded-md"} // Fully rounded corners
                         />
@@ -121,7 +120,7 @@ async function PGColiveDetail({params}) {
                         </p>
                         <p className=" mt-1 text-sm text-muted-foreground">
                             {listing?.project?.name ? listing?.project?.name?.toUpperCase() + ' - ' : ' '}
-                            {listing?.locatedIn?.locality}
+                            {listing?.locality}
                         </p>
                     </div>
 
@@ -198,31 +197,14 @@ async function PGColiveDetail({params}) {
                             <h2 className="font-bold text-xl  tracking-wide">Amenities</h2>
                             <div
                                 className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-0 border border-gray-200 rounded-md overflow-hidden my-4">
-                                {[
-                                    {label: "Parking", value: listing?.features?.hasParking},
-                                    {label: "Lift", value: listing?.features?.hasLift},
-                                    {label: "Power Backup", value: listing?.features?.hasPowerBackup},
-                                    {label: "Security", value: listing?.features?.hasSecurity},
-                                    {label: "Water Supply", value: listing?.features?.hasWaterSupply},
-                                    {label: "Gym", value: listing?.features?.hasGym},
-                                    {label: "Swimming Pool", value: listing?.features?.hasSwimmingPool},
-                                    {label: "Play Area", value: listing?.features?.hasPlayArea},
-                                    {label: "Clubhouse", value: listing?.features?.hasClubhouse},
-                                    {label: "Servant Room", value: listing?.features?.hasServantRoom},
-                                    {label: "Pooja Room", value: listing?.features?.hasPoojaRoom},
-                                    {label: "Study Room", value: listing?.features?.hasStudyRoom},
-                                    {
-                                        label: "Private Terrace/Garden",
-                                        value: listing?.features?.hasPrivateTerraceGarden
-                                    },
-
-                                ].map((item, index) =>
-                                    (item.value != null) ? (<div
+                                {
+                                    listing?.features?.map((item, index) =>
+                                    (item?.featureValue != null) ? (<div
                                             key={index}
                                             className="border-1 border-gray-200 px-4 py-2 flex flex-col cursor-pointer hover:bg-gray-100 hover:shadow"
                                         >
-                                            <p className="text-sm text-muted-foreground">{item.label}</p>
-                                            <p className="text-base font-medium">{item.value ? 'Yes' : 'No'}</p>
+                                            <p className="text-sm text-muted-foreground">{item.featureName}</p>
+                                            <p className="text-base font-medium">{item.featureValue ? 'Yes' : 'No'}</p>
                                         </div>
                                     ) : <></>)}
                             </div>
@@ -233,15 +215,15 @@ async function PGColiveDetail({params}) {
                             <div
                                 className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-0 border border-gray-200 rounded-md overflow-hidden my-4">
                                 {[
-                                    {label: "Address Line 1", value: listing?.locatedIn?.addressLine1},
-                                    {label: "Address Line 2", value: listing?.locatedIn?.addressLine2},
-                                    {label: "Locality", value: listing?.locatedIn?.locality},
-                                    {label: "City", value: listing?.locatedIn?.city},
-                                    {label: "State", value: listing?.locatedIn?.state},
-                                    {label: "Zip Code", value: listing?.locatedIn?.zipCode},
-                                    {label: "Country", value: listing?.locatedIn?.country},
-                                    {label: "Latitude", value: listing?.locatedIn?.latitude},
-                                    {label: "Longitude", value: listing?.locatedIn?.longitude},
+                                    {label: "Address Line 1", value: listing?.addressLine1},
+                                    {label: "Address Line 2", value: listing?.addressLine2},
+                                    {label: "Locality", value: listing?.locality},
+                                    {label: "City", value: listing?.city},
+                                    {label: "State", value: listing?.state},
+                                    {label: "Zip Code", value: listing?.zipCode},
+                                    {label: "Country", value: listing?.country},
+                                    {label: "Latitude", value: listing?.latitude},
+                                    {label: "Longitude", value: listing?.longitude},
 
                                 ].map((item, index) =>
                                     item.value ? (<div

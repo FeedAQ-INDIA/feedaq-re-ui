@@ -147,7 +147,7 @@ function Listing({listing, active}) {
                                 <h2 className="font-bold text-sm ">{formatIndianCurrency(listing?.price)} <span
                                     className="text-muted-foreground text-xs font-normal">₹11.46 K/sq.ft
                   Avg. Price</span></h2>  <p
-                                className=" mt-1 text-xs text-muted-foreground">{listing?.project?.name ? listing?.project?.name?.toUpperCase() + ' - ' : ' '} {listing?.locatedIn?.locality}</p>
+                                className=" mt-1 text-xs text-muted-foreground">{listing?.project?.name ? listing?.project?.name?.toUpperCase() + ' - ' : ' '} {listing?.locality}</p>
                             </Link>
 
                         </div>
@@ -177,7 +177,7 @@ function Listing({listing, active}) {
 
                                 <h2 className="font-medium text-sm  ">{formatIndianCurrency(listing?.price)} <span
                                     className="text-muted-foreground text-xs">₹11.46 K/sq.ft Avg. Price</span></h2>
-                                <p className="my-1  text-sm text-muted-foreground">{listing?.project?.name ? listing?.project?.name?.toUpperCase() + ' - ' : ' '} {listing?.locatedIn?.locality}</p>
+                                <p className="my-1  text-sm text-muted-foreground">{listing?.project?.name ? listing?.project?.name?.toUpperCase() + ' - ' : ' '} {listing?.locality}</p>
 
                                 <p className="  text-sm  ">{listing?.description}</p>
                             </div>

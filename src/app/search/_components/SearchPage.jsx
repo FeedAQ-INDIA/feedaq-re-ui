@@ -52,7 +52,7 @@ export default function SearchPage({reference, initialPage, lim}) {
 
 
     const findNearbyLocations = async (lat, lng) => {
-        apiClient(`http://localhost:8080/search?transactionType=buy&centerLat=${lat}&centerLon=${lng}&radiusKm=50&limit=${limit}&page=${page}`)
+        apiClient(`http://localhost:8080/search?transactionType=buy&lat=${lat}&lng=${lng}&radius=50&limit=${limit}&page=${page}`)
             .then(res => res.json())               // ✅ Parse the response and return the Promise
             .then((json) => {
                 console.log(json)
