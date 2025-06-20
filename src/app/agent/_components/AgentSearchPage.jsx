@@ -86,7 +86,7 @@ export default function AgentSearchPage({reference, initialPage, lim}) {
 
 
             <div className="px-2 md:px-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-6 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-6 gap-4">
                     {listingData?.map(a => (<AgentListingCard listing={a}/>))}
                     <div className="col-span-1">
                         <Image

@@ -119,12 +119,12 @@ async function AgentDetail({params}) {
                                         <h2 className="font-semibold text-lg line-clamp-1">{listing?.agentAgencyName}</h2>
                                         <h2 className="font-medium text-muted-foreground text-md line-clamp-1">{listing?.user?.firstName + ' ' + listing?.user?.lastName}</h2>
 
-
                                         <div className="flex overflow-x-auto gap-2 mt-1">
                                             <p className="text-xs text-muted-foreground tracking-normal">
                                                 {listing?.agentLocality?.toUpperCase()} - {listing?.agentCity?.toUpperCase()} - {listing?.agentState?.toUpperCase()} - {listing?.agentCountry?.toUpperCase()}
                                             </p>
                                         </div>
+                                        <p className="text-xs text-muted-foreground">Partner Id : {listing?.agentId}</p>
 
 
                                     </div>
@@ -167,16 +167,16 @@ async function AgentDetail({params}) {
                                 </div>
 
 
-                                <div className="mt-2 flex flex-wrap gap-2 items-center">
-                                    <p className="text-xs text-muted-foreground">Partner Id : {listing?.agentId}</p>
-                                    <div className=" sm:ml-auto">
-                                        {listing?.agentIsVerified ?
-                                            <Badge
-                                                className="tracking-wider rounded-xs bg-green-600 text-white flex gap-1 animate-blink"><CheckLine
-                                                size={14}/><span>Verified</span></Badge>
-                                            : <></>}
-                                    </div>
-                                </div>
+                                {/*<div className="mt-2 flex flex-wrap gap-2 items-center">*/}
+                                {/*    <p className="text-xs text-muted-foreground">Partner Id : {listing?.agentId}</p>*/}
+                                {/*    <div className=" sm:ml-auto">*/}
+                                {/*        {listing?.agentIsVerified ?*/}
+                                {/*            <Badge*/}
+                                {/*                className="tracking-wider rounded-xs bg-green-600 text-white flex gap-1 animate-blink"><CheckLine*/}
+                                {/*                size={14}/><span>Verified</span></Badge>*/}
+                                {/*            : <></>}*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
 
                             </CardHeader>
                         </Card>
@@ -186,7 +186,7 @@ async function AgentDetail({params}) {
                             lat={listing?.geom?.coordinates?.[0]}
                             lng={listing?.geom?.coordinates?.[1]}
                             detail={listing?.title}
-                            cutsomClassName={"w-full h-[290px] rounded-md"} // Fully rounded corners
+                            cutsomClassName={"w-full h-[300px] rounded-md"} // Fully rounded corners
                         />
                     </div>
                 </div>
