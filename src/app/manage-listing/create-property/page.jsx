@@ -14,6 +14,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/c
 import CreatePropertyBuy from "@/app/manage-listing/create-property/_components/CreatePropertyBuy";
 import {Label} from "@/components/ui/label";
 import {Card, CardHeader, CardTitle} from "@/components/ui/card";
+import CreatePropertyRent from "@/app/manage-listing/create-property/_components/CreatePropertyRent";
 
 
 export default function PropertyListingForm() {
@@ -51,6 +52,7 @@ export default function PropertyListingForm() {
                 </Select>
 
                 {transactionType=="buy" && <CreatePropertyBuy/>}
+                {transactionType=="rent" && <CreatePropertyRent/>}
             </div>
 
         </div>

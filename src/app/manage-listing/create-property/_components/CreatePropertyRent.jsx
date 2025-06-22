@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
@@ -11,6 +11,12 @@ import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
 import AddressSearch from "@/app/_components/AddressSearch"; // Your existing component
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.jsx";
+import Link from "next/link";
+import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
+import {cn} from "@/lib/utils";
+import {Check, ChevronsUpDown} from "lucide-react";
+import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "@/components/ui/command";
+import axios from "axios";
 
 
 export default function CreatePropertyRent() {
@@ -70,8 +76,42 @@ export default function CreatePropertyRent() {
         // send to backend
     };
 
+    const [projects, setProjects] = useState([]);
+    const [projectSearchQuery, setProjectSearchQuery] = useState("");
+
+    useEffect(() => {
+        const fetchProjects = async () => {
+            try {
+                const res = await axios.post("http://localhost:8080/search-v2", {
+                    limit: 10,
+                    offset: 0,
+                    getThisData: {
+                        datasource: "Project",
+                        attributes: [],
+                        where: {
+                            name: {
+                                $like: `%${projectSearchQuery}%`,
+                            },
+                        },
+                    },
+                });
+                const results = res.data?.data?.results || [];
+                // const mapped = results.map((d) => ({
+                //     id: d.developer_id,
+                //     name: d.developer_name,
+                // }));
+                setProjects(results);
+            } catch (err) {
+                console.error("Error fetching projects:", err);
+            }
+        };
+
+        fetchProjects();
+    }, [projectSearchQuery]);
+
+
     return (
-        <div  className="mt-12">
+        <div className="mt-12">
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-6">
 
@@ -99,7 +139,8 @@ export default function CreatePropertyRent() {
                             render={({field}) => (
                                 <FormItem>
                                     <FormLabel>Description</FormLabel>
-                                    <FormControl><Textarea placeholder="Property Description" {...field} /></FormControl>
+                                    <FormControl><Textarea
+                                        placeholder="Property Description" {...field} /></FormControl>
                                     <FormMessage/>
                                 </FormItem>
                             )}
@@ -154,16 +195,16 @@ export default function CreatePropertyRent() {
                         <FormField
                             control={form.control}
                             name="category"
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <FormItem>
                                     <FormLabel>Category</FormLabel>
                                     <FormControl>
                                         <Select
-                                            onValueChange={field.onChange }
-                                            value={ field.value }
+                                            onValueChange={field.onChange}
+                                            value={field.value}
                                         >
                                             <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select Category" />
+                                                <SelectValue placeholder="Select Category"/>
                                             </SelectTrigger>
                                             <SelectContent>
                                                 {["residential", "commercial", "industrial", "land", "other"].map(a => (
@@ -174,7 +215,7 @@ export default function CreatePropertyRent() {
                                             </SelectContent>
                                         </Select>
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage/>
                                 </FormItem>
                             )}
                         />
@@ -185,16 +226,16 @@ export default function CreatePropertyRent() {
                         <FormField
                             control={form.control}
                             name="propertyType"
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <FormItem>
                                     <FormLabel>Property Type</FormLabel>
                                     <FormControl>
                                         <Select
-                                            onValueChange={field.onChange }
-                                            value={ field.value }
+                                            onValueChange={field.onChange}
+                                            value={field.value}
                                         >
                                             <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select Property Type" />
+                                                <SelectValue placeholder="Select Property Type"/>
                                             </SelectTrigger>
                                             <SelectContent>
                                                 {[
@@ -209,7 +250,7 @@ export default function CreatePropertyRent() {
                                             </SelectContent>
                                         </Select>
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage/>
                                 </FormItem>
                             )}
                         />
@@ -219,16 +260,16 @@ export default function CreatePropertyRent() {
                         <FormField
                             control={form.control}
                             name="bhkType"
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <FormItem>
                                     <FormLabel>BHK Type</FormLabel>
                                     <FormControl>
                                         <Select
-                                            onValueChange={field.onChange }
-                                            value={ field.value }
+                                            onValueChange={field.onChange}
+                                            value={field.value}
                                         >
                                             <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select BHK Type" />
+                                                <SelectValue placeholder="Select BHK Type"/>
                                             </SelectTrigger>
                                             <SelectContent>
                                                 {["1_rk", "1_bhk", "2_bhk", "3_bhk", "4_bhk", "5_bhk", "5_plus_bhk"].map(a => (
@@ -239,7 +280,7 @@ export default function CreatePropertyRent() {
                                             </SelectContent>
                                         </Select>
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage/>
                                 </FormItem>
                             )}
                         />
@@ -253,7 +294,8 @@ export default function CreatePropertyRent() {
                             render={({field}) => (
                                 <FormItem>
                                     <FormLabel>Bedrooms</FormLabel>
-                                    <FormControl><Input type="number" placeholder="No. of Bedroom" {...field} /></FormControl>
+                                    <FormControl><Input type="number"
+                                                        placeholder="No. of Bedroom" {...field} /></FormControl>
                                     <FormMessage/>
                                 </FormItem>
                             )}
@@ -268,7 +310,8 @@ export default function CreatePropertyRent() {
                             render={({field}) => (
                                 <FormItem>
                                     <FormLabel>Bathrooms</FormLabel>
-                                    <FormControl><Input type="number" placeholder="No. of bathrooms" {...field} /></FormControl>
+                                    <FormControl><Input type="number"
+                                                        placeholder="No. of bathrooms" {...field} /></FormControl>
                                     <FormMessage/>
                                 </FormItem>
                             )}
@@ -284,7 +327,8 @@ export default function CreatePropertyRent() {
                             render={({field}) => (
                                 <FormItem>
                                     <FormLabel>Carpet Area</FormLabel>
-                                    <FormControl><Input type="number" placeholder="Carpet Area" {...field} /></FormControl>
+                                    <FormControl><Input type="number"
+                                                        placeholder="Carpet Area" {...field} /></FormControl>
                                     <FormMessage/>
                                 </FormItem>
                             )}
@@ -295,16 +339,16 @@ export default function CreatePropertyRent() {
                         <FormField
                             control={form.control}
                             name="areaUnit"
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <FormItem>
                                     <FormLabel>Area unit</FormLabel>
                                     <FormControl>
                                         <Select
-                                            onValueChange={field.onChange }
-                                            value={ field.value }
+                                            onValueChange={field.onChange}
+                                            value={field.value}
                                         >
                                             <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select Area Unit" />
+                                                <SelectValue placeholder="Select Area Unit"/>
                                             </SelectTrigger>
                                             <SelectContent>
                                                 {["sq_ft", "sq_yd", "sq_m", "acre", "bigha"].map(a => (
@@ -315,7 +359,7 @@ export default function CreatePropertyRent() {
                                             </SelectContent>
                                         </Select>
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage/>
                                 </FormItem>
                             )}
                         />
@@ -325,16 +369,16 @@ export default function CreatePropertyRent() {
                         <FormField
                             control={form.control}
                             name="furnishingStatus"
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <FormItem>
                                     <FormLabel>Furnishing Status</FormLabel>
                                     <FormControl>
                                         <Select
-                                            onValueChange={field.onChange }
-                                            value={ field.value }
+                                            onValueChange={field.onChange}
+                                            value={field.value}
                                         >
                                             <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select Furnishing Status" />
+                                                <SelectValue placeholder="Select Furnishing Status"/>
                                             </SelectTrigger>
                                             <SelectContent>
                                                 {["furnished", "semi_furnished", "unfurnished"].map(a => (
@@ -345,7 +389,84 @@ export default function CreatePropertyRent() {
                                             </SelectContent>
                                         </Select>
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage/>
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div>
+
+                        <FormField
+                            control={form.control}
+                            name="developerId"
+                            render={({field}) => (
+                                <FormItem className="flex flex-col">
+                                    <FormLabel>
+                                        Project{" "}
+                                        <Link
+                                            href="/manage-listing/create-project"
+                                            target="_blank"
+                                            className="font-normal text-blue-600 underline"
+                                        >
+                                            Click here to create project
+                                        </Link>
+                                    </FormLabel>
+
+
+                                    <Popover>
+                                        <PopoverTrigger asChild>
+                                            <FormControl>
+                                                <Button
+                                                    variant="outline"
+                                                    role="combobox"
+                                                    className={cn(
+                                                        "w-full justify-between",
+                                                        !field.value && "text-muted-foreground"
+                                                    )}
+                                                >
+                                                    {field.value
+                                                        ? projects.find((dev) => dev.id === field.value)?.name
+                                                        : "Select Project"}
+                                                    <ChevronsUpDown className="ml-2 h-4 w-4 opacity-50"/>
+                                                </Button>
+                                            </FormControl>
+                                        </PopoverTrigger>
+
+                                        <PopoverContent className="w-full p-0">
+                                            <Command>
+                                                <CommandInput
+                                                    placeholder="Search developer..."
+                                                    className="h-9"
+                                                    value={projectSearchQuery}
+                                                    onValueChange={setProjectSearchQuery}
+                                                />
+                                                <CommandList>
+                                                    <CommandEmpty>No developer found.</CommandEmpty>
+                                                    <CommandGroup>
+                                                        {projects.map((dev) => (
+                                                            <CommandItem
+                                                                key={dev.id}
+                                                                value={dev.id.toString()} // Use only ID for uniqueness and selection
+                                                                onSelect={() => {
+                                                                    field.onChange(dev.id === field.value ? "" : dev.id);
+                                                                }}
+                                                            >
+                                                                {`${dev.name} - ${dev.id}`}
+                                                                <Check
+                                                                    className={cn(
+                                                                        "ml-auto h-4 w-4",
+                                                                        dev.id === field.value ? "opacity-100" : "opacity-0"
+                                                                    )}
+                                                                />
+                                                            </CommandItem>
+                                                        ))}
+                                                    </CommandGroup>
+                                                </CommandList>
+                                            </Command>
+                                        </PopoverContent>
+                                    </Popover>
+
+                                    <FormMessage/>
                                 </FormItem>
                             )}
                         />
@@ -356,13 +477,27 @@ export default function CreatePropertyRent() {
                         <FormField
                             control={form.control}
                             name="addressLine1"
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <FormItem>
                                     <FormLabel>Address Line 1</FormLabel>
                                     <FormControl>
                                         <Input placeholder="Enter Address" {...field} />
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage/>
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="addressLine2"
+                            render={({field}) => (
+                                <FormItem>
+                                    <FormLabel>Address Line 2</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Enter Address" {...field} />
+                                    </FormControl>
+                                    <FormMessage/>
                                 </FormItem>
                             )}
                         />
@@ -370,13 +505,13 @@ export default function CreatePropertyRent() {
                         <FormField
                             control={form.control}
                             name="locality"
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <FormItem>
                                     <FormLabel>Locality</FormLabel>
                                     <FormControl>
                                         <Input placeholder="Enter Locality" {...field} />
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage/>
                                 </FormItem>
                             )}
                         />
@@ -384,13 +519,13 @@ export default function CreatePropertyRent() {
                         <FormField
                             control={form.control}
                             name="city"
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <FormItem>
                                     <FormLabel>City</FormLabel>
                                     <FormControl>
                                         <Input placeholder="Enter City" {...field} />
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage/>
                                 </FormItem>
                             )}
                         />
@@ -398,13 +533,13 @@ export default function CreatePropertyRent() {
                         <FormField
                             control={form.control}
                             name="state"
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <FormItem>
                                     <FormLabel>State</FormLabel>
                                     <FormControl>
                                         <Input placeholder="Enter State" {...field} />
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage/>
                                 </FormItem>
                             )}
                         />
@@ -412,13 +547,13 @@ export default function CreatePropertyRent() {
                         <FormField
                             control={form.control}
                             name="country"
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <FormItem>
                                     <FormLabel>Country</FormLabel>
                                     <FormControl>
                                         <Input placeholder="Enter Country" readOnly {...field} />
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage/>
                                 </FormItem>
                             )}
                         />

@@ -363,18 +363,16 @@ console.log(data)
                                                 {developers.map((dev) => (
                                                     <CommandItem
                                                         key={dev.id}
-                                                        value={dev.name}
+                                                        value={dev.id.toString()} // Use only ID for uniqueness and selection
                                                         onSelect={() => {
                                                             field.onChange(dev.id === field.value ? "" : dev.id);
                                                         }}
                                                     >
-                                                        {dev.name}
+                                                        {`${dev.name} - ${dev.id}`}
                                                         <Check
                                                             className={cn(
                                                                 "ml-auto h-4 w-4",
-                                                                dev.id === field.value
-                                                                    ? "opacity-100"
-                                                                    : "opacity-0"
+                                                                dev.id === field.value ? "opacity-100" : "opacity-0"
                                                             )}
                                                         />
                                                     </CommandItem>
