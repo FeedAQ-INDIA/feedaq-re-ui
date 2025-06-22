@@ -26,6 +26,9 @@ function Listing({listing, active}) {
 
 
     function formatIndianCurrency(value) {
+        if(!value){
+            return;
+        }
         const absValue = Math.abs(value);
 
         if (absValue >= 1e12) {
@@ -79,12 +82,12 @@ function Listing({listing, active}) {
                             height={150}
                         />
                         <div className="p-1 tracking-wide">
-                            <Link href={`/property/${listing?.id}`}>
-                                <h2 className="font-semibold text-md line-clamp-1">{listing?.title}</h2>
-                                <h2 className="font-bold text-sm ">{formatIndianCurrency(listing?.price)} <span
+                            <Link href={`/project/${listing?.id}`}>
+                                <h2 className="font-semibold text-md line-clamp-1">{listing?.name}</h2>
+                                <h2 className="font-bold text-sm ">{formatIndianCurrency(listing?.minPrice)} - {formatIndianCurrency(listing?.maxPrice)} <span
                                     className="text-muted-foreground text-xs font-normal">₹11.46 K/sq.ft
                   Avg. Price</span></h2>  <p
-                                className=" mt-1 text-xs text-muted-foreground">{listing?.project?.name ? listing?.project?.name?.toUpperCase() + ' - ' : ' '} {listing?.locatedIn?.locality}</p>
+                                className=" mt-1 text-xs text-muted-foreground">  {listing?.locality}</p>
                             </Link>
 
                         </div>
@@ -109,12 +112,12 @@ function Listing({listing, active}) {
                             </div>
 
                             <div className="tracking-wide">
-                                <h2 className="font-semibold text-lg line-clamp-1">{listing?.title}
+                                <h2 className="font-semibold text-lg line-clamp-1">{listing?.name}
                                 </h2>
 
-                                <h2 className="font-medium text-sm  ">{formatIndianCurrency(listing?.price)} <span
+                                <h2 className="font-medium text-sm  ">{formatIndianCurrency(listing?.minPrice)} - {formatIndianCurrency(listing?.maxPrice)} <span
                                     className="text-muted-foreground text-xs">₹11.46 K/sq.ft Avg. Price</span></h2>
-                                <p className="my-1  text-sm text-muted-foreground">{listing?.project?.name ? listing?.project?.name?.toUpperCase() + ' - ' : ' '} {listing?.locatedIn?.locality}</p>
+                                <p className="my-1  text-sm text-muted-foreground"> {listing?.locatedIn?.locality}</p>
 
                                 <p className="  text-sm  ">{listing?.description}</p>
                             </div>
@@ -125,7 +128,7 @@ function Listing({listing, active}) {
             <div className="flex flex-wrap gap-2 mt-2">
 
                 <Link
-                    href={`/property/${listing.id}`}
+                    href={`/project/${listing.id}`}
                     target="_blank"
                     rel="noopener noreferrer" className="flex-1"
                 >

@@ -28,7 +28,9 @@ export default function ProjectSearchPage({reference, initialPage, lim}) {
 
     useEffect(() => {
 
-        fetchAddressByReference();
+        if(page){
+            fetchAddressByReference();
+        }
 
         console.log(selectedAddress)
     }, [mapReference, page]);
@@ -53,7 +55,7 @@ export default function ProjectSearchPage({reference, initialPage, lim}) {
 
 
     const findNearbyLocations = async (lat, lng) => {
-        apiClient(`http://localhost:8080/searchProject?lat=${lat}&lng=${lng}&radius=50&limit=${limit}&page=${page}`)
+        apiClient(`http://localhost:8080/searchProject?lat=19.17380000&lng=72.86000000&radius=5&limit=${limit}&page=${page}`)
             .then(res => res.json())               // ✅ Parse the response and return the Promise
             .then((json) => {
                 console.log(json)

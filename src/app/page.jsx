@@ -122,30 +122,30 @@ export default function Home() {
         </section>
 
 
-        <section className="my-12">
-             <Card className="rounded-sm bg-black text-white ">
-              <CardHeader className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className=" ">
-                  <ImageCarousel
-                      imageList={[
-                        "https://www.adanirealty.com/-/media/Project/Realty/Home/Social-Clubs/Club-house-Shantigram-(1).jpg",
-                        "https://www.adanirealty.com/-/media/Project/Realty/Residential/Pune/Atelier-Greens/Carousel-Images/Thumbnail-image/1.jpg",
-                        "https://www.adanirealty.com/-/media/Project/Realty/Commercial/Gurugram/Downtown-Avenue/Outdoor/1920x1080/For-Desktop-1920-X1080-2.jpg",
-                        "https://www.adanirealty.com/-/media/Project/Realty/Commercial/Gurugram/Downtown-Avenue/Project-Status/1920x1080/Downtown-Airel-View-1.jpg",
-                        "https://www.adanirealty.com/-/media/Project/Realty/Commercial/Gurugram/Downtown-Avenue/Outdoor/1920x1080/For-Desktop-1920-X1080-4.jpg",
-                      ]}
+        {/*<section className="my-12">*/}
+        {/*     <Card className="rounded-sm bg-black text-white ">*/}
+        {/*      <CardHeader className="grid grid-cols-1 md:grid-cols-2 gap-8">*/}
+        {/*        <div className=" ">*/}
+        {/*          <ImageCarousel*/}
+        {/*              imageList={[*/}
+        {/*                "https://www.adanirealty.com/-/media/Project/Realty/Home/Social-Clubs/Club-house-Shantigram-(1).jpg",*/}
+        {/*                "https://www.adanirealty.com/-/media/Project/Realty/Residential/Pune/Atelier-Greens/Carousel-Images/Thumbnail-image/1.jpg",*/}
+        {/*                "https://www.adanirealty.com/-/media/Project/Realty/Commercial/Gurugram/Downtown-Avenue/Outdoor/1920x1080/For-Desktop-1920-X1080-2.jpg",*/}
+        {/*                "https://www.adanirealty.com/-/media/Project/Realty/Commercial/Gurugram/Downtown-Avenue/Project-Status/1920x1080/Downtown-Airel-View-1.jpg",*/}
+        {/*                "https://www.adanirealty.com/-/media/Project/Realty/Commercial/Gurugram/Downtown-Avenue/Outdoor/1920x1080/For-Desktop-1920-X1080-4.jpg",*/}
+        {/*              ]}*/}
 
-                      customClass={'rounded-md h-80 w-full '}
-                      width={100}
-                      height={150}
-                  />
-                </div>
-                <div>
-                  <h4 className="font-bold tracking-wider text-2xl">Exciting Projects</h4>
-                </div>
-              </CardHeader>
-            </Card>
-         </section>
+        {/*              customClass={'rounded-md h-80 w-full '}*/}
+        {/*              width={100}*/}
+        {/*              height={150}*/}
+        {/*          />*/}
+        {/*        </div>*/}
+        {/*        <div>*/}
+        {/*          <h4 className="font-bold tracking-wider text-2xl">Exciting Projects</h4>*/}
+        {/*        </div>*/}
+        {/*      </CardHeader>*/}
+        {/*    </Card>*/}
+        {/* </section>*/}
 
       </div>
   );
