@@ -18,27 +18,23 @@ import {cn} from "@/lib/utils";
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "@/components/ui/command";
 import {Check, ChevronsUpDown} from "lucide-react";
 import axios from "axios";
+import {apiClient} from "@/lib/apiClient.mjs";
 
 const projectSchema = z.object({
     name: z.string().min(1),
     description: z.string().optional(),
     status: z.enum(['newly_launched', 'under_construction', 'ready_to_move', 'possession_soon']),
     expectedCompletionDate: z.string().optional(),
-
-    totalLandArea: z.string().optional(),
+    totalLandArea: z.coerce.number().optional(),
     landAreaUnit: z.enum(['sq_ft', 'sq_yd', 'acre', 'hectare']),
     projectUnitDetail: z.any().optional(),
     projectAdditionalDetail: z.any().optional(),
-
     numberOfTowers: z.coerce.number().optional(),
     reraRegistrationNumber: z.string().optional(),
     developerId: z.coerce.number(),
-
     isVerified: z.boolean().default(false),
-
     minPrice: z.coerce.number().optional(),
     maxPrice: z.coerce.number().optional(),
-
     mapReferenceId: z.string().optional(),
     mapReferenceAddress: z.string().optional(),
     addressLine1: z.string().min(1),
@@ -48,9 +44,11 @@ const projectSchema = z.object({
     state: z.string().min(1),
     zipCode: z.string().optional(),
     country: z.string().default('India'),
-
     latitude: z.coerce.number().optional(),
     longitude: z.coerce.number().optional()
+
+    // projectConfiguration = [],
+    // projectFeatures = []
 });
 
 export default function CreateProject({ onSubmit }) {
@@ -69,6 +67,55 @@ export default function CreateProject({ onSubmit }) {
         }
     });
 
+    async function onSubmit(data) {
+        try {
+console.log(data)
+            const projectRes = await apiClient("http://localhost:8080/saveProject", {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: data.name,
+                    description: data.description,
+                    status: data.status,
+                    expectedCompletionDate: data.expectedCompletionDate,
+                    totalLandArea: data.totalLandArea,
+                    landAreaUnit: data.landAreaUnit,
+                    projectUnitDetail: data.projectUnitDetail,
+                    projectAdditionalDetail: data.projectAdditionalDetail,
+                    numberOfTowers: data.numberOfTowers,
+                    reraRegistrationNumber: data.reraRegistrationNumber,
+                    developerId: data.developerId,
+                    isVerified: data.isVerified,
+                    minPrice: data.minPrice,
+                    maxPrice: data.maxPrice,
+                    mapReferenceId: data.mapReferenceId,
+                    mapReferenceAddress: data.mapReferenceAddress,
+                    addressLine1: data.addressLine1,
+                    addressLine2: data.addressLine2,
+                    locality: data.locality,
+                    city: data.city,
+                    state: data.state,
+                    zipCode: data.zipCode,
+                    country: data.country,
+                    latitude: data.latitude,
+                    longitude: data.longitude
+                })
+
+            }, window.location.pathname);
+
+
+            if (projectRes.ok) {
+                const devData = await projectRes.json();
+                console.log(devData);
+            }
+        } catch (err) {
+            console.error("User tracking error", err);
+        }
+    }
+
 
     const [developers, setDevelopers] = useState([]);
     const [developerSearchQuery, setDeveloperSearchQuery] = useState("");
@@ -83,7 +130,7 @@ export default function CreateProject({ onSubmit }) {
                         datasource: "Developer",
                         attributes: [ ],
                         where: {
-                            developer_name: {
+                            name: {
                                 $like: `%${developerSearchQuery}%`,
                             },
                         },
@@ -317,7 +364,9 @@ export default function CreateProject({ onSubmit }) {
                                                     <CommandItem
                                                         key={dev.id}
                                                         value={dev.name}
-                                                        onSelect={() => field.onChange(dev.id)}
+                                                        onSelect={() => {
+                                                            field.onChange(dev.id === field.value ? "" : dev.id);
+                                                        }}
                                                     >
                                                         {dev.name}
                                                         <Check
