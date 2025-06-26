@@ -7,8 +7,6 @@ import {useUser} from "@/lib/useUser";
 import {apiClient} from "@/lib/apiClient.mjs";
 import ListingCard from "@/app/_components/PropertyListingCard";
 import Image from "next/image";
-import {Button} from "@/components/ui/button";
-import Link from "next/link";
 
 
 export default function PropertyListingForm() {
@@ -80,12 +78,6 @@ export default function PropertyListingForm() {
 
 
             </Card>
-
-            <div className="flex flex-wrap gap-4 my-4">
-                <Link  className="flex-1 cursor-pointer" href={'/manage-listing/create-property'} target='_blank'><Button className="w-full cursor-pointer" variant="secondary">Create Listing</Button></Link>
-                <Link  className="flex-1 cursor-pointer" href={'/manage-listing/create-project'} target='_blank'><Button className="w-full cursor-pointer" variant="secondary">Create Project</Button></Link>
-                <Link  className="flex-1 cursor-pointer" href={'/manage-listing/create-developer'} target='_blank'><Button className="w-full cursor-pointer" variant="secondary">Create Developer</Button></Link>
-            </div>
 
                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-6 gap-4">
                     {listingData?.map(a => (<ListingCard listing={a}/>))}

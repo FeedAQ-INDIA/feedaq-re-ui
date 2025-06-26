@@ -94,7 +94,7 @@ export default function AgentSearchPage({reference, initialPage, lim}) {
                             alt="Picture of the author"
                             width={200}
                             height={240}
-                            className="w-full h-[310px] rounded-md"
+                            className="w-full h-[265px]  rounded-md"
                         />
                     </div>
                 </div>

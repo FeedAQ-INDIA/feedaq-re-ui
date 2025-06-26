@@ -116,7 +116,9 @@ export default function CreatePropertyBuy() {
                         state: data.state,
                         country: data.country,
                         latitude: data.latitude,
-                        longitude: data.longitude
+                        longitude: data.longitude,
+                        mapReferenceId: mapReference,
+                        mapReferenceAddress: selectedAddress,
                     }
                 )
             }, window.location.pathname);

@@ -7,8 +7,7 @@ import {useUser} from "@/lib/useUser";
 import {apiClient} from "@/lib/apiClient.mjs";
 import ListingCard from "@/app/_components/PropertyListingCard";
 import Image from "next/image";
-import {Button} from "@/components/ui/button";
-import Link from "next/link";
+import PropertyListingCard from "@/app/_components/PropertyListingCard";
 
 
 export default function PropertyListingForm() {
@@ -38,21 +37,17 @@ export default function PropertyListingForm() {
     const findListedprop = async () => {
         apiClient(`http://localhost:8080/search-v2`, {
             method: "POST", credentials: true, body: JSON.stringify({
-                limit: limit, offset: offset, getThisData:     {
-                    datasource: "Property",
-                    as: "property",
-                    required: false,
-                    where: {userId: user?.data?.userId},
-                    include: [
-                        {datasource: "PropertyFeature", as: "features", required: false},
-                        {
-                            datasource: "Project", as: "project", required: false,
-                            include: [{datasource: "Developer", as: "developer", required: false}]
-                        },
-                        {datasource: "PropertyAttachment", as: "attachment", required: false},
-                        {datasource: "UserFav", as: "fav", required: false}]
-
-                },
+                limit: limit, offset: offset, getThisData:
+        {
+            datasource: "Project",
+                attributes: [],
+            where: {userId: user?.data?.userId},
+            include: [
+                {datasource: "ProjectFeature", as: "features", required: false},
+                {datasource: "ProjectConfiguration", as: "configurations", required: false},
+                {datasource: "ProjectAttachment", as: "attachment", required: false},
+            ]
+        }
             }),
         }, window.location.pathname)
             .then(res => res.json())               // ✅ Parse the response and return the Promise
@@ -74,21 +69,15 @@ export default function PropertyListingForm() {
             <Card className="border-0 bg-muted/50  bg-rose-600 text-white ">
                 <CardHeader>
                     <CardTitle className="text-lg sm:text-xl font-bold  tracking-wider">
-                        MANAGE LISTING
+                        MANAGE PROJECT LISTING
                     </CardTitle>
                 </CardHeader>
 
 
             </Card>
 
-            <div className="flex flex-wrap gap-4 my-4">
-                <Link  className="flex-1 cursor-pointer" href={'/manage-listing/create-property'} target='_blank'><Button className="w-full cursor-pointer" variant="secondary">Create Listing</Button></Link>
-                <Link  className="flex-1 cursor-pointer" href={'/manage-listing/create-project'} target='_blank'><Button className="w-full cursor-pointer" variant="secondary">Create Project</Button></Link>
-                <Link  className="flex-1 cursor-pointer" href={'/manage-listing/create-developer'} target='_blank'><Button className="w-full cursor-pointer" variant="secondary">Create Developer</Button></Link>
-            </div>
-
                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-6 gap-4">
-                    {listingData?.map(a => (<ListingCard listing={a}/>))}
+                    {listingData?.map(a => (<PropertyListingCard listing={a}/>))}
                     {/*<div className="col-span-1">*/}
                     {/*    <Image*/}
                     {/*        src={'https://cdn.vectorstock.com/i/1000v/40/01/vertical-banner-04-vector-29244001.jpg'}*/}

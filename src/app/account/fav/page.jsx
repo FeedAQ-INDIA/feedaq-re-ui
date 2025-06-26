@@ -4,7 +4,7 @@ import {apiClient} from "@/lib/apiClient.mjs";
 import {useUser} from "@/lib/useUser";
 import ListingCard from "@/app/_components/PropertyListingCard";
 import Image from "next/image";
-import {Card, CardHeader} from "@/components/ui/card";
+import {Card, CardHeader, CardTitle} from "@/components/ui/card";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar";
 
 export default function Search() {
@@ -69,17 +69,14 @@ export default function Search() {
 
         <div className="p-2 md:p-6">
 
-            <Card className="border-0 bg-rose-500">
+            <Card className="border-0 bg-muted/50  bg-rose-600 text-white ">
                 <CardHeader>
-                    <div className="flex flex-sm justify-items-center gap-4 items-center">
-
-                        <div className="text-white">
-                            <h1 className="text-xl font-medium tracking-wide">My Favourites</h1>
-                        </div>
-                    </div>
-
-
+                    <CardTitle className="text-lg sm:text-xl font-bold  tracking-wider">
+                        MY FAVOURITES
+                    </CardTitle>
                 </CardHeader>
+
+
             </Card>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-6 gap-4">

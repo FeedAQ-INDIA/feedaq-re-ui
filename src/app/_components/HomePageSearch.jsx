@@ -11,11 +11,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-function HomePageSearch({ type }) {
+ import useLocationStore from "@/lib/locationStore";
+function HomePageSearch({ type, agentListLoad }) {
   const [selectedAddress, setSelectedAddress] = useState("");
   const [coordinates, setCoordinates] = useState({});
   const [isValid, setIsValid] = useState(false);
   const [mapReference, setMapReference] = useState(null);
+  const {
+    latitude,
+    longitude,
+     loading,
+    fetchLocation,
+  } = useLocationStore();
 
   useEffect(() => {
     console.log("Selected Address : ", selectedAddress);
@@ -25,7 +32,11 @@ function HomePageSearch({ type }) {
     } else {
       setIsValid(false);
     }
-  });
+    sessionStorage.setItem('mapReference', mapReference);
+    sessionStorage.setItem('latitude', coordinates?.lat);
+    sessionStorage.setItem('longitude', coordinates?.lng);
+    fetchLocation()
+   }, [selectedAddress]);
 
   return (
     <div className="">

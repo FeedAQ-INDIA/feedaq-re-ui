@@ -8,8 +8,14 @@ import Link from "next/link";
 import React from "react";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
+import {apiClient} from "@/lib/apiClient.mjs";
+import AgentListingCard from "@/app/_components/AgentListingCard";
+import HomeAgentView from "@/app/_components/HomeAgentView";
+import HomeProjectView from "@/app/_components/HomeProjectView";
 
 export default function Home() {
+
+
   return (
       <div className="p-4">
         <section className="mb-4">
@@ -54,9 +60,10 @@ export default function Home() {
                 <p className="mt-2">
                   Find your dream home with ease — verified listings, smart filters, and trusted agents. Your next address is here.
                 </p>
-                <Button variant="outline" className="mt-4">
+                <Link href={'/manage-listing'}> <Button variant="outline" className="mt-4 cursor-pointer">
                   Browse
                 </Button>
+                </Link>
               </CardContent>
             </Card>
 
@@ -74,10 +81,10 @@ export default function Home() {
                 <p className="mt-2">
                   From budget flats to luxury rentals — browse verified homes, connect instantly, and move in without hassle or hidden fees.
                 </p>
-                <Button variant="outline" className="mt-4">
+                <Link href={'/manage-listing'}> <Button variant="outline" className="mt-4 cursor-pointer">
                   Find Rentals
-                </Button>
-              </CardContent>
+                </Button></Link>
+            </CardContent>
             </Card>
 
             <Card className="rounded-sm">
@@ -93,9 +100,9 @@ export default function Home() {
                 <h1 className="text-2xl font-bold">Sell a property</h1>
                 <p className="mt-2">
                   List your property fast, reach genuine buyers, and close deals smarter. Sell confidently with our trusted real estate platform.                </p>
-                <Button variant="outline" className="mt-4">
-                  Start selling
-                </Button>
+                <Link href={'/manage-listing'}><Button variant="outline" className="mt-4 cursor-pointer">
+                  Post Ad
+                </Button></Link>
               </CardContent>
             </Card>
 
@@ -122,30 +129,62 @@ export default function Home() {
         </section>
 
 
-        {/*<section className="my-12">*/}
-        {/*     <Card className="rounded-sm bg-black text-white ">*/}
-        {/*      <CardHeader className="grid grid-cols-1 md:grid-cols-2 gap-8">*/}
-        {/*        <div className=" ">*/}
-        {/*          <ImageCarousel*/}
-        {/*              imageList={[*/}
-        {/*                "https://www.adanirealty.com/-/media/Project/Realty/Home/Social-Clubs/Club-house-Shantigram-(1).jpg",*/}
-        {/*                "https://www.adanirealty.com/-/media/Project/Realty/Residential/Pune/Atelier-Greens/Carousel-Images/Thumbnail-image/1.jpg",*/}
-        {/*                "https://www.adanirealty.com/-/media/Project/Realty/Commercial/Gurugram/Downtown-Avenue/Outdoor/1920x1080/For-Desktop-1920-X1080-2.jpg",*/}
-        {/*                "https://www.adanirealty.com/-/media/Project/Realty/Commercial/Gurugram/Downtown-Avenue/Project-Status/1920x1080/Downtown-Airel-View-1.jpg",*/}
-        {/*                "https://www.adanirealty.com/-/media/Project/Realty/Commercial/Gurugram/Downtown-Avenue/Outdoor/1920x1080/For-Desktop-1920-X1080-4.jpg",*/}
-        {/*              ]}*/}
+        <section className="my-12">
 
-        {/*              customClass={'rounded-md h-80 w-full '}*/}
-        {/*              width={100}*/}
-        {/*              height={150}*/}
-        {/*          />*/}
-        {/*        </div>*/}
-        {/*        <div>*/}
-        {/*          <h4 className="font-bold tracking-wider text-2xl">Exciting Projects</h4>*/}
-        {/*        </div>*/}
-        {/*      </CardHeader>*/}
-        {/*    </Card>*/}
-        {/* </section>*/}
+          {/*<Card className="rounded-sm bg-black text-white ">*/}
+          {/*    <CardHeader className="grid grid-cols-1 md:grid-cols-2 gap-8">*/}
+          {/*      <div className=" ">*/}
+          {/*        <ImageCarousel*/}
+          {/*            imageList={[*/}
+          {/*              "https://www.adanirealty.com/-/media/Project/Realty/Home/Social-Clubs/Club-house-Shantigram-(1).jpg",*/}
+          {/*              "https://www.adanirealty.com/-/media/Project/Realty/Residential/Pune/Atelier-Greens/Carousel-Images/Thumbnail-image/1.jpg",*/}
+          {/*              "https://www.adanirealty.com/-/media/Project/Realty/Commercial/Gurugram/Downtown-Avenue/Outdoor/1920x1080/For-Desktop-1920-X1080-2.jpg",*/}
+          {/*              "https://www.adanirealty.com/-/media/Project/Realty/Commercial/Gurugram/Downtown-Avenue/Project-Status/1920x1080/Downtown-Airel-View-1.jpg",*/}
+          {/*              "https://www.adanirealty.com/-/media/Project/Realty/Commercial/Gurugram/Downtown-Avenue/Outdoor/1920x1080/For-Desktop-1920-X1080-4.jpg",*/}
+          {/*            ]}*/}
+          {/*            customClass={'rounded-md h-80 w-full '}*/}
+          {/*            width={100}*/}
+          {/*            height={150}*/}
+          {/*        />*/}
+          {/*      </div>*/}
+          {/*      <div>*/}
+          {/*        <h4 className="font-bold tracking-wider text-2xl">Find Real Estate Consultants</h4>*/}
+          {/*      </div>*/}
+          {/*    </CardHeader>*/}
+          {/*  </Card>*/}
+         </section>
+
+        <section className="my-12">
+
+
+          <Card className="rounded-sm bg-black text-white ">
+              <CardHeader  >
+       
+                <div className="">
+                  <h4 className="font-bold tracking-wider text-2xl">Find Real Estate Consultants</h4>
+                </div>
+                <HomeAgentView/>
+
+              </CardHeader>
+            </Card>
+        </section>
+
+
+
+        <section className="my-12">
+
+
+          <Card className="rounded-sm bg-black text-white ">
+            <CardHeader  >
+
+              <div className="">
+                <h4 className="font-bold tracking-wider text-2xl">Attractive Projects in the Town</h4>
+              </div>
+              <HomeProjectView/>
+
+            </CardHeader>
+          </Card>
+        </section>
 
       </div>
   );

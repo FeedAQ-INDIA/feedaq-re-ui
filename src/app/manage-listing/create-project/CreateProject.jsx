@@ -35,9 +35,7 @@ const projectSchema = z.object({
     isVerified: z.boolean().default(false),
     minPrice: z.coerce.number().optional(),
     maxPrice: z.coerce.number().optional(),
-    mapReferenceId: z.string().optional(),
-    mapReferenceAddress: z.string().optional(),
-    addressLine1: z.string().min(1),
+     addressLine1: z.string().min(1),
     addressLine2: z.string().optional(),
     locality: z.string().min(1),
     city: z.string().min(1),
@@ -91,8 +89,6 @@ console.log(data)
                     isVerified: data.isVerified,
                     minPrice: data.minPrice,
                     maxPrice: data.maxPrice,
-                    mapReferenceId: data.mapReferenceId,
-                    mapReferenceAddress: data.mapReferenceAddress,
                     addressLine1: data.addressLine1,
                     addressLine2: data.addressLine2,
                     locality: data.locality,
@@ -101,7 +97,9 @@ console.log(data)
                     zipCode: data.zipCode,
                     country: data.country,
                     latitude: data.latitude,
-                    longitude: data.longitude
+                    longitude: data.longitude,
+                    mapReferenceId: mapReference,
+                    mapReferenceAddress: selectedAddress,
                 })
 
             }, window.location.pathname);
