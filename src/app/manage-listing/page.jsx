@@ -85,6 +85,7 @@ export default function PropertyListingForm() {
                 <Link  className="flex-1 cursor-pointer" href={'/manage-listing/create-property'} target='_blank'><Button className="w-full cursor-pointer" variant="secondary">Create Listing</Button></Link>
                 <Link  className="flex-1 cursor-pointer" href={'/manage-listing/create-project'} target='_blank'><Button className="w-full cursor-pointer" variant="secondary">Create Project</Button></Link>
                 <Link  className="flex-1 cursor-pointer" href={'/manage-listing/create-developer'} target='_blank'><Button className="w-full cursor-pointer" variant="secondary">Create Developer</Button></Link>
+                <Link  className="flex-1 cursor-pointer" href={'/manage-listing/create-pg-colive'} target='_blank'><Button className="w-full cursor-pointer" variant="secondary">Create PG / Colive</Button></Link>
             </div>
 
                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-6 gap-4">

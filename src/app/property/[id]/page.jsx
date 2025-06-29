@@ -102,7 +102,7 @@ async function PGColiveDetail({params}) {
 
                 </div>
                 <div className="mt-6 mb-2 flex flex-wrap gap-2 items-center">
-                    {/*<p className="text-xs text-muted-foreground">Listing Id : {listing?.id}</p>*/}
+                    {/*<p className="text-xs text-muted-foreground">PGListingCard Id : {listing?.id}</p>*/}
                     {/*<div className=" sm:ml-auto">*/}
                         {listing?.isVerified ?
                             <Badge

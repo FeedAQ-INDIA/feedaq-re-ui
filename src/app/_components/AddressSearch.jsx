@@ -97,13 +97,13 @@ function AddressSearch({ setSelectedAddress, setCoordinates , customTriggerWidth
         type={"button"}
       role="combobox"
       aria-expanded={open}
-      className={`"  justify-between gap-4 ${customTriggerWidth}"`}
+      className={`"  justify-between   gap-4 ${customTriggerWidth}"`}
       size="lg"
       {...(customTriggerProps)}
     >
       <LocateFixed className="shrink-0" />
       <span className="truncate">
-        {address  ? address : "Select Search Location"}
+        {address  ? address : "Search Location"}
       </span>
       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
     </Button>

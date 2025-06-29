@@ -47,6 +47,7 @@ const publicPatterns = [
     /^\/search(\/.*)?$/,    // "/search" and subpaths
     /^\/agent(\/.*)?$/,    // "/search" and subpaths
     /^\/project(\/.*)?$/,    // "/search" and subpaths
+    /^\/pg-colive(\/.*)?$/,    // "/search" and subpaths
 ];
 
 // Check if a path is public

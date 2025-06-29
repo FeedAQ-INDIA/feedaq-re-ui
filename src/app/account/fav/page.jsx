@@ -37,15 +37,15 @@ export default function Search() {
                         datasource: "Property",
                         as: "property",
                         required: false,
-                        include: [{datasource: "PropertyFeature", as: "features", required: false}, {
-                            datasource: "Location", as: "locatedIn", required: true
-                        }, {
-                            datasource: "Project",
-                            as: "project",
-                            required: false,
-                            include: [{datasource: "Developer", as: "developer", required: false},]
-                        }, {datasource: "PropertyImage", as: "images", required: false},
-                            {datasource: "UserFav", as: "fav", required: false}]
+                        include: [
+                            {datasource: "PropertyFeature", as: "features", required: false},
+                            {
+                                datasource: "Project", as: "project", required: false,
+                                include: [{datasource: "Developer", as: "developer", required: false}]
+                            },
+                            {datasource: "PropertyAttachment", as: "attachment", required: false},
+                            {datasource: "UserFav", as: "fav", required: false}
+                        ]
 
                     },],
                 },
