@@ -116,13 +116,13 @@ export default function Home() {
                 />
               </CardHeader>
               <CardContent className="text-center tracking-wide">
-                <h1 className="text-2xl font-bold">Find PG & Coliving</h1>
+                <h1 className="text-2xl font-bold">PG & Coliving</h1>
                 <p className="mt-2">
                   Flexible PGs and stylish coliving spaces for students and professionals — fully furnished, affordable, and ready to move in.
                 </p>
-                <Button variant="outline" className="mt-4" disabled>
-                  Coming Soon...
-                </Button>
+                <Link href={'/pg-colive'}><Button variant="outline" className="mt-4 cursor-pointer">
+                  Find PG/Colive
+                </Button></Link>
               </CardContent>
             </Card>
           </div>

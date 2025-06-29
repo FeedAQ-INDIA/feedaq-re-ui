@@ -50,8 +50,9 @@ async function PGColiveDetail({params}) {
 
 
   function formatIndianCurrency(value) {
-
-    if(!value) return;
+    if(!value){
+      return;
+    }
     const absValue = Math.abs(value);
 
     if (absValue >= 1e12) {
@@ -65,6 +66,15 @@ async function PGColiveDetail({params}) {
     }
   }
 
+  function getPriceRange(rooms ) {
+    if (!rooms.length) return "₹0";
+
+    const prices = rooms.map(room => room.price);
+    const min = Math.min(...prices);
+    const max = Math.max(...prices);
+
+    return min === max ? formatIndianCurrency(min) : `${formatIndianCurrency(min)} - ${formatIndianCurrency(max)}`;
+  }
 
 
   return (
@@ -112,14 +122,15 @@ async function PGColiveDetail({params}) {
             {/*</div>*/}
           </div>
           <div className="mb-6 flex gap-2 flex-col">
-            <div className="tracking-wider">
-              <h2 className="font-semibold text-xl ">{listing?.name} </h2>
-              <p className="font-bold text-lg mt-1">{formatIndianCurrency(listing?.price)}
+            <div className="tracking-wide">
+              <h2 className="font-semibold text-xl ">{listing?.title} </h2>
+              <h2 className="font-medium text-md text-muted-foreground ">{listing?.pgName} - {listing?.locality} </h2>
+              <p className="font-bold text-lg mt-1">{getPriceRange(listing?.pgroomdetail)}
 
               </p>
               <p className=" mt-1 text-sm text-muted-foreground">
 
-                {listing?.locality}
+
               </p>
             </div>
 
