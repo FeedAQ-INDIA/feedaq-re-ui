@@ -37,6 +37,7 @@ function PGListingCard({ listing, active }) {
     if(!value){
       return;
     }
+    value = parseFloat(value)
     const absValue = Math.abs(value);
 
     if (absValue >= 1e12) {
@@ -95,7 +96,7 @@ function PGListingCard({ listing, active }) {
                   <Link href={`/pg-colive/${listing?.id}`}>
                     <h2 className="font-semibold text-md line-clamp-1">{listing?.title}</h2>
                     <h2 className="font-normal text-sm line-clamp-1">{listing?.pgName}</h2>
-                     <h2 className="font-bold text-xs line-clamp-1 ">{getPriceRange(listing?.pgroomdetail)}  </h2>
+                     <h2 className="font-bold text-xs line-clamp-1 ">{getPriceRange(listing?.pgroomdetail)} / month  </h2>
                     <p
                       className=" mt-1 text-xs text-muted-foreground line-clamp-1">  {listing?.locality}</p>
                   </Link>
@@ -122,7 +123,9 @@ function PGListingCard({ listing, active }) {
                     {/* Title and Basic Info */}
                     <h2 className="font-semibold text-md">{listing?.title}</h2>
                     <h2 className="font-normal text-sm">{listing?.pgName}</h2>
-                    <h2 className="font-bold text-xs">{getPriceRange(listing?.pgroomdetail)}</h2>
+                    <h2 className="font-bold text-xs">{getPriceRange(listing?.pgroomdetail)} / month</h2>
+                    {/* Description */}
+                    <p className="text-sm my-2">{listing?.description}</p>
 
                     {/* Gender, Suited For */}
                     <p className="text-xs text-muted-foreground"><span className="font-medium">Gender</span> – {listing?.gender}</p>
@@ -140,8 +143,6 @@ function PGListingCard({ listing, active }) {
                       ].filter(Boolean).join('\n')}
                     </p>
 
-                    {/* Description */}
-                    <p className="text-sm mt-1">{listing?.description}</p>
 
                     {/* Operating Since */}
                     {listing?.operatingSince && (
@@ -154,14 +155,6 @@ function PGListingCard({ listing, active }) {
                     <p className="text-xs text-muted-foreground">
                       <span className="font-medium"> Meals Available</span> – {listing?.isMealAvailable ? 'Yes' : 'No'}
                     </p>
-
-
-                    {/* Map Address (if needed) */}
-                    {listing?.mapReferenceAddress && (
-                        <p className="text-xs text-muted-foreground whitespace-normal">
-                          <span className="font-medium">Map Address:</span> {listing.mapReferenceAddress}
-                        </p>
-                    )}
 
 
                     {/* --- Room Details --- */}
@@ -177,7 +170,7 @@ function PGListingCard({ listing, active }) {
                                     {room.roomType}
                                   </Badge>
                                   <Badge variant="outline" className="rounded-sm bg-emerald-600 text-white">
-                                    ₹{room.price.toLocaleString()}
+                                    ₹{room.price.toLocaleString()} / month
                                   </Badge>
                                   <Badge variant="outline" className="rounded-sm bg-pink-600 text-white">
                                     {room.area} {room.areaUnit}
@@ -191,6 +184,11 @@ function PGListingCard({ listing, active }) {
                                   <Badge variant="outline" className="rounded-sm bg-purple-600 text-white">
                                     {room.furnishingStatus.charAt(0).toUpperCase() + room.furnishingStatus.slice(1).replace('_', ' ')}
                                   </Badge>
+                                  {room?.additionalPrice?.map(a => (
+                                      <Badge variant="outline" className="rounded-sm bg-purple-600 text-white">
+                                        {a.priceType} - {formatIndianCurrency(a.priceDetail)}
+                                      </Badge>
+                                  ))}
                                 </div>
                               </div>
                           ))}

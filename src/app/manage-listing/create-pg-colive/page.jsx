@@ -16,6 +16,7 @@ import {useUser} from "@/lib/useUser";
 import {Card, CardHeader, CardTitle} from "@/components/ui/card";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {apiClient} from "@/lib/apiClient.mjs";
+import MultiImageUpload from "@/app/manage-listing/create-pg-colive/_components/MultiImageUpload";
 
 function AddNewListing() {
     const [selectedAddress, setSelectedAddress] = useState("");
@@ -119,10 +120,12 @@ function AddNewListing() {
 
 
                 }, window.location.pathname);
-
                 if (pgRoomRes.ok) {
                     console.log(await pgRoomRes.json())
                 }
+
+
+                await handleUpload();
             }
         } catch (err) {
             console.error("User tracking error", err);
@@ -137,9 +140,6 @@ function AddNewListing() {
         pgForm.setValue('roomTypeList', roomList)
     };
 
-    useEffect(() => {
-        console.log(roomTypeList);
-    }, [roomTypeList]);
 
     const removeRoomTypeFromList = (index) => {
         const newList = [...roomTypeList];
@@ -148,7 +148,53 @@ function AddNewListing() {
         pgForm.setValue('roomTypeList', newList)
     };
 
+    const [previews, setPreviews] = useState([]) // [{ file, url, caption, isPrimary, order }]
+    const [uploading, setUploading] = useState(false)
+    const [message, setMessage] = useState('')
+    const handleUpload = async () => {
+        if (previews.length === 0) {
+            setMessage('Please select images before uploading.')
+            return
+        }
 
+        setUploading(true)
+        setMessage('Uploading...')
+
+        const formData = new FormData()
+        previews.forEach((item, index) => {
+            formData.append('files', item.file)
+            formData.append(`meta[${index}][caption]`, item.caption)
+            formData.append(`meta[${index}][isPrimary]`, String(item.isPrimary))
+            formData.append(`meta[${index}][order]`, String(item.order))
+        })
+
+        try {
+            const res = await fetch('/api/upload/pg-colive', {
+                method: 'POST',
+                body: formData,
+            })
+
+            const data = await res.json()
+            console.log(data?.data)
+            if (res.ok) {
+                setMessage('Images uploaded successfully!')
+                setPreviews([]) // Clear preview after upload
+            } else {
+                setMessage(data.error || 'Upload failed.')
+            }
+            return data?.data;
+        } catch (err) {
+            console.error('Upload error:', err)
+            setMessage('Something went wrong during the upload.')
+            throw err;
+        } finally {
+            setUploading(false);
+        }
+    }
+
+    useEffect(() => {
+        console.log(previews);
+    }, [previews]);
     return (<div className="p-4">
         <Card className="border-0 bg-muted/50  bg-rose-600 text-white ">
             <CardHeader>
@@ -474,23 +520,6 @@ function AddNewListing() {
                     </div>
 
 
-                    <span className="relative flex justify-center my-8">
-          <div
-              className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-transparent bg-gradient-to-r from-transparent via-gray-500 to-transparent opacity-75"></div>
-
-          <span className="relative z-10 bg-white px-6">Gallery details</span>
-        </span>
-
-                    <div className="  ">
-                        <Input
-                            id="picture"
-                            type="file"
-                            multiple
-                            onChange={(e) => setFile(e.target.files)}
-                        />
-
-                    </div>
-
 
                     <span className="relative flex justify-center my-8">
           <div
@@ -605,6 +634,37 @@ function AddNewListing() {
                         />
 
                     </div>
+
+
+
+                    <span className="relative flex justify-center my-8">
+          <div
+              className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-transparent bg-gradient-to-r from-transparent via-gray-500 to-transparent opacity-75"></div>
+
+          <span className="relative z-10 bg-white px-6">Gallery details</span>
+        </span>
+
+                    <div className="  ">
+                        <Input
+                            id="picture"
+                            type="file"
+                            multiple
+                            onChange={(e) => setFile(e.target.files)}
+                        />
+                        <MultiImageUpload previews={previews} setPreviews={setPreviews} setMessage={setMessage} message={message}/>
+                        {message && (
+                            <div
+                                className={`mt-4 p-3 rounded-lg text-center ${
+                                    message.includes('success')
+                                        ? 'bg-green-100 text-green-800'
+                                        : 'bg-red-100 text-red-800'
+                                }`}
+                            >
+                                {message}
+                            </div>
+                        )}
+                    </div>
+
 
                     <div className="flex gap-4">
                         <Button type="submit">Save</Button>

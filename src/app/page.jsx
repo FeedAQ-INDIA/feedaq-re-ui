@@ -12,6 +12,8 @@ import {apiClient} from "@/lib/apiClient.mjs";
 import AgentListingCard from "@/app/_components/AgentListingCard";
 import HomeAgentView from "@/app/_components/HomeAgentView";
 import HomeProjectView from "@/app/_components/HomeProjectView";
+import TransformationText from "@/app/_components/TransformationText";
+import HomePGView from "@/app/_components/HomePGView";
 
 export default function Home() {
 
@@ -38,14 +40,18 @@ export default function Home() {
                 <div className="mt-8 items-left">
                   <HomePageSearch className="w-screen" />
                 </div>
+
               </div>
+
             </div>
           </div>
         </section>
 
 
+
+
         <section className="my-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-6">
             <Card className="rounded-sm">
               <CardHeader className="pb-1">
                 <Image
@@ -56,10 +62,10 @@ export default function Home() {
                 />
               </CardHeader>
               <CardContent className="text-center tracking-wide">
-                <h1 className="text-2xl font-bold">Buy a property</h1>
-                <p className="mt-2">
-                  Find your dream home with ease — verified listings, smart filters, and trusted agents. Your next address is here.
-                </p>
+                <h1 className="text-2xl font-bold">Buy a Property</h1>
+                {/*<p className="mt-2">*/}
+                {/*  Find your dream home with ease — verified listings, smart filters, and trusted agents. Your next address is here.*/}
+                {/*</p>*/}
                 <Link href={'/manage-listing'}> <Button variant="outline" className="mt-4 cursor-pointer">
                   Browse
                 </Button>
@@ -77,13 +83,15 @@ export default function Home() {
                 />
               </CardHeader>
               <CardContent className="text-center tracking-wide">
-                <h1 className="text-2xl font-bold">Rent a property</h1>
-                <p className="mt-2">
-                  From budget flats to luxury rentals — browse verified homes, connect instantly, and move in without hassle or hidden fees.
-                </p>
-                <Link href={'/manage-listing'}> <Button variant="outline" className="mt-4 cursor-pointer">
-                  Find Rentals
-                </Button></Link>
+                <h1 className="text-2xl font-bold">Rent a Property</h1>
+                {/*<p className="mt-2">*/}
+                {/*  From budget flats to luxury rentals — browse verified homes, connect instantly, and move in without hassle or hidden fees.*/}
+                {/*</p>*/}
+                {/*<Link href={'/manage-listing'}> */}
+                  <Button variant="outline" className="mt-4 cursor-pointer" disabled>
+                    Coming Soon...
+                  </Button>
+                {/*</Link>*/}
             </CardContent>
             </Card>
 
@@ -97,9 +105,9 @@ export default function Home() {
                 />
               </CardHeader>
               <CardContent className="text-center tracking-wide">
-                <h1 className="text-2xl font-bold">Sell a property</h1>
-                <p className="mt-2">
-                  List your property fast, reach genuine buyers, and close deals smarter. Sell confidently with our trusted real estate platform.                </p>
+                <h1 className="text-2xl font-bold">List a Property</h1>
+                {/*<p className="mt-2">*/}
+                {/*  List your property fast, reach genuine buyers, and close deals smarter. Sell confidently with our trusted real estate platform.                </p>*/}
                 <Link href={'/manage-listing'}><Button variant="outline" className="mt-4 cursor-pointer">
                   Post Ad
                 </Button></Link>
@@ -117,11 +125,33 @@ export default function Home() {
               </CardHeader>
               <CardContent className="text-center tracking-wide">
                 <h1 className="text-2xl font-bold">PG & Coliving</h1>
-                <p className="mt-2">
-                  Flexible PGs and stylish coliving spaces for students and professionals — fully furnished, affordable, and ready to move in.
-                </p>
+                {/*<p className="mt-2">*/}
+                {/*  Flexible PGs and stylish coliving spaces for students and professionals — fully furnished, affordable, and ready to move in.*/}
+                {/*</p>*/}
                 <Link href={'/pg-colive'}><Button variant="outline" className="mt-4 cursor-pointer">
                   Find PG/Colive
+                </Button></Link>
+              </CardContent>
+            </Card>
+
+
+            <Card className="rounded-sm">
+              <CardHeader className="pb-1">
+                <Image
+                    src="https://www.zillowstatic.com/bedrock/app/uploads/sites/5/2024/04/homepage-spot-agent-lg-1.webp"
+                    className="rounded-md h-[140px] md:h-[150px] mx-auto"
+                    width={140}
+                    height={100}
+                />
+              </CardHeader>
+              <CardContent className="text-center tracking-wide">
+                <h1 className="text-2xl font-bold">Find Consultant</h1>
+                {/*<p className="mt-2">*/}
+                {/*  Flexible PGs and stylish coliving spaces for students and professionals — fully furnished, affordable, and ready to move in.*/}
+                {/*</p>*/}
+                <Link href={'/agent'}>
+                  <Button variant="outline" className="mt-4 cursor-pointer">
+                  Browse
                 </Button></Link>
               </CardContent>
             </Card>
@@ -129,49 +159,107 @@ export default function Home() {
         </section>
 
 
-        <section className="my-12">
-
-          {/*<Card className="rounded-sm bg-black text-white ">*/}
-          {/*    <CardHeader className="grid grid-cols-1 md:grid-cols-2 gap-8">*/}
-          {/*      <div className=" ">*/}
-          {/*        <ImageCarousel*/}
-          {/*            imageList={[*/}
-          {/*              "https://www.adanirealty.com/-/media/Project/Realty/Home/Social-Clubs/Club-house-Shantigram-(1).jpg",*/}
-          {/*              "https://www.adanirealty.com/-/media/Project/Realty/Residential/Pune/Atelier-Greens/Carousel-Images/Thumbnail-image/1.jpg",*/}
-          {/*              "https://www.adanirealty.com/-/media/Project/Realty/Commercial/Gurugram/Downtown-Avenue/Outdoor/1920x1080/For-Desktop-1920-X1080-2.jpg",*/}
-          {/*              "https://www.adanirealty.com/-/media/Project/Realty/Commercial/Gurugram/Downtown-Avenue/Project-Status/1920x1080/Downtown-Airel-View-1.jpg",*/}
-          {/*              "https://www.adanirealty.com/-/media/Project/Realty/Commercial/Gurugram/Downtown-Avenue/Outdoor/1920x1080/For-Desktop-1920-X1080-4.jpg",*/}
-          {/*            ]}*/}
-          {/*            customClass={'rounded-md h-80 w-full '}*/}
-          {/*            width={100}*/}
-          {/*            height={150}*/}
-          {/*        />*/}
-          {/*      </div>*/}
-          {/*      <div>*/}
-          {/*        <h4 className="font-bold tracking-wider text-2xl">Find Real Estate Consultants</h4>*/}
-          {/*      </div>*/}
-          {/*    </CardHeader>*/}
-          {/*  </Card>*/}
-         </section>
-
-        <section className="my-12">
+        {/*<section className="my-12">*/}
+        {/*  <Card className="rounded-sm bg-black text-white ">*/}
+        {/*        <CardHeader className=" ">*/}
+        {/*    <TransformationText transformations ={[*/}
+        {/*    "BUY A PROPERTY",*/}
+        {/*    "SELL A PROPERTY",*/}
+        {/*    "RENT A PROPERTY",*/}
+        {/*    "SEARCH CONSULATANTS ",*/}
+        {/*    "FIND PG / HOSTELS",*/}
+        {/*    "FIND COLIVING"*/}
+        {/*  ]}/>*/}
+        {/*        </CardHeader>*/}
+        {/*  </Card>*/}
+        {/*</section>*/}
 
 
-          <Card className="rounded-sm bg-black text-white ">
-              <CardHeader  >
-       
-                <div className="">
-                  <h4 className="font-bold tracking-wider text-2xl">Find Real Estate Consultants</h4>
-                </div>
-                <HomeAgentView/>
 
-              </CardHeader>
-            </Card>
+        <section className="my-8 relative">
+          {/* Background Image */}
+          <div
+              className="absolute inset-0 bg-center"
+              style={{
+                backgroundImage:
+                    "url('https://visor.gumlet.io//public/assets/home/desktop/hero-img.png?compress=true&format=auto&quality=75&dpr=auto&h=480&w=522&ar=unset')",
+              }}
+          >
+            {/* Black overlay with gradient */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/80 to-black/70" />
+          </div>
+
+          {/* Content */}
+          <Card className="relative rounded-sm bg-transparent text-white border-none shadow-none">
+            <CardHeader>
+              <div>
+                <h4 className="font-bold tracking-wider text-2xl">
+                  Trending Coliving Stays
+                </h4>
+              </div>
+              <HomePGView />
+            </CardHeader>
+          </Card>
+        </section>
+
+
+        <section className="my-8 relative">
+          {/* Background Image */}
+          <div
+              className="absolute inset-0 bg-center"
+              style={{
+                backgroundImage:
+                    "url('https://visor.gumlet.io//public/assets/images/stay-easy.png?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=auto&ar=unset')",
+              }}
+          >
+            {/* Black overlay with gradient */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/80 to-black/70" />
+          </div>
+
+          {/* Content */}
+          <Card className="relative rounded-sm bg-transparent text-white border-none shadow-none">
+            <CardHeader>
+              <div>
+                <h4 className="font-bold tracking-wider text-2xl">
+                  Trending Women PG & Hostels
+                </h4>
+              </div>
+              <HomePGView />
+            </CardHeader>
+          </Card>
+        </section>
+
+
+        <section className="my-8 relative">
+          {/* Background Image */}
+          <div
+              className="absolute inset-0 bg-center"
+              style={{
+                backgroundImage:
+                    "url('https://visor.gumlet.io//public/assets/images/findEasy.png?compress=true&format=auto&quality=75&dpr=auto&h=auto&w=auto&ar=unset')",
+              }}
+          >
+            {/* Black overlay with gradient */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/80 to-black/70" />
+          </div>
+
+          {/* Content */}
+          <Card className="relative rounded-sm bg-transparent text-white border-none shadow-none">
+            <CardHeader>
+              <div>
+                <h4 className="font-bold tracking-wider text-2xl">
+                  Trending Men PG & Hostels
+                </h4>
+              </div>
+              <HomePGView />
+            </CardHeader>
+          </Card>
         </section>
 
 
 
-        <section className="my-12">
+
+        <section className="my-8">
 
 
           <Card className="rounded-sm bg-black text-white ">
@@ -186,6 +274,25 @@ export default function Home() {
           </Card>
         </section>
 
+        <section className="my-8">
+
+
+          <Card className="rounded-sm bg-black text-white ">
+            <CardHeader  >
+
+              <div className="">
+                <h4 className="font-bold tracking-wider text-2xl">Find Real Estate Consultants</h4>
+              </div>
+              <HomeAgentView/>
+
+            </CardHeader>
+          </Card>
+        </section>
+
+
+
       </div>
   );
 }
+
+

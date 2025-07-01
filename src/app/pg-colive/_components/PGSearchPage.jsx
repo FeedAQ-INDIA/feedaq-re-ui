@@ -92,17 +92,18 @@ export default function PGSearchPage({reference, initialPage, lim}) {
             <div className="px-2 md:px-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-6 gap-4">
                     {listingData?.map((a, index) => (
-                        <PGListingCard key={index} listing={a} />
-                    ))}
-                    <div className="col-span-1">
+                    <>   <PGListingCard key={index} listing={a} />
+                    {index % 4 == 0 && <div className="col-span-1">
                         <Image
-                            src={'https://cdn.vectorstock.com/i/1000v/40/01/vertical-banner-04-vector-29244001.jpg'}
-                            alt="Picture of the author"
-                            width={200}
-                            height={240}
-                            className="w-full h-[310px] rounded-md"
-                        />
-                    </div>
+                        src={'https://cdn.vectorstock.com/i/1000v/40/01/vertical-banner-04-vector-29244001.jpg'}
+                    alt="Picture of the author"
+                    width={200}
+                    height={240}
+                    className="w-full h-[310px] rounded-md"
+                />
+            </div>}
+            </>  ))}
+
                 </div>
 
                 {listingData?.length > 0 && (

@@ -12,11 +12,11 @@ import {apiClient} from "@/lib/apiClient.mjs";
 import AgentListingCard from "@/app/_components/AgentListingCard";
 
 export default function AgentSearchPage({reference, initialPage, lim}) {
-
+console.log(reference)
     const [listingData, setListingData] = useState([]);
     const [selectedAddress, setSelectedAddress] = useState("");
     const [coordinates, setCoordinates] = useState({});
-    const [mapReference, setMapReference] = useState(reference || 5000039876089);
+    const [mapReference, setMapReference] = useState();
     const [limit, setLimit] = useState(lim || 3);
     const [page, setPage] = useState(initialPage || 1);
     const [totalCount, setTotalCount] = useState(0);
@@ -26,7 +26,12 @@ export default function AgentSearchPage({reference, initialPage, lim}) {
     const router = useRouter();
 
     useEffect(() => {
+        console.log(reference)
+        setMapReference(reference || 5000039876089)
+    }, [reference]);
 
+    useEffect(() => {
+        console.log(mapReference);
         fetchAddressByReference();
 
         console.log(selectedAddress)
@@ -87,16 +92,26 @@ export default function AgentSearchPage({reference, initialPage, lim}) {
 
             <div className="px-2 md:px-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-6 gap-4">
-                    {listingData?.map(a => (<AgentListingCard listing={a}/>))}
-                    <div className="col-span-1">
-                        <Image
-                            src={'https://cdn.vectorstock.com/i/1000v/40/01/vertical-banner-04-vector-29244001.jpg'}
-                            alt="Picture of the author"
-                            width={200}
-                            height={240}
-                            className="w-full h-[265px]  rounded-md"
-                        />
-                    </div>
+                    {listingData?.map((a, index) => (<><AgentListingCard listing={a}/>
+                        {index % 4 == 0 && <div className="col-span-1">
+                            <Image
+                                src={'https://cdn.vectorstock.com/i/1000v/40/01/vertical-banner-04-vector-29244001.jpg'}
+                                alt="Picture of the author"
+                                width={200}
+                                height={240}
+                                className="w-full h-[265px]  rounded-md"
+                            />
+                        </div>}
+                    </>))}
+                    {/*<div className="col-span-1">*/}
+                    {/*    <Image*/}
+                    {/*        src={'https://cdn.vectorstock.com/i/1000v/40/01/vertical-banner-04-vector-29244001.jpg'}*/}
+                    {/*        alt="Picture of the author"*/}
+                    {/*        width={200}*/}
+                    {/*        height={240}*/}
+                    {/*        className="w-full h-[265px]  rounded-md"*/}
+                    {/*    />*/}
+                    {/*</div>*/}
                 </div>
 
                 {listingData?.length > 0 && (
