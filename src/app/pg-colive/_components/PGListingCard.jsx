@@ -70,10 +70,11 @@ function PGListingCard({ listing, active }) {
                 <div className="wrapper">
                   <div className="marquee animate-8">
                     <div className="flex overflow-x-auto gap-2">
-                      <Badge variant="outline" className="rounded-sm bg-green-600 text-white flex gap-1">{listing?.gender}</Badge>
+                      <Badge variant="outline" className="rounded-sm bg-green-600 text-white flex gap-1">{listing?.gender?.toUpperCase()}</Badge>
+                      <Badge variant="outline" className="rounded-sm bg-rose-600 text-white flex gap-1">VERIFIED</Badge>
                       {listing?.pgroomdetail?.map((a) => (
                           <Badge variant="outline" className="rounded-sm bg-blue-600 text-white">
-                            {a.roomType}: ₹{a.price}/-
+                            {a.roomType?.toUpperCase()}
                           </Badge>
                       ))}
                     </div>
@@ -95,8 +96,8 @@ function PGListingCard({ listing, active }) {
                 <div className="p-1 tracking-wide">
                   <Link href={`/pg-colive/${listing?.id}`}>
                     <h2 className="font-semibold text-md line-clamp-1">{listing?.title}</h2>
-                    <h2 className="font-normal text-sm line-clamp-1">{listing?.pgName}</h2>
-                     <h2 className="font-bold text-xs line-clamp-1 ">{getPriceRange(listing?.pgroomdetail)} / month  </h2>
+                    <h2 className="font-normal text-xs line-clamp-1  text-muted-foreground">{listing?.pgName}</h2>
+                     <h2 className="font-bold text-xs line-clamp-1 mt-1">{getPriceRange(listing?.pgroomdetail)} / month  </h2>
                     <p
                       className=" mt-1 text-xs text-muted-foreground line-clamp-1">  {listing?.locality}</p>
                   </Link>

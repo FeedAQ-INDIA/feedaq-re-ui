@@ -94,7 +94,7 @@ function AgentListingCard({listing, active}) {
                         </div>
 
                         <div className="p-0 tracking-wide text-center mt-2">
-                            <Link href={`/agent/${listing?.agentId}`}>
+                            <Link href={`/consultant/${listing?.agentId}`}>
 
                                 <div className="wrapper">
                                     <div className="marquee animate-14">
@@ -187,7 +187,7 @@ function AgentListingCard({listing, active}) {
 
 
                 <Link
-                    href={`/agent/${listing.agentId}`}
+                    href={`/consultant/${listing.agentId}`}
                     target="_blank"
                     rel="noopener noreferrer" className="flex-1"
                 >

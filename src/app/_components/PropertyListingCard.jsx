@@ -104,7 +104,7 @@ function Listing({listing, active}) {
 
 
     return (
-        <div className="p-2 border shadow hover:shadow-lg overflow-x-hidden rounded-md bg-white">
+        <div className="p-2 border shadow hover:shadow-lg overflow-x-hidden rounded-md bg-white text-black ">
             <div className="overflow-y-auto">
                 {screenNo ? (
                     <div className="h-fit">

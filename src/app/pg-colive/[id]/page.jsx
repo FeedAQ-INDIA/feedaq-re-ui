@@ -124,10 +124,11 @@ async function PGColiveDetail({params}) {
                         <p className="font-bold text-lg mt-1">{getPriceRange(listing?.pgroomdetail)} / month
 
                         </p>
-                        <p className=" mt-1 text-sm text-muted-foreground">
-
-
+                        <p className="mt-1 text-sm font-semibold text-muted-foreground">
+                            {Array.from(new Set(listing?.pgroomdetail?.map(a => a?.roomType))).filter(Boolean).join(', ')} for {listing?.gender}
                         </p>
+
+
                     </div>
 
                     <div className="flex-wrap flex items-center gap-2 my-2">
@@ -161,26 +162,54 @@ async function PGColiveDetail({params}) {
                     <div className=" lg:col-span-3">
 
                         <div className="my-2">
-                            <h2 className="font-bold text-xl tracking-wide">Details</h2>
-                            <div className=" whitespace-pre-wrap text-muted-foreground my-4 space-y-2">
+                            <h2 className="font-bold text-xl tracking-wide">General Detail</h2>
+                        {/*    <div className=" whitespace-pre-wrap text-muted-foreground my-4 space-y-2">*/}
+                        {/*        {[*/}
+                        {/*            {label: "Property Code", value: listing.id},*/}
+
+                        {/*            {label: "Gender", value: listing.gender},*/}
+                        {/*            {label: "Number of Beds", value:  listing?.pgroomdetail?.map(a => parseInt(a?.occupancyLimit))?.reduce((accumulator, current) => accumulator + current, 0)},*/}
+                        {/*            {label: "Operating Since", value: listing.operatingSince},*/}
+                        {/*            {label: "Suited For", value: listing.suitedFor},*/}
+                        {/*            {label: "Meal Available", value: listing.mealAvailable},*/}
+                        {/*            {label: "Meal Available Type", value: listing.mealAvailableType},*/}
+                        {/*            {label: "Brand Name", value: listing.brandName},*/}
+                        {/*            {label: "PG Contact", value: listing.pgContact},*/}
+                        {/*            {label: "PG Email", value: listing.pgEmail},*/}
+                        {/*            {label: "PG Name", value: listing.pgName},*/}
+                        {/*            {label: "Posted On", value: listing.created_at},*/}
+                        {/*         ]?.map(a =>*/}
+                        {/*            (a.value && <p><span className="font-medium">{a.label}</span>*/}
+                        {/*    - <span*/}
+                        {/*    className="text-black">{a.value}</span></p>*/}
+                        {/*)*/}
+                        {/*        )}*/}
+                        {/*    </div>*/}
+                            <div
+                                className="grid grid-cols-1 md:grid-cols-2  gap-4 rounded-md  my-4">
                                 {[
                                     {label: "Property Code", value: listing.id},
 
                                     {label: "Gender", value: listing.gender},
-                                    {label: "Number of Beds", value: listing.numberOfBeds},
+                                    {label: "Number of Beds", value:  listing?.pgroomdetail?.map(a => parseInt(a?.occupancyLimit))?.reduce((accumulator, current) => accumulator + current, 0)},
                                     {label: "Operating Since", value: listing.operatingSince},
                                     {label: "Suited For", value: listing.suitedFor},
                                     {label: "Meal Available", value: listing.mealAvailable},
                                     {label: "Meal Available Type", value: listing.mealAvailableType},
-                                    {label: "Brand Name", value: listing.brandName},
+                                     {label: "Brand Name", value: listing.brandName},
                                     {label: "PG Contact", value: listing.pgContact},
                                     {label: "PG Email", value: listing.pgEmail},
                                     {label: "PG Name", value: listing.pgName},
                                     {label: "Posted On", value: listing.created_at},
-                                 ]?.map(a => (
-                                    <p><span className="font-medium">{a.label}</span> - <span
-                                        className="text-black">{a.value}</span></p>
-                                ))}
+                                ].map((item, index) =>
+                                    item.value ? (<div
+                                        key={index}
+                                        className=" flex flex-col cursor-pointer  "
+                                    >
+                                        <p className="text-sm font-semibold text-muted-foreground">{item.label}</p>
+                                        <p className=" font-medium line-clamp-1">{String(item.value)?.replaceAll('_', ' ')?.toUpperCase() ?? '-'}</p>
+                                    </div>) : <></>
+                                )}
                             </div>
 
                         </div>

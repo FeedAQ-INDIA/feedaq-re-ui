@@ -10,8 +10,9 @@ import ListingCard from "@/app/_components/PropertyListingCard";
 import Image from "next/image";
 import {ChevronLeft, ChevronRight, CircleEllipsis, Ellipsis} from "lucide-react";
 import {apiClient} from "@/lib/apiClient.mjs";
+import ProjectListingCard from "@/app/_components/ProjectListingCard";
 
-export default function SearchPage({reference, initialPage, lim}) {
+export default function ProjectSearchPage({reference, initialPage, lim}) {
 
     const [listingData, setListingData] = useState([]);
     const [selectedAddress, setSelectedAddress] = useState("");
@@ -27,7 +28,9 @@ export default function SearchPage({reference, initialPage, lim}) {
 
     useEffect(() => {
 
-        fetchAddressByReference();
+        if(page){
+            fetchAddressByReference();
+        }
 
         console.log(selectedAddress)
     }, [mapReference, page]);
@@ -52,13 +55,13 @@ export default function SearchPage({reference, initialPage, lim}) {
 
 
     const findNearbyLocations = async (lat, lng) => {
-        apiClient(`http://localhost:8080/search?transactionType=buy&lat=${lat}&lng=${lng}&radius=50&limit=${limit}&page=${page}`)
+        apiClient(`http://localhost:8080/searchProject?lat=19.17380000&lng=72.86000000&radius=5&limit=${limit}&page=${page}`)
             .then(res => res.json())               // ✅ Parse the response and return the Promise
             .then((json) => {
                 console.log(json)
-                setListingData(json?.properties)
+                setListingData(json?.data)
                 setPage(json?.currentPage)
-                setTotalCount(json?.totalProperties)
+                setTotalCount(json?.total)
             })       // ✅ Now you can access the actual data
             .catch(err => console.error(err));     // ✅ Catch and log any errors
         setLoadingSearch(false)
@@ -82,41 +85,23 @@ export default function SearchPage({reference, initialPage, lim}) {
                     />
                 </div>
 
-                <div className="flex-grow max-w-[140px]">
-                    <Select>
-                        <SelectTrigger className="w-full min-w-[80px]">
-                            <SelectValue placeholder="Select Type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="Buy">Buy</SelectItem>
-                            <SelectItem value="Rent">Rent</SelectItem>
-                            <SelectItem value="Lease">Lease</SelectItem>
-                            <SelectItem value="PG/Coliving">PG/Coliving</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
-
-                <div className="ml-auto">
-                    <Button size="sm" className="min-w-[40px] px-2">
-                        <Ellipsis />
-                    </Button>
-                </div>
             </header>
 
 
             <div className="px-2 md:px-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-6 gap-4">
-                    {listingData?.map(a => (<><ListingCard listing={a}/>
-                        {index % 4 == 0 && <div className="col-span-1">
-                            <Image
-                                src={'https://cdn.vectorstock.com/i/1000v/40/01/vertical-banner-04-vector-29244001.jpg'}
-                                alt="Picture of the author"
-                                width={200}
-                                height={240}
-                                className="w-full h-[310px] rounded-md"
-                            />
-                        </div>}
-                    </>))}
+                    {listingData?.map((a, index) => (
+                        <><ProjectListingCard listing={a}/>
+                            {index % 4 == 0 && <div className="col-span-1">
+                                <Image
+                                    src={'https://cdn.vectorstock.com/i/1000v/40/01/vertical-banner-04-vector-29244001.jpg'}
+                                    alt="Picture of the author"
+                                    width={200}
+                                    height={240}
+                                    className="w-full h-[310px] rounded-md"
+                                />
+                            </div>}
+                        </>))}
                     <div className="col-span-1">
                         <Image
                             src={'https://cdn.vectorstock.com/i/1000v/40/01/vertical-banner-04-vector-29244001.jpg'}

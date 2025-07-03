@@ -152,9 +152,10 @@ async function PGColiveDetail({params}) {
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 my-4">
                     <div className=" lg:col-span-3">
 
-
+                        <div className="my-2">
+                            <h2 className="font-bold text-xl tracking-wide">General Detail</h2>
                         <div
-                            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-0 border border-gray-200 rounded-md overflow-hidden mb-4">
+                            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-0 border border-gray-200 rounded-md overflow-hidden my-4">
                             {[
                                 {label: "Property Code", value: listing?.id},
                                 {label: "Transaction Type", value: listing?.transactionType},
@@ -189,7 +190,7 @@ async function PGColiveDetail({params}) {
                                 </div>) : <></>
                             )}
                         </div>
-
+                        </div>
                         <div className="my-6">
                             <h2 className="font-bold text-xl  tracking-wide">Amenities</h2>
                             <div

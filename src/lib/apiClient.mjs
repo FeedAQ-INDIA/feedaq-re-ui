@@ -44,8 +44,10 @@ const publicPatterns = [
     /^\/$/,                 // "/"
     /^\/signin$/,           // "/signin"
     /^\/property(\/.*)?$/,  // "/property" and subpaths
-    /^\/search(\/.*)?$/,    // "/search" and subpaths
-    /^\/agent(\/.*)?$/,    // "/search" and subpaths
+    /^\/buy(\/.*)?$/,    // "/search" and subpaths
+    /^\/plot-land(\/.*)?$/,    // "/search" and subpaths
+    /^\/buy(\/.*)?$/,    // "/search" and subpaths
+    /^\/consultant(\/.*)?$/,    // "/search" and subpaths
     /^\/project(\/.*)?$/,    // "/search" and subpaths
     /^\/pg-colive(\/.*)?$/,    // "/search" and subpaths
 ];

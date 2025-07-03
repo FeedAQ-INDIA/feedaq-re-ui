@@ -6,6 +6,7 @@ const useLocationStore = create((set) => ({
     longitude: '',
     mapReference: null,
     loading: true,
+    initialSearchType: 'all',
 
     fetchLocation: () => {
         set({ loading: true });
@@ -31,6 +32,13 @@ const useLocationStore = create((set) => ({
 
         set({ latitude, longitude, mapReference });
     },
+
+    setInitialSearchType: ({value}) => {
+        set({
+            initialSearchType : value
+        })
+    },
+
 }));
 
 export default useLocationStore;
