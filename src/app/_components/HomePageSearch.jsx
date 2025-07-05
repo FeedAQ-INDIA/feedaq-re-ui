@@ -19,10 +19,7 @@ function HomePageSearch({ type, agentListLoad }) {
   const [isValid, setIsValid] = useState(false);
   const [mapReference, setMapReference] = useState(null);
   const {
-    latitude,
-    longitude,
-    loading,
-    fetchLocation,
+
     setInitialSearchType
   } = useLocationStore();
   const [searchType, setSearchType] = useState("all");
@@ -50,10 +47,10 @@ function HomePageSearch({ type, agentListLoad }) {
     } else {
       setIsValid(false);
     }
-    sessionStorage.setItem('mapReference', mapReference);
-    sessionStorage.setItem('latitude', coordinates?.lat);
-    sessionStorage.setItem('longitude', coordinates?.lng);
-    fetchLocation()
+    // sessionStorage.setItem('mapReference', mapReference);
+    // sessionStorage.setItem('latitude', coordinates?.lat);
+    // sessionStorage.setItem('longitude', coordinates?.lng);
+    // fetchLocation()
    }, [selectedAddress]);
 
   useEffect(() => {
@@ -65,9 +62,9 @@ function HomePageSearch({ type, agentListLoad }) {
       case "rent": setSearchPageUri('property');break;
       case "plot-land": setSearchPageUri('property');break;
       case "commercial": setSearchPageUri('property');break;
-      case "project": setSearchPageUri('project');break;
-      case "pg-colive": setSearchPageUri('pg-colive');break;
-      case "consultant": setSearchPageUri('consultant');break;
+      case "project": setSearchPageUri('project/search');break;
+      case "pg-colive": setSearchPageUri('pg-colive/search');break;
+      case "consultant": setSearchPageUri('consultant/search');break;
     }
   }, [searchType]);
 

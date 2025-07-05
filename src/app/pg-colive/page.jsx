@@ -49,6 +49,72 @@ export default function Home() {
         </section>
 
 
+        <section className="my-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 ">
+             <Card className="rounded-sm bg-pink-200 hover:bg-rose-500 cursor-pointer  hover:text-white">
+              <CardHeader className="">
+                <Image
+                    src="https://www.colive.com/assets/images/home/section15/Mens.png"
+                    className="rounded-md h-[140px] md:h-[150px] mx-auto"
+                    width={140}
+                    height={100}
+                />
+              </CardHeader>
+              <CardContent className="text-center tracking-wide">
+                <h1 className="text-2xl font-bold">For Men</h1>
+
+                {/*<Link href={'/manage-listing'}> <Button variant="outline" className="mt-4 cursor-pointer">*/}
+                {/*  Browse*/}
+                {/*</Button>*/}
+                {/*</Link>*/}
+              </CardContent>
+            </Card>
+
+
+            <Card className="rounded-sm  bg-pink-200 hover:bg-rose-500 cursor-pointer  hover:text-white">
+              <CardHeader className="">
+                <Image
+                    src="https://www.colive.com/assets/images/home/section15/Womens.png"
+                    className="rounded-md h-[140px] md:h-[150px] mx-auto"
+                    width={140}
+                    height={100}
+                />
+              </CardHeader>
+              <CardContent className="text-center tracking-wide">
+                <h1 className="text-2xl font-bold">For Women</h1>
+                {/*<p className="mt-2">*/}
+                {/*  Flexible PGs and stylish coliving spaces for students and professionals — fully furnished, affordable, and ready to move in.*/}
+                {/*</p>*/}
+                {/*<Link href={'/pg-colive'}><Button variant="outline" className="mt-4 cursor-pointer">*/}
+                {/*  Find PG/Colive*/}
+                {/*</Button></Link>*/}
+              </CardContent>
+            </Card>
+
+
+            <Card className="rounded-sm bg-pink-200 hover:bg-rose-500 cursor-pointer  hover:text-white">
+              <CardHeader className=" ">
+                <Image
+                    src="https://www.colive.com/assets/images/home/section15/Coliving.png"
+                    className="rounded-md h-[140px] md:h-[150px] mx-auto"
+                    width={140}
+                    height={100}
+                />
+              </CardHeader>
+              <CardContent className="text-center tracking-wide">
+                <h1 className="text-2xl font-bold">For Coliving</h1>
+                {/*<p className="mt-2">*/}
+                {/*  Flexible PGs and stylish coliving spaces for students and professionals — fully furnished, affordable, and ready to move in.*/}
+                {/*</p>*/}
+                {/*<Link href={'/agent'}>*/}
+                {/*  <Button variant="outline" className="mt-4 cursor-pointer">*/}
+                {/*    Browse*/}
+                {/*  </Button></Link>*/}
+              </CardContent>
+            </Card>
+
+          </div>
+        </section>
 
 
 

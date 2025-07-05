@@ -221,8 +221,8 @@ async function PGColiveDetail({params}) {
 
                                     {listing.pgroomdetail.map((room, idx) => (
                                         <div key={room.id} className="p-2 border rounded-md bg-gray-50 space-y-1">
-                                            <p className="text-sm font-semibold">{room.title}</p>
-                                            <div className="flex flex-wrap gap-2 text-xs">
+                                            <p className="text-sm font-semibold">{room.title} </p>
+                                            <div className="flex flex-wrap gap-2 text-xs mt-2">
                                                 <Badge variant="outline" className="rounded-sm bg-blue-600 text-white">
                                                     {room.roomType}
                                                 </Badge>
@@ -230,8 +230,20 @@ async function PGColiveDetail({params}) {
                                                        className="rounded-sm bg-emerald-600 text-white">
                                                     ₹{room.price.toLocaleString()} / month
                                                 </Badge>
+                                                {room?.additionalPrice?.map(a => (
+                                                    <Badge variant="outline"
+                                                           className="rounded-sm bg-purple-600 text-white">
+                                                        {a.priceType} - {formatIndianCurrency(a.priceDetail)}
+                                                    </Badge>
+                                                ))}
+
+
+                                            </div>
+
+                                            <div className="flex flex-wrap gap-2 text-xs">
+
                                                 <Badge variant="outline" className="rounded-sm bg-pink-600 text-white">
-                                                    {room.area} {room.areaUnit}
+                                                    Size: {room.area} {room.areaUnit}
                                                 </Badge>
                                                 <Badge variant="outline" className="rounded-sm bg-gray-700 text-white">
                                                     Occupancy: {room.occupancyLimit}
@@ -249,18 +261,19 @@ async function PGColiveDetail({params}) {
                                                     Available From : {room.availableFrom}
                                                 </Badge>
 
-                                                {room?.additionalPrice?.map(a => (
-                                                    <Badge variant="outline"
-                                                           className="rounded-sm bg-purple-600 text-white">
-                                                        {a.priceType} - {formatIndianCurrency(a.priceDetail)}
-                                                    </Badge>
-                                                ))}
+
                                             </div>
                                         </div>
                                     ))}
                                 </div>
                             )}
                         </div>
+
+                        { listing?.rules &&  <div className="my-6">
+                            <h2 className="font-bold text-xl tracking-wide">Rules</h2>
+                            <p className="my-2">{listing?.rules}</p>
+                        </div> }
+
 
                         <div className="my-6">
                             <h2 className="font-bold text-xl tracking-wide ">Locality</h2>

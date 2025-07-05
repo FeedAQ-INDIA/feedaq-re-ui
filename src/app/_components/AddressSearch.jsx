@@ -17,6 +17,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import useLocationStore from "@/lib/locationStore";
 
 function AddressSearch({ setSelectedAddress, setCoordinates , customTriggerWidth, customTriggerProps={}, customContentWidth, selectedAddress, setMapReference}) {
   const [open, setOpen] = useState(false);
@@ -26,11 +27,45 @@ function AddressSearch({ setSelectedAddress, setCoordinates , customTriggerWidth
   const [searchText, setSearchText] = useState("");
   const [debouncedSearchText, setDebouncedSearchText] = useState("");
   const [addressSuggestionList, setAddressSuggestionList] = useState([]);
+  const {
+    latitude,
+    longitude,
+    loading,
+    addressSearch,
+    mapReference ,
+    fetchLocation,
+    setInitialSearchType
+  } = useLocationStore();
 
   useEffect(() => {
     console.log(selectedAddress)
     setAddress(selectedAddress);
+    // console.log(mapReference)
+    // if(mapReference){
+    //   console.log('triggering address loading')
+    //   handleAddressSelection(
+    //       addressSearch,
+    //       longitude,
+    //       latitude,
+    //       mapReference
+    //   );
+    // }
   },[])
+
+
+  useEffect(() => {
+    console.log(mapReference)
+    if(mapReference){
+      console.log('triggering address loading')
+      handleAddressSelection(
+          addressSearch,
+          longitude,
+          latitude,
+          mapReference
+      );
+    }
+  }, [window.location.pathname]);
+
 
   useEffect(() => {
     setAddress(selectedAddress);
@@ -80,13 +115,20 @@ function AddressSearch({ setSelectedAddress, setCoordinates , customTriggerWidth
     console.log("Selected Address", currentValue);
     console.log("Selected Lat", lat);
     console.log("Selected Lng", lng);
+    console.log("Selected Ref", reference);
 
     setAddress(currentValue);
     setLat(lat);
     setLng(lng);
     setCoordinates({ lat: lat, lng: lng });
     setSelectedAddress(currentValue);
-    setMapReference(reference)
+    setMapReference(reference);
+
+    sessionStorage.setItem('mapReference', reference);
+    sessionStorage.setItem('latitude', lat);
+    sessionStorage.setItem('longitude', lng);
+    sessionStorage.setItem('addressSearch', currentValue);
+    fetchLocation();
   };
 
   return (

@@ -71,7 +71,7 @@ function PGListingCard({ listing, active }) {
                   <div className="marquee animate-8">
                     <div className="flex overflow-x-auto gap-2">
                       <Badge variant="outline" className="rounded-sm bg-green-600 text-white flex gap-1">{listing?.gender?.toUpperCase()}</Badge>
-                      <Badge variant="outline" className="rounded-sm bg-rose-600 text-white flex gap-1">VERIFIED</Badge>
+                      {listing?.isVerified &&  <Badge variant="outline" className="rounded-sm bg-rose-600 text-white flex gap-1">VERIFIED</Badge>}
                       {listing?.pgroomdetail?.map((a) => (
                           <Badge variant="outline" className="rounded-sm bg-blue-600 text-white">
                             {a.roomType?.toUpperCase()}
