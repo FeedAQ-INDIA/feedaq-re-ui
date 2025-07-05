@@ -72,7 +72,7 @@ export default function Home() {
         <section className="my-8">
 
 
-          <Card className="rounded-sm bg-black text-white ">
+          <Card className="rounded-sm bg-black text-white  ">
             <CardHeader  >
 
               <div className="">
@@ -82,6 +82,12 @@ export default function Home() {
 
             </CardHeader>
           </Card>
+
+          {/*<div className="">*/}
+          {/*  <h4 className="font-bold tracking-wider text-2xl text-center">Featured Real Estate Consultants</h4>*/}
+          {/*</div>*/}
+          {/*<HomeAgentView/>*/}
+
         </section>
 
 

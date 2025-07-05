@@ -1,11 +1,11 @@
 import {Button} from "@/components/ui/button";
 import Head from "next/head";
-import {CheckLine, Globe, Mail, MessageCircle, Phone} from "lucide-react";
+import {CheckLine, Globe, Mail, Map, MessageCircle, Phone} from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import {Badge} from "@/components/ui/badge";
 import ShareButton from "@/app/property/[id]/_components/ShareButton";
-import {Avatar, AvatarFallback} from "@/components/ui/avatar";
+import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import "./pg-colive.css"
 import {Card, CardHeader} from "@/components/ui/card";
 import Image from "next/image";
@@ -109,7 +109,8 @@ async function AgentDetail({params}) {
 
                                 <div className="flex flex-wrap gap-4 items-center   my-4">
                                     <div className="flex justify-center  ">
-                                        <Avatar className="w-24 h-24 shadow">
+                                        <Avatar className="w-26 h-26 shadow">
+                                            <AvatarImage src="https://photos.zillowstatic.com/fp/05c43f9895b928ea6de04a4724ac8f5c-h_g.jpg" />
                                             <AvatarFallback className="text-3xl">
                                                 {listing?.agentNameInitial}
                                             </AvatarFallback>
@@ -124,14 +125,14 @@ async function AgentDetail({params}) {
                                                 {listing?.agentLocality?.toUpperCase()} - {listing?.agentCity?.toUpperCase()} - {listing?.agentState?.toUpperCase()} - {listing?.agentCountry?.toUpperCase()}
                                             </p>
                                         </div>
-                                        <p className="text-xs text-muted-foreground">Partner Id : {listing?.agentId}</p>
+                                        <p className="text-xs text-muted-foreground">#{listing?.agentId}</p>
 
 
                                     </div>
                                 </div>
 
 
-                                <div className="flex-wrap flex items-center gap-2 my-4">
+                                <div className="flex-wrap flex items-center gap-2 my-2">
                                     <Link className=" "
                                           href={`https://wa.me/9631045873?text=Hi! I want detail regarding property id ${listing?.agentId}`}
                                           target="_blank">
@@ -193,57 +194,67 @@ async function AgentDetail({params}) {
 
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 my-4">
                     <div className=" lg:col-span-3">
+                        <div className="my-2">
+                            <h2 className="font-bold text-xl tracking-wide">Overview</h2>
+                            <p className="my-4 whitespace-pre w-full overflow-hidden  ">{listing?.agentBio}</p>
 
-                        <Card className="rounded-sm bg-muted/50 border-none mb-6">
-                            <CardHeader><h2 className="font-bold text-xl tracking-wide">Overview</h2>
-                                <p className="my-2 whitespace-pre w-full overflow-hidden  ">{listing?.agentBio}</p>
-                            </CardHeader>
-
-                        </Card>
-
-                        <Card className="rounded-sm bg-muted/50 border-none my-4">
-                            <CardHeader>
-                                <h2 className="font-bold text-xl tracking-wide">Specialization</h2>
-                                <div
-                                    className="my-2  w-full flex flex-wrap gap-2 ">{listing?.agentSpecializations?.map(a => (
-                                    <Badge variant="secondary" className="p-1 rounded-xs">{a}</Badge>))}</div>
-
-                            </CardHeader>
-
-                        </Card>
+                        </div>
 
 
-                        <Card className="rounded-sm bg-muted/50 border-none my-4">
-                            <CardHeader>
-                                <h2 className="font-bold text-xl tracking-wide">Areas Served</h2>
-                                <div
-                                    className="my-2  w-full flex flex-wrap gap-2 ">{listing?.agentAreasServed?.map(a => (
-                                    <Badge variant="secondary" className="p-1 rounded-xs">{a}</Badge>))}</div>
+                        <div className="my-6">
+                            <h2 className="font-bold text-xl tracking-wide">Specialization</h2>
+                            <div
+                                className="my-4  w-full flex flex-wrap gap-2 ">{listing?.agentSpecializations?.map(a => (
+                                <Badge variant="secondary" className="p-1 rounded-xs">{a}</Badge>))}</div>
 
-                            </CardHeader>
+                        </div>
 
-                        </Card>
 
-                        <Card className="rounded-sm bg-muted/50 border-none my-4">
-                            <CardHeader>
-                                <h2 className="font-bold text-xl tracking-wide">Language</h2>
-                                <div
-                                    className="my-2  w-full flex flex-wrap gap-2 ">{listing?.agentLanguagesSpoken?.map(a => (
-                                    <Badge variant="secondary" className="p-1 rounded-xs">{a}</Badge>))}</div>
-                            </CardHeader>
+                        <div className="my-6">
+                            <h2 className="font-bold text-xl tracking-wide">Areas Served</h2>
+                            <div
+                                className="my-2  w-full flex flex-wrap gap-2 ">{listing?.agentAreasServed?.map(a => (
+                                <Badge variant="secondary" className="p-1 rounded-xs">{a}</Badge>))}</div>
 
-                        </Card>
+                        </div>
 
-                        <Card className="rounded-sm bg-muted/50 border-none my-4">
-                            <CardHeader>
-                                <h2 className="font-bold text-xl tracking-wide ">Location</h2>
-                                <p className="mt-2 whitespace-pre w-full overflow-hidden  ">{listing?.agentOfficeAddress}</p>
-                                <p className=" whitespace-pre w-full overflow-hidden  ">{listing?.agentCity}</p>
-                                <p className=" whitespace-pre w-full overflow-hidden  ">{listing?.agentState}</p>
-                                <p className=" whitespace-pre w-full overflow-hidden  ">{listing?.agentCountry}</p>
-                            </CardHeader>
+                        <div className="my-6">
+                            <h2 className="font-bold text-xl tracking-wide">Language</h2>
+                            <div
+                                className="my-4  w-full flex flex-wrap gap-2 ">{listing?.agentLanguagesSpoken?.map(a => (
+                                <Badge variant="secondary" className="p-1 rounded-xs">{a}</Badge>))}</div>
+                        </div>
 
-                        </Card>
+
+                        <div className="my-6">
+                            <h2 className="font-bold text-xl tracking-wide">Location</h2>
+
+                            <div className=" whitespace-pre-wrap text-muted-foreground my-4 space-y-2">
+                                {[
+                                    {label: "Address Line 1", value: listing?.addressLine1},
+                                    {label: "Address Line 2", value: listing?.addressLine2},
+                                    {label: "Locality", value: listing?.locality},
+                                    {label: "City", value: listing?.city},
+                                    {label: "State", value: listing?.state},
+                                    {label: "Zip Code", value: listing?.zipCode},
+                                    {label: "Country", value: listing?.country},
+                                    {label: "Latitude", value: listing?.latitude},
+                                    {label: "Longitude", value: listing?.longitude},
+                                    // {label: "Map Ref Id", value: listing?.mapReferenceId},
+                                    // {label: "Map Ref Address", value: listing?.mapReferenceAddress},
+                                ]?.map(a => (
+                                    <p><span className="font-medium">{a.label}</span> - <span
+                                        className="text-black">{a.value}</span></p>
+                                ))}
+
+                                <Link className="cursor-pointer"
+                                      href={`https://www.google.com/maps/search/?api=1&query=${listing?.latitude},${listing?.longitude}`}
+                                      target="_blank">
+                                    <Button variant="outline" className="cursor-pointer"><Map/>Click here to open the
+                                        location in google map</Button></Link>
+                            </div>
+                        </div>
+
                     </div>
                     <div className="hidden lg:block">
                         <Image

@@ -45,7 +45,7 @@ export default function HomeAgentView({reference, initialPage, lim}) {
 
 
     return (
-        <div className="grid grid-cols-1   md:grid-cols-2  my-6 gap-4">
+        <div className="grid grid-cols-1   md:grid-cols-2 lg:grid-cols-3 my-6 gap-4">
             {listings?.map(a => (<AgentListingCard listing={a}/>))}
             {/*<div className="col-span-1 ">*/}
             {/*    <Image*/}
@@ -57,7 +57,8 @@ export default function HomeAgentView({reference, initialPage, lim}) {
             {/*    />*/}
             {/*</div>*/}
 
-            <Link href={`/pg-colive/search?reference=${mapReference}`}  target="_blank"><div className="col-span-1 w-full h-[265px] rounded-md flex flex-col items-center justify-center bg-rose-500 ">
+            <Link href={`/pg-colive/search?reference=${mapReference}`}  target="_blank">
+                <div className="col-span-1 w-full h-[200px] rounded-md flex flex-col items-center justify-center bg-rose-500 ">
                 <div className="text-center">
                     <p className="text-2xl text-white font-bold mb-2">VIEW ALL</p>
                     {/*<Plus size={40} className="mx-auto" />*/}
