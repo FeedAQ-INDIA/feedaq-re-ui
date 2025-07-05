@@ -27,7 +27,7 @@ export default function HomeAgentView({reference, initialPage, lim}) {
     } = useLocationStore();
 
      const findNearbyLocations =  () => {
-        apiClient(`http://localhost:8080/searchAgent?lat=${latitude}&lng=${ longitude }&radius=50&limit=${4}&page=${1}`)
+        apiClient(`http://localhost:8080/searchAgent?lat=${latitude}&lng=${longitude}&radius=50&limit=${20}&page=${1}`)
             .then(res => res.json())               // ✅ Parse the response and return the Promise
             .then((json) => {
                 console.log(json)
@@ -45,7 +45,7 @@ export default function HomeAgentView({reference, initialPage, lim}) {
 
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-6 gap-4">
+        <div className="grid grid-cols-1   md:grid-cols-2  my-6 gap-4">
             {listings?.map(a => (<AgentListingCard listing={a}/>))}
             {/*<div className="col-span-1 ">*/}
             {/*    <Image*/}
@@ -57,7 +57,7 @@ export default function HomeAgentView({reference, initialPage, lim}) {
             {/*    />*/}
             {/*</div>*/}
 
-            <Link href={`/agent?reference=${mapReference}`}  target="_blank"><div className="col-span-1 w-full h-[265px] rounded-md flex flex-col items-center justify-center bg-rose-500 ">
+            <Link href={`/pg-colive/search?reference=${mapReference}`}  target="_blank"><div className="col-span-1 w-full h-[265px] rounded-md flex flex-col items-center justify-center bg-rose-500 ">
                 <div className="text-center">
                     <p className="text-2xl text-white font-bold mb-2">VIEW ALL</p>
                     {/*<Plus size={40} className="mx-auto" />*/}

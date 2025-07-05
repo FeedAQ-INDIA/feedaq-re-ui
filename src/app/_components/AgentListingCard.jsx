@@ -80,15 +80,16 @@ function AgentListingCard({listing, active}) {
                         </div>
 
                         <div className="flex items-center mt-2 gap-4">
-                            <Avatar className="w-24 h-24 shadow">
+                            <Avatar className="w-26 h-26 shadow">
                                 <AvatarFallback className="text-3xl">
                                     {listing?.agentNameInitial}
                                 </AvatarFallback>
                             </Avatar>
-                            <div>
+                            <div className="space-y-2">
                                 <h2 className="font-semibold text-lg line-clamp-1">{listing?.agentAgencyName}</h2>
                                 <h2 className="font-medium text-muted-foreground text-md line-clamp-1">{listing?.user?.firstName + ' ' + listing?.user?.lastName}</h2>
-
+                                <p className="text-xs text-muted-foreground tracking-normal">
+                                     {listing.addressLine1},  {listing.addressLine2},  {listing.locality},  {listing.city},  {listing.state} -  {listing.zipCode},  {listing.country}                                </p>
                             </div>
 
                         </div>
@@ -96,16 +97,6 @@ function AgentListingCard({listing, active}) {
                         <div className="p-0 tracking-wide text-center mt-2">
                             <Link href={`/consultant/${listing?.agentId}`}>
 
-                                <div className="wrapper">
-                                    <div className="marquee animate-14">
-                                        <div className="flex overflow-x-auto gap-2">
-                                            <p className="text-xs text-muted-foreground tracking-normal">
-                                                {listing?.agentOfficeAddress}
-                                            </p>
-
-                                        </div>
-                                    </div>
-                                </div>
 
                                 <p className=" mt-1 text-xs text-muted-foreground">{listing?.project?.name ? listing?.project?.name?.toUpperCase() + ' - ' : ' '} {listing?.locatedIn?.locality}</p>
                             </Link>

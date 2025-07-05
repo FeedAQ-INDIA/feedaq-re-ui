@@ -99,7 +99,7 @@ export default function PGSearchPage({reference, initialPage, lim}) {
                     alt="Picture of the author"
                     width={200}
                     height={240}
-                    className="w-full h-[310px] rounded-md"
+                    className="w-full h-[325px] rounded-md"
                 />
             </div>}
             </>  ))}

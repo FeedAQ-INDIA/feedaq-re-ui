@@ -22,7 +22,7 @@ export default function Home() {
   return (
       <div className="p-4">
         <section className="mb-4">
-          <div className="relative rounded-lg bg-[url(https://cdn.pixabay.com/photo/2013/09/16/19/21/beds-182965_1280.jpg)] bg-cover bg-center bg-no-repeat">
+          <div className="relative rounded-lg bg-[url(https://hw-production-compressed-image.s3.ap-south-1.amazonaws.com/property/610/hdp/desktop/1572848029NXC.jpeg)] bg-cover bg-center bg-no-repeat">
             <div className="absolute rounded-lg inset-0 bg-gray-900/75  bg-transparent   from-gray-900/95 to-gray-900/25  bg-gradient-to-r  bg-gradient-to-l"></div>
 
             <div className="relative  mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:items-center lg:px-8">

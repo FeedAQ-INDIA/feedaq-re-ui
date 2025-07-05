@@ -47,10 +47,7 @@ function HomePageSearch({ type, agentListLoad }) {
     } else {
       setIsValid(false);
     }
-    // sessionStorage.setItem('mapReference', mapReference);
-    // sessionStorage.setItem('latitude', coordinates?.lat);
-    // sessionStorage.setItem('longitude', coordinates?.lng);
-    // fetchLocation()
+
    }, [selectedAddress]);
 
   useEffect(() => {
