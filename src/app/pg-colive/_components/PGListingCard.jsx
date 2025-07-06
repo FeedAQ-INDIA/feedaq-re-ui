@@ -105,7 +105,7 @@ function PGListingCard({ listing, active }) {
                 </div>
               </div>
           ) : (
-              <div className="h-[260px]">
+              <div className="h-[265px]">
                 <div className="p-1">
 
                   <div className="wrapper">

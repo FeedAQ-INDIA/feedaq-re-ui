@@ -20,7 +20,7 @@ import CreatePropertyRent from "@/app/manage-listing/create-property/_components
 export default function PropertyListingForm() {
     const [selectedAddress, setSelectedAddress] = useState("");
     const [coordinates, setCoordinates] = useState({lat: 0, lng: 0});
-    const [transactionType, setTransactionType] = useState("");
+    const [transactionType, setTransactionType] = useState("buy");
 
 
 
@@ -43,7 +43,7 @@ export default function PropertyListingForm() {
                         <SelectValue placeholder="Select Transaction Type"/>
                     </SelectTrigger>
                     <SelectContent>
-                        {["buy", "rent"].map(a => (
+                        {["buy"].map(a => (
                             <SelectItem key={a} value={a}>
                                 {a.toUpperCase()}
                             </SelectItem>

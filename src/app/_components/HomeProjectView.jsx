@@ -59,7 +59,7 @@ export default function HomeProjectView({reference, initialPage, lim}) {
             {/*    />*/}
             {/*</div>*/}
 
-            <Link href={`/project?reference=${mapReference}`} target="_blank"><div className="col-span-1 w-full h-[325px] rounded-md flex flex-col items-center justify-center bg-rose-500 ">
+            <Link href={`/project/search?reference=${mapReference}`} target="_blank"><div className="col-span-1 w-full h-[305px] rounded-md flex flex-col items-center justify-center bg-rose-500 ">
                 <div className="text-center">
                     <p className="text-2xl text-white font-bold mb-2">VIEW ALL</p>
                     {/*<Plus size={40} className="mx-auto" />*/}

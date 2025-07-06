@@ -18,6 +18,7 @@ import {Check, ChevronsUpDown} from "lucide-react";
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "@/components/ui/command";
 import axios from "axios";
 import {apiClient} from "@/lib/apiClient.mjs";
+import MultiImageUpload from "@/app/manage-listing/_components/MultiImageUpload";
 
 
 export default function CreatePropertyBuy() {
@@ -77,7 +78,7 @@ export default function CreatePropertyBuy() {
     async function onSubmit(data) {
         try {
             console.log(data)
-            const projectRes = await apiClient("http://localhost:8080/saveProperty", {
+            const propertyRes = await apiClient("http://localhost:8080/saveProperty", {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -124,9 +125,32 @@ export default function CreatePropertyBuy() {
             }, window.location.pathname);
 
 
-            if (projectRes.ok) {
-                const devData = await projectRes.json();
+            if (propertyRes.ok) {
+                const devData = await propertyRes.json();
                 console.log(devData);
+                if(previews.length>0){
+                    let uploadData = await handleUpload(devData?.data?.id);
+                    console.log(uploadData);
+                    try {
+                        const propertyAttachRes = await apiClient("http://localhost:8080/savePropertyAttachment", {
+                            method: "POST",
+                            credentials: "include",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(uploadData)
+
+                        }, window.location.pathname);
+
+                        if (propertyAttachRes.ok) {
+                            console.log(propertyAttachRes);
+                        } else {
+                            console.log('Error Occured')
+                        }
+                    }catch(err){
+                        console.log(err)
+                    }
+                }
             }
         } catch (err) {
             console.error("User tracking error", err);
@@ -165,6 +189,54 @@ export default function CreatePropertyBuy() {
 
         fetchProjects();
     }, [projectSearchQuery]);
+
+
+
+    const [previews, setPreviews] = useState([])
+    const [uploading, setUploading] = useState(false)
+    const [message, setMessage] = useState('')
+    const handleUpload = async (propertyId) => {
+        if (previews.length === 0) {
+            setMessage('Please select images before uploading.')
+            return
+        }
+
+        setUploading(true)
+        setMessage('Uploading...')
+
+        const formData = new FormData()
+        previews.forEach((item, index) => {
+            formData.append('files', item.file)
+            formData.append(`meta[${index}][caption]`, item.caption)
+            formData.append(`meta[${index}][isPrimary]`, String(item.isPrimary))
+            formData.append(`meta[${index}][order]`, String(item.order))
+        })
+        formData.append('propertyId', propertyId)
+
+        try {
+            const res = await fetch('/api/upload/property', {
+                method: 'POST',
+                body: formData,
+            })
+
+            const data = await res.json()
+            console.log(data)
+            if (res.ok) {
+                setMessage('Images uploaded successfully!')
+                setPreviews([]) // Clear preview after upload
+            } else {
+                setMessage(data.error || 'Upload failed.')
+            }
+            return data;
+        } catch (err) {
+            console.error('Upload error:', err)
+            setMessage('Something went wrong during the upload.')
+            throw err;
+        } finally {
+            setUploading(false);
+        }
+    }
+
 
 
     return (
@@ -830,6 +902,23 @@ export default function CreatePropertyBuy() {
                             )}
                         />
 
+                    </div>
+
+                    <div className="  ">
+                        <FormLabel className="mb-2">Choose an Avatar</FormLabel>
+
+                        <MultiImageUpload previews={previews} setPreviews={setPreviews} setMessage={setMessage} message={message}/>
+                        {/*{message && (*/}
+                        {/*    <div*/}
+                        {/*        className={`mt-4 p-3 rounded-lg text-center ${*/}
+                        {/*            message.includes('success')*/}
+                        {/*                ? 'bg-green-100 text-green-800'*/}
+                        {/*                : 'bg-red-100 text-red-800'*/}
+                        {/*        }`}*/}
+                        {/*    >*/}
+                        {/*        {message}*/}
+                        {/*    </div>*/}
+                        {/*)}*/}
                     </div>
 
                     <div className="flex gap-4">
