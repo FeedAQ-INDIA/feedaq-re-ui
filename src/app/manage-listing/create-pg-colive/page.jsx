@@ -16,7 +16,7 @@ import {useUser} from "@/lib/useUser";
 import {Card, CardHeader, CardTitle} from "@/components/ui/card";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {apiClient} from "@/lib/apiClient.mjs";
-import MultiImageUpload from "@/app/manage-listing/create-pg-colive/_components/MultiImageUpload";
+import MultiImageUpload from "@/app/manage-listing/_components/MultiImageUpload";
 
 function AddNewListing() {
     const [selectedAddress, setSelectedAddress] = useState("");
@@ -125,7 +125,8 @@ function AddNewListing() {
                 }
 
 
-                await handleUpload();
+                const urls = await handleUpload();
+
             }
         } catch (err) {
             console.error("User tracking error", err);
@@ -294,9 +295,7 @@ function AddNewListing() {
                                 </dl>
                             </a>);
                         })}
-                    </div>
-
-
+                </div>
             </div>
 
 

@@ -65,7 +65,7 @@ export async function POST(req) {
 
         console.log(pgAttachList)
 
-        return NextResponse.json({ urls })
+        return NextResponse.json({ pgAttachList })
     } catch (err) {
         console.error('API upload error:', err)
         return NextResponse.json({ error: 'Internal server error' }, { status: 500 })

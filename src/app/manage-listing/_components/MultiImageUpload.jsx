@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import {Input} from "@/components/ui/input";
 
 export default function MultiImageUpload({previews, setPreviews, message, setMessage}) {
 
@@ -29,17 +30,11 @@ export default function MultiImageUpload({previews, setPreviews, message, setMes
         <div className=" ">
             <div className=" ">
 
-                <input
+                <Input
                     type="file"
                     multiple
                     accept="image/*"
                     onChange={handleFileChange}
-                    className="mb-6 block w-full text-sm text-gray-500
-                        file:mr-4 file:py-2 file:px-4
-                        file:rounded-full file:border-0
-                        file:text-sm file:font-semibold
-                        file:bg-blue-50 file:text-blue-700
-                        hover:file:bg-blue-100"
                 />
 
                 {previews.length > 0 && (

@@ -14,9 +14,11 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import React from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {apiClient} from "@/lib/apiClient.mjs";
+import MultiImageUpload from "@/app/manage-listing/_components/MultiImageUpload";
+import AvatarImageUpload from "@/app/manage-listing/_components/AvatarImageUpload";
 
 // --- Zod Schema ---
 const developerSchema = z.object({
@@ -39,10 +41,42 @@ export function CreateDeveloper({ onSubmit }) {
         },
     });
 
+    const [previews, setPreviews] = useState([]) // [{ file, url, caption, isPrimary, order }]
+    const [uploading, setUploading] = useState(false)
+    const [message, setMessage] = useState('')
 
     async function onSubmit(data){
         try {
+            let avatarUrl = null;
+            if (previews.length>0) {
+                let formData = new FormData()
+                previews.forEach((item, index) => {
+                    formData.append('file', item.file)
+                    formData.append('type', 'developer-avatar')
+                })
 
+                try {
+                    const res = await fetch('/api/upload/avatar', {
+                        method: 'POST',
+                        body: formData,
+                    })
+
+                    const data = await res.json()
+                    console.log(data)
+                    if (res.ok) {
+                        // setPreviews([]) // Clear preview after upload
+                        avatarUrl = data?.file?.url
+                    } else {
+                        console.log(data.error || 'Upload failed.')
+                    }
+                 } catch (err) {
+                    console.error('Upload error:', err)
+                     throw err;
+                } finally {
+
+                }
+            }
+console.log(avatarUrl)
             const devRes = await apiClient("http://localhost:8080/saveDeveloper", {
                 method: "POST",
                 credentials: "include",
@@ -55,6 +89,7 @@ export function CreateDeveloper({ onSubmit }) {
                     email : data.email,
                     contactNumber : data.contactNumber,
                     description : data.description,
+                    avatar: avatarUrl
                 }),
             }, window.location.pathname);
 
@@ -62,11 +97,13 @@ export function CreateDeveloper({ onSubmit }) {
             if (devRes.ok) {
                 const devData = await devRes.json();
                 console.log(devData);
+                form.reset()
              }
         } catch (err) {
             console.error("User tracking error", err);
         }
     }
+
 
     return (
         <Form {...form}>
@@ -74,6 +111,23 @@ export function CreateDeveloper({ onSubmit }) {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="grid gap-6"
             >
+
+                <div className="  ">
+                    <FormLabel className="mb-2">Choose an Avatar</FormLabel>
+                    <AvatarImageUpload previews={previews} setPreviews={setPreviews} setMessage={setMessage} message={message}/>
+                    {message && (
+                        <div
+                            className={`mt-4 p-3 rounded-lg text-center ${
+                                message.includes('success')
+                                    ? 'bg-green-100 text-green-800'
+                                    : 'bg-red-100 text-red-800'
+                            }`}
+                        >
+                            {message}
+                        </div>
+                    )}
+                </div>
+
                 <FormField
                     control={form.control}
                     name="name"

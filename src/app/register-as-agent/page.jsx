@@ -14,6 +14,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {useUser} from "@/lib/useUser";
 import {apiClient} from "@/lib/apiClient.mjs";
 import AddressSearch from "@/app/_components/AddressSearch";
+import AvatarImageUpload from "@/app/manage-listing/_components/AvatarImageUpload";
 
 const createAgentSchema = z.object({
     agentBio: z.string().optional(),
@@ -100,6 +101,10 @@ function RegisterAsAgent() {
     useEffect(() => {
         console.log("Form values updated:", formValues);
     }, [formValues]);
+
+    const [previews, setPreviews] = useState([]) // [{ file, url, caption, isPrimary, order }]
+    const [uploading, setUploading] = useState(false)
+    const [message, setMessage] = useState('')
 
 
     return (<div className="p-2 md:p-6">
@@ -370,7 +375,11 @@ function RegisterAsAgent() {
                                 </FormItem>)}
                             />
                         </div>
-                        <div>
+
+
+
+
+                        <div className="lg:col-span-2">
 
                             <FormField
                                 control={form.control}
@@ -384,7 +393,25 @@ function RegisterAsAgent() {
                                 </FormItem>)}
                             />
                         </div>
+
+                        <div  className="lg:col-span-2">
+                            <FormLabel className="mb-2">Choose an Avatar</FormLabel>
+                            <AvatarImageUpload previews={previews} setPreviews={setPreviews} setMessage={setMessage} message={message}/>
+                            {message && (
+                                <div
+                                    className={`mt-4 p-3 rounded-lg text-center ${
+                                        message.includes('success')
+                                            ? 'bg-green-100 text-green-800'
+                                            : 'bg-red-100 text-red-800'
+                                    }`}
+                                >
+                                    {message}
+                                </div>
+                            )}
+                        </div>
                     </div>
+
+
 
                         <div className="flex gap-4 mt-6">
                             <Button type="button" variant="outline" onClick={() => form.reset()}>

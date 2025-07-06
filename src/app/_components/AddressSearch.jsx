@@ -133,19 +133,20 @@ function AddressSearch({
             <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
                     <Button
-                        type={"button"}
+                        type="button"
                         role="combobox"
                         aria-expanded={open}
-                        className={`"  justify-between   gap-4 ${customTriggerWidth}"`}
+                        className={`justify-between items-center gap-4 w-full max-w-full truncate ${customTriggerWidth}`}
                         size="lg"
-                        {...(customTriggerProps)}
+                        {...customTriggerProps}
                     >
-                        <LocateFixed className="shrink-0"/>
-                        <span className="truncate">
-        {address ? address : "Search Location"} {address}
-      </span>
-                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50"/>
+                        <LocateFixed className="shrink-0" />
+                        <span className="truncate block max-w-[calc(100%-3rem)] text-left">
+    {address ? address : "Search Location"}
+  </span>
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
+
                 </PopoverTrigger>
                 <PopoverContent className={`" ${customContentWidth} p-0 overflow-auto"`}>
                     <Command>
