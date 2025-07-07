@@ -102,15 +102,15 @@ export default function ProjectSearchPage({reference, initialPage, lim}) {
                                 />
                             </div>}
                         </>))}
-                    <div className="col-span-1">
-                        <Image
-                            src={'https://cdn.vectorstock.com/i/1000v/40/01/vertical-banner-04-vector-29244001.jpg'}
-                            alt="Picture of the author"
-                            width={200}
-                            height={240}
-                            className="w-full h-[310px] rounded-md"
-                        />
-                    </div>
+                    {/*<div className="col-span-1">*/}
+                    {/*    <Image*/}
+                    {/*        src={'https://cdn.vectorstock.com/i/1000v/40/01/vertical-banner-04-vector-29244001.jpg'}*/}
+                    {/*        alt="Picture of the author"*/}
+                    {/*        width={200}*/}
+                    {/*        height={240}*/}
+                    {/*        className="w-full h-[310px] rounded-md"*/}
+                    {/*    />*/}
+                    {/*</div>*/}
                 </div>
 
                 {listingData?.length > 0 && (

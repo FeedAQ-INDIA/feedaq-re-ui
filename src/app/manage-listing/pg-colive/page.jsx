@@ -11,6 +11,8 @@ import PropertyListingCard from "@/app/_components/PropertyListingCard";
 import ProjectListingCard from "@/app/_components/ProjectListingCard";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
+import {Pagination, PaginationContent, PaginationItem} from "@/components/ui/pagination";
+import {ChevronLeft, ChevronRight} from "lucide-react";
 
 
 export default function PGColiveListingForm() {
@@ -24,6 +26,7 @@ export default function PGColiveListingForm() {
     const [loadingSearch, setLoadingSearch] = useState(false);
     const [limit, setLimit] = useState(10);
     const [offset, setOffset] = useState(0);
+    const [totalCount, setTotalCount] = useState(0);
 
 
     useEffect(() => {
@@ -39,7 +42,7 @@ export default function PGColiveListingForm() {
 
 
     const findListedprop = async () => {
-        apiClient(`http://localhost:8080/search-v2`, {
+        await apiClient(`http://localhost:8080/search-v2`, {
             method: "POST", credentials: true, body: JSON.stringify({
                 limit: limit, offset: offset, getThisData:     {
                     datasource: "Property",
@@ -62,6 +65,7 @@ export default function PGColiveListingForm() {
             .then((json) => {
                 console.log(json)
                 setListingData(json?.data?.results)
+                setTotalCount(json?.data?.totalCount);
                 setLimit(json?.data?.limit);
                 setOffset(json?.data?.offset);
 
@@ -104,6 +108,48 @@ export default function PGColiveListingForm() {
                     {/*    />*/}
                     {/*</div>*/}
                 </div>
+
+
+            {listingData?.length > 0 && (
+                <div className="flex flex-row items-center">
+                    <div className="text-xs text-muted-foreground">
+                        {offset + 1} to {Math.min(offset + limit, totalCount)} of {totalCount} row(s) selected.
+                    </div>
+                    <Pagination className="ml-auto mr-0 w-auto">
+                        <PaginationContent>
+                            <PaginationItem>
+                                <Button
+                                    size="icon"
+                                    variant="outline"
+                                    className="h-6 w-6"
+                                    onClick={() => {
+                                        setOffset(Math.max(offset - limit, 0));
+                                        console.log(Math.max(offset - limit, 0))
+
+                                    }}
+                                >
+                                    <ChevronLeft className="h-3.5 w-3.5"/>
+                                    <span className="sr-only">Previous Order</span>
+                                </Button>
+                            </PaginationItem>
+                            <PaginationItem>
+                                <Button
+                                    size="icon"
+                                    variant="outline"
+                                    className="h-6 w-6"
+                                    onClick={() => {
+                                        setOffset(offset + limit < totalCount ? offset + limit : offset);
+                                        console.log(offset + limit < totalCount ? offset + limit : offset)
+                                    }}
+                                >
+                                    <ChevronRight className="h-3.5 w-3.5"/>
+                                    <span className="sr-only">Next Order</span>
+                                </Button>
+                            </PaginationItem>
+                        </PaginationContent>
+                    </Pagination>
+                </div>
+            )}
 
         </div>
     );

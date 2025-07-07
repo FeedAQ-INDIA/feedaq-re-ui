@@ -10,6 +10,8 @@ import Image from "next/image";
 import DeveloperListingCard from "@/app/_components/DeveloperListingCard";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
+import {Pagination, PaginationContent, PaginationItem} from "@/components/ui/pagination";
+import {ChevronLeft, ChevronRight} from "lucide-react";
 
 
 export default function DeveloperListingForm() {
@@ -23,6 +25,7 @@ export default function DeveloperListingForm() {
     const [loadingSearch, setLoadingSearch] = useState(false);
     const [limit, setLimit] = useState(10);
     const [offset, setOffset] = useState(0);
+    const [totalCount, setTotalCount] = useState(0);
 
 
     useEffect(() => {
@@ -51,6 +54,7 @@ export default function DeveloperListingForm() {
             .then((json) => {
                 console.log(json)
                 setListingData(json?.data?.results)
+                setTotalCount(json?.data?.totalCount);
                 setLimit(json?.data?.limit);
                 setOffset(json?.data?.offset);
 
@@ -93,7 +97,46 @@ export default function DeveloperListingForm() {
                     {/*    />*/}
                     {/*</div>*/}
                 </div>
+            {listingData?.length > 0 && (
+                <div className="flex flex-row items-center">
+                    <div className="text-xs text-muted-foreground">
+                        {offset + 1} to {Math.min(offset + limit, totalCount)} of {totalCount} row(s) selected.
+                    </div>
+                    <Pagination className="ml-auto mr-0 w-auto">
+                        <PaginationContent>
+                            <PaginationItem>
+                                <Button
+                                    size="icon"
+                                    variant="outline"
+                                    className="h-6 w-6"
+                                    onClick={() => {
+                                        setOffset(Math.max(offset - limit, 0));
+                                        console.log(Math.max(offset - limit, 0))
 
+                                    }}
+                                >
+                                    <ChevronLeft className="h-3.5 w-3.5"/>
+                                    <span className="sr-only">Previous Order</span>
+                                </Button>
+                            </PaginationItem>
+                            <PaginationItem>
+                                <Button
+                                    size="icon"
+                                    variant="outline"
+                                    className="h-6 w-6"
+                                    onClick={() => {
+                                        setOffset(offset + limit < totalCount ? offset + limit : offset);
+                                        console.log(offset + limit < totalCount ? offset + limit : offset)
+                                    }}
+                                >
+                                    <ChevronRight className="h-3.5 w-3.5"/>
+                                    <span className="sr-only">Next Order</span>
+                                </Button>
+                            </PaginationItem>
+                        </PaginationContent>
+                    </Pagination>
+                </div>
+            )}
         </div>
     );
 }
