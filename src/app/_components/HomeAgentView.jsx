@@ -9,7 +9,7 @@ import {Button} from "@/components/ui/button";
 import Image from "next/image";
 import {ChevronLeft, ChevronRight, CircleEllipsis, Ellipsis, Plus} from "lucide-react";
 import {apiClient} from "@/lib/apiClient.mjs";
-import AgentListingCard from "@/app/_components/AgentListingCard";
+import ConsultantListingCard from "@/app/_components/ConsultantListingCard";
  import useLocationStore from "@/lib/locationStore";
 import Link from "next/link";
 
@@ -46,7 +46,7 @@ export default function HomeAgentView({reference, initialPage, lim}) {
 
     return (
         <div className="grid grid-cols-1   md:grid-cols-2 lg:grid-cols-3 my-6 gap-4">
-            {listings?.map(a => (<AgentListingCard listing={a}/>))}
+            {listings?.map(a => (<ConsultantListingCard listing={a}/>))}
             {/*<div className="col-span-1 ">*/}
             {/*    <Image*/}
             {/*        src={'https://cdn.vectorstock.com/i/1000v/40/01/vertical-banner-04-vector-29244001.jpg'}*/}

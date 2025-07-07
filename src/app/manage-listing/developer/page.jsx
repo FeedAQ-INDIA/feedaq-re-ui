@@ -7,9 +7,12 @@ import {useUser} from "@/lib/useUser";
 import {apiClient} from "@/lib/apiClient.mjs";
 import ListingCard from "@/app/_components/PropertyListingCard";
 import Image from "next/image";
+import DeveloperListingCard from "@/app/_components/DeveloperListingCard";
+import {Button} from "@/components/ui/button";
+import Link from "next/link";
 
 
-export default function PropertyListingForm() {
+export default function DeveloperListingForm() {
 
 
     const {user, refreshUser} = useUser();
@@ -61,17 +64,25 @@ export default function PropertyListingForm() {
     return (
         <div className="p-4">
             <Card className="border-0 bg-muted/50  bg-rose-600 text-white ">
-                <CardHeader>
+                <CardHeader className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
                     <CardTitle className="text-lg sm:text-xl font-bold  tracking-wider">
-                        MANAGE LISTING
+                        MANAGE DEVELOPER LISTINGS
                     </CardTitle>
+                    <div className="sm:ml-auto">
+                        <Link href={`/manage-listing/create-developer`} target="_blank" >
+                            <Button
+                                className=" gap-1 cursor-pointer"
+                                variant="secondary"
+                            >Create</Button>
+                        </Link>
+                    </div>
                 </CardHeader>
 
 
             </Card>
 
                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-6 gap-4">
-                    {listingData?.map(a => (<ListingCard listing={a}/>))}
+                    {listingData?.map(a => (<DeveloperListingCard listing={a}/>))}
                     {/*<div className="col-span-1">*/}
                     {/*    <Image*/}
                     {/*        src={'https://cdn.vectorstock.com/i/1000v/40/01/vertical-banner-04-vector-29244001.jpg'}*/}

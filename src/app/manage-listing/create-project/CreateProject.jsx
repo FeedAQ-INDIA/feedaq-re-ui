@@ -20,6 +20,7 @@ import {Check, ChevronsUpDown} from "lucide-react";
 import axios from "axios";
 import {apiClient} from "@/lib/apiClient.mjs";
 import MultiImageUpload from "@/app/manage-listing/_components/MultiImageUpload";
+import {toast} from "sonner";
 
 const projectSchema = z.object({
     name: z.string().min(1),
@@ -132,6 +133,13 @@ export default function CreateProject({ onSubmit }) {
                         console.log(err)
                     }
                 }
+                toast("Project has been created : #"+devData?.data?.id, {
+                    description: new Date().toLocaleDateString('en-US', {weekday: 'long', year: 'numeric', month: 'long', day: '2-digit', hour: 'numeric', minute: '2-digit', hour12: true}),
+                    action: {
+                        label: "Copy Id",
+                        onClick: () => navigator.clipboard.writeText(devData?.data?.id)
+                    },
+                })
             }
         } catch (err) {
             console.error("User tracking error", err);

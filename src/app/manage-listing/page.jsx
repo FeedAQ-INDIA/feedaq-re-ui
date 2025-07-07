@@ -9,6 +9,7 @@ import ListingCard from "@/app/_components/PropertyListingCard";
 import Image from "next/image";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
+import HomePGView from "@/app/_components/HomePGView";
 
 
 export default function PropertyListingForm() {
@@ -24,50 +25,6 @@ export default function PropertyListingForm() {
     const [offset, setOffset] = useState(0);
 
 
-    useEffect(() => {
-
-
-        if (user) {
-            findListedprop();
-
-        }
-
-    }, [user]);
-
-
-    const findListedprop = async () => {
-        apiClient(`http://localhost:8080/search-v2`, {
-            method: "POST", credentials: true, body: JSON.stringify({
-                limit: limit, offset: offset, getThisData:     {
-                    datasource: "Property",
-                    as: "property",
-                    required: false,
-                    where: {userId: user?.data?.userId},
-                    include: [
-                        {datasource: "PropertyFeature", as: "features", required: false},
-                        {
-                            datasource: "Project", as: "project", required: false,
-                            include: [{datasource: "Developer", as: "developer", required: false}]
-                        },
-                        {datasource: "PropertyAttachment", as: "attachment", required: false},
-                        {datasource: "UserFav", as: "fav", required: false}]
-
-                },
-            }),
-        }, window.location.pathname)
-            .then(res => res.json())               // ✅ Parse the response and return the Promise
-            .then((json) => {
-                console.log(json)
-                setListingData(json?.data?.results)
-                setLimit(json?.data?.limit);
-                setOffset(json?.data?.offset);
-
-            })       // ✅ Now you can access the actual data
-            .catch(err => console.error(err));     // ✅ Catch and log any errors
-        setLoadingSearch(false)
-    };
-
-
 
     return (
         <div className="p-4">
@@ -81,26 +38,108 @@ export default function PropertyListingForm() {
 
             </Card>
 
-            <div className="flex flex-wrap gap-4 my-4">
-                <Link  className="flex-1 cursor-pointer" href={'/manage-listing/create-property'} target='_blank'><Button className="w-full cursor-pointer" variant="secondary">Create Listing</Button></Link>
-                <Link  className="flex-1 cursor-pointer" href={'/manage-listing/create-project'} target='_blank'><Button className="w-full cursor-pointer" variant="secondary">Create Project</Button></Link>
-                <Link  className="flex-1 cursor-pointer" href={'/manage-listing/create-developer'} target='_blank'><Button className="w-full cursor-pointer" variant="secondary">Create Developer</Button></Link>
-                <Link  className="flex-1 cursor-pointer" href={'/manage-listing/create-pg-colive'} target='_blank'><Button className="w-full cursor-pointer" variant="secondary">Create PG / Colive</Button></Link>
-            </div>
+            {/*<div className="flex flex-wrap gap-4 my-4">*/}
+            {/*    <Link  className="flex-1 cursor-pointer" href={'/manage-listing/create-property'} target='_blank'><Button className="w-full cursor-pointer" variant="secondary">Create Listing</Button></Link>*/}
+            {/*    <Link  className="flex-1 cursor-pointer" href={'/manage-listing/create-project'} target='_blank'><Button className="w-full cursor-pointer" variant="secondary">Create Project</Button></Link>*/}
+            {/*    <Link  className="flex-1 cursor-pointer" href={'/manage-listing/create-developer'} target='_blank'><Button className="w-full cursor-pointer" variant="secondary">Create Developer</Button></Link>*/}
+            {/*    <Link  className="flex-1 cursor-pointer" href={'/manage-listing/create-pg-colive'} target='_blank'><Button className="w-full cursor-pointer" variant="secondary">Create PG / Colive</Button></Link>*/}
+            {/*</div>*/}
 
-                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-6 gap-4">
-                    {listingData?.map(a => (<ListingCard listing={a}/>))}
-                    {/*<div className="col-span-1">*/}
-                    {/*    <Image*/}
-                    {/*        src={'https://cdn.vectorstock.com/i/1000v/40/01/vertical-banner-04-vector-29244001.jpg'}*/}
-                    {/*        alt="Picture of the author"*/}
-                    {/*        width={200}*/}
-                    {/*        height={240}*/}
-                    {/*        className="w-full h-[310px] rounded-md"*/}
-                    {/*    />*/}
-                    {/*</div>*/}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4  my-8">
+            <Link href='/manage-listing/project' target="_blank" className=" cursor-pointer transition-transform duration-300 ease-in-out hover:scale-101 hover:shadow-amber-100 relative">
+                {/* Background image + overlay for visual impact */}
+                <div
+                    className="absolute inset-0 bg-center"
+                    style={{
+                        backgroundImage:
+                            "url('https://visor.gumlet.io//public/assets/home/desktop/hero-img.png?compress=true&format=auto&quality=75&dpr=auto&h=480&w=522&ar=unset')",
+                    }}
+                >
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/80 to-black/70" />
                 </div>
+                {/* PG stays content */}
+                <Card className="relative rounded-sm bg-transparent text-white border-none shadow-none">
+                    <CardHeader>
+                        <div>
+                            <h4 className="font-bold tracking-wider text-2xl">
+                                Manage Project Listings
+                            </h4>
+                        </div>
+                     </CardHeader>
+                </Card>
+            </Link>
 
+            <Link href='/manage-listing/property' target="_blank" className=" cursor-pointer transition-transform duration-300 ease-in-out hover:scale-101 hover:shadow-amber-100  relative">
+                {/* Background image + overlay for visual impact */}
+                <div
+                    className="absolute inset-0 bg-center"
+                    style={{
+                        backgroundImage:
+                            "url('https://visor.gumlet.io//public/assets/home/desktop/hero-img.png?compress=true&format=auto&quality=75&dpr=auto&h=480&w=522&ar=unset')",
+                    }}
+                >
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/80 to-black/70" />
+                </div>
+                {/* PG stays content */}
+                <Card className="relative rounded-sm bg-transparent text-white border-none shadow-none">
+                    <CardHeader>
+                        <div>
+                            <h4 className="font-bold tracking-wider text-2xl">
+                                Manage Property Listings
+                            </h4>
+                        </div>
+                    </CardHeader>
+                </Card>
+            </Link>
+
+
+            <Link href='/manage-listing/developer' target="_blank" className=" cursor-pointer transition-transform duration-300 ease-in-out hover:scale-101 hover:shadow-amber-100   relative">
+                {/* Background image + overlay for visual impact */}
+                <div
+                    className="absolute inset-0 bg-center"
+                    style={{
+                        backgroundImage:
+                            "url('https://visor.gumlet.io//public/assets/home/desktop/hero-img.png?compress=true&format=auto&quality=75&dpr=auto&h=480&w=522&ar=unset')",
+                    }}
+                >
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/80 to-black/70" />
+                </div>
+                {/* PG stays content */}
+                <Card className="relative rounded-sm bg-transparent text-white border-none shadow-none">
+                    <CardHeader>
+                        <div>
+                            <h4 className="font-bold tracking-wider text-2xl">
+                                Manage Developer Listings
+                            </h4>
+                        </div>
+                    </CardHeader>
+                </Card>
+            </Link>
+
+            <Link href='/manage-listing/pg-colive' target="_blank" className=" cursor-pointer transition-transform duration-300 ease-in-out hover:scale-101 hover:shadow-amber-100  relative">
+                {/* Background image + overlay for visual impact */}
+                <div
+                    className="absolute inset-0 bg-center"
+                    style={{
+                        backgroundImage:
+                            "url('https://visor.gumlet.io//public/assets/home/desktop/hero-img.png?compress=true&format=auto&quality=75&dpr=auto&h=480&w=522&ar=unset')",
+                    }}
+                >
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/80 to-black/70" />
+                </div>
+                {/* PG stays content */}
+                <Card className="relative rounded-sm bg-transparent text-white border-none shadow-none">
+                    <CardHeader>
+                        <div>
+                            <h4 className="font-bold tracking-wider text-2xl">
+                                Manage PG / Coliving Listings
+                            </h4>
+                        </div>
+                    </CardHeader>
+                </Card>
+            </Link>
+
+            </div>
         </div>
     );
 }

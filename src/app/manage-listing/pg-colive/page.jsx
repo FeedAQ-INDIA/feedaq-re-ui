@@ -9,9 +9,11 @@ import ListingCard from "@/app/_components/PropertyListingCard";
 import Image from "next/image";
 import PropertyListingCard from "@/app/_components/PropertyListingCard";
 import ProjectListingCard from "@/app/_components/ProjectListingCard";
+import Link from "next/link";
+import {Button} from "@/components/ui/button";
 
 
-export default function PropertyListingForm() {
+export default function PGColiveListingForm() {
 
 
     const {user, refreshUser} = useUser();
@@ -73,11 +75,21 @@ export default function PropertyListingForm() {
     return (
         <div className="p-4">
             <Card className="border-0 bg-muted/50  bg-rose-600 text-white ">
-                <CardHeader>
+
+                <CardHeader className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
                     <CardTitle className="text-lg sm:text-xl font-bold  tracking-wider">
-                        MANAGE PROPERTY LISTING
+                        MANAGE COLIVING LISTINGS
                     </CardTitle>
+                    <div className="sm:ml-auto">
+                        <Link href={`/manage-listing/create-pg-colive`} target="_blank" >
+                            <Button
+                                className=" gap-1 cursor-pointer"
+                                variant="secondary"
+                            >Create</Button>
+                        </Link>
+                    </div>
                 </CardHeader>
+
             </Card>
 
                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-6 gap-4">

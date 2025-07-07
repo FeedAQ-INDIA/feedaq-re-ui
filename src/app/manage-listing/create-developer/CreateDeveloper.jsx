@@ -92,7 +92,7 @@ export function CreateDeveloper({onSubmit}) {
                 form.reset();
                 setPreviews([]);
                 toast("Developer has been created : #"+devData?.data?.id, {
-                    description: "Sunday, December 03, 2023 at 9:00 AM",
+                    description: new Date().toLocaleDateString('en-US', {weekday: 'long', year: 'numeric', month: 'long', day: '2-digit', hour: 'numeric', minute: '2-digit', hour12: true}),
                     action: {
                         label: "Copy Id",
                         onClick: () => navigator.clipboard.writeText(devData?.data?.id)

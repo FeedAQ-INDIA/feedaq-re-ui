@@ -1,7 +1,7 @@
 "use client";
 
 import React, {useEffect, useState} from "react";
-import {Card, CardHeader,} from "@/components/ui/card.jsx";
+import {Card, CardHeader, CardTitle,} from "@/components/ui/card.jsx";
 import {Button,} from "@/components/ui/button.jsx";
 import {Avatar, AvatarFallback,} from "@/components/ui/avatar.jsx";
 import {Input,} from "@/components/ui/input.jsx";
@@ -15,6 +15,7 @@ import {useUser} from "@/lib/useUser";
 import {apiClient} from "@/lib/apiClient.mjs";
 import AddressSearch from "@/app/_components/AddressSearch";
 import AvatarImageUpload from "@/app/manage-listing/_components/AvatarImageUpload";
+import {toast} from "sonner";
 
 const createAgentSchema = z.object({
     agentBio: z.string().optional(),
@@ -26,15 +27,17 @@ const createAgentSchema = z.object({
         .optional(),
     agentAgencyName: z.string().min(1, "Agency name is required"),
     agentWebsite: z.string().url().optional(),
-    agentOfficeAddress: z.string(),
-    agentCity: z.string(),
-    agentState: z.string(),
-    agentCountry: z.string(),
     agentAreasServed: z.array(z.string()).optional(),
     agentSpecializations: z.array(z.string()).optional(),
     agentLanguagesSpoken: z.array(z.string()).optional(),
     latitude: z.preprocess(val => (val === '' ? undefined : Number(val)), z.number()),
     longitude: z.preprocess(val => (val === '' ? undefined : Number(val)), z.number()),
+    addressLine1: z.string(),
+    addressLine2: z.string(),
+    locality: z.string(),
+    city: z.string(),
+    state: z.string(),
+    country: z.string().default("India"),
 
 });
 
@@ -54,10 +57,7 @@ function RegisterAsAgent() {
             agentExperience: '',
             agentAgencyName: '',
             agentWebsite: '',
-            agentOfficeAddress: '',
-            agentCity: '',
-            agentState: '',
-            agentCountry: '',
+
             agentAreasServed: [],
             agentSpecializations: [],
             agentLanguagesSpoken: [],
@@ -108,19 +108,32 @@ function RegisterAsAgent() {
                     agentExperience: data.agentExperience,
                     agentAgencyName: data.agentAgencyName,
                     agentWebsite: data.agentWebsite,
-                    agentOfficeAddress: data.agentOfficeAddress,
-                    agentCity: data.agentCity,
-                    agentState: data.agentState,
-                    agentCountry: data.agentCountry,
                     agentAreasServed: data.agentAreasServed,
                     agentSpecializations: data.agentSpecializations,
                     agentLanguagesSpoken: data.agentLanguagesSpoken,
                     latitude: data.latitude,
                     longitude: data.longitude,
+                    addressLine1: data.addressLine1,
+                    addressLine2: data.addressLine2,
+                    locality: data.locality,
+                    city: data.city,
+                    state: data.state,
+                    country: data.country,
+                    mapReferenceId: mapReference,
+                    mapReferenceAddress: selectedAddress,
                 }),
             }, window.location.pathname);
             if (res.ok) {
                 console.log("Agent profile updated successfully");
+                form.reset();
+                setPreviews([])
+                toast("You are registered as a Consultant : #"+res?.data?.data?.agentId, {
+                    description: new Date().toLocaleDateString('en-US', {weekday: 'long', year: 'numeric', month: 'long', day: '2-digit', hour: 'numeric', minute: '2-digit', hour12: true}),
+                    action: {
+                        label: "Copy Id",
+                        onClick: () => navigator.clipboard.writeText(res?.data?.data?.agentId)
+                    },
+                })
                 await refreshUser();
             }
         }catch (err) {
@@ -141,24 +154,16 @@ function RegisterAsAgent() {
     const [message, setMessage] = useState('')
 
 
-    return (<div className="p-2 md:p-6">
-        <Card className="border-0 bg-rose-500">
-            <CardHeader>
-                <div className="flex gap-4 items-center">
-                    <Avatar className="w-12 h-12">
-                        <AvatarFallback className="text-xl">
-                            {user?.data?.nameInitial}
-                        </AvatarFallback>
-                    </Avatar>
-                    <div className="text-white">
-                        <h1 className="text-xl font-medium">
-                            Welcome {user?.data?.derivedUserName}
-                        </h1>
-                        <p>Member since {user?.data?.created_date}</p>
-                    </div>
-                </div>
-            </CardHeader>
-        </Card>
+    return (<div className="p-2 md:p-4">
+            <Card className="border-0 bg-muted/50  bg-rose-600 text-white ">
+                <CardHeader>
+                    <CardTitle className="text-lg sm:text-xl font-bold  tracking-wider">
+                        REGISTER AS CONSULTANT
+                    </CardTitle>
+                </CardHeader>
+
+
+            </Card>
 
         <div className="my-12">
             <h1 className="font-bold text-2xl mb-6">Register as Agent</h1>
@@ -292,62 +297,7 @@ function RegisterAsAgent() {
                                 </FormItem>)}
                             />
                         </div>
-                        <div>
 
-                            <FormField
-                                control={form.control}
-                                name="agentOfficeAddress"
-                                render={({field}) => (<FormItem>
-                                    <FormLabel>Office Address</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Office Address" {...field} />
-                                    </FormControl>
-                                    <FormMessage/>
-                                </FormItem>)}
-                            />
-                        </div>
-                        <div>
-
-                            <FormField
-                                control={form.control}
-                                name="agentCity"
-                                render={({field}) => (<FormItem>
-                                    <FormLabel>City</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="City" {...field} />
-                                    </FormControl>
-                                    <FormMessage/>
-                                </FormItem>)}
-                            />
-                        </div>
-                        <div>
-
-                            <FormField
-                                control={form.control}
-                                name="agentState"
-                                render={({field}) => (<FormItem>
-                                    <FormLabel>State</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="State" {...field} />
-                                    </FormControl>
-                                    <FormMessage/>
-                                </FormItem>)}
-                            />
-                        </div>
-                        <div>
-
-                            <FormField
-                                control={form.control}
-                                name="agentCountry"
-                                render={({field}) => (<FormItem>
-                                    <FormLabel>Country</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Country" {...field} />
-                                    </FormControl>
-                                    <FormMessage/>
-                                </FormItem>)}
-                            />
-                        </div>
                         <div>
 
                             <FormField
@@ -427,6 +377,85 @@ function RegisterAsAgent() {
                                 </FormItem>)}
                             />
                         </div>
+
+
+                        <div className="grid gap-4">
+ 
+
+                            <FormField
+                                control={form.control}
+                                name="addressLine1"
+                                render={({field}) => (<FormItem>
+                                    <FormLabel>Address Line 1</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Enter Address" {...field} />
+                                    </FormControl>
+                                    <FormMessage/>
+                                </FormItem>)}
+                            />
+
+                            <FormField
+                                control={form.control}
+                                name="addressLine2"
+                                render={({field}) => (<FormItem>
+                                    <FormLabel>Address Line 2</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Enter Address" {...field} />
+                                    </FormControl>
+                                    <FormMessage/>
+                                </FormItem>)}
+                            />
+
+                            <FormField
+                                control={form.control}
+                                name="locality"
+                                render={({field}) => (<FormItem>
+                                    <FormLabel>Locality</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Enter Locality" {...field} />
+                                    </FormControl>
+                                    <FormMessage/>
+                                </FormItem>)}
+                            />
+
+                            <FormField
+                                control={form.control}
+                                name="city"
+                                render={({field}) => (<FormItem>
+                                    <FormLabel>City</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Enter City" {...field} />
+                                    </FormControl>
+                                    <FormMessage/>
+                                </FormItem>)}
+                            />
+
+                            <FormField
+                                control={form.control}
+                                name="state"
+                                render={({field}) => (<FormItem>
+                                    <FormLabel>State</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Enter State" {...field} />
+                                    </FormControl>
+                                    <FormMessage/>
+                                </FormItem>)}
+                            />
+
+                            <FormField
+                                control={form.control}
+                                name="country"
+                                render={({field}) => (<FormItem>
+                                    <FormLabel>Country</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Enter Country" readOnly  {...field} />
+                                    </FormControl>
+                                    <FormMessage/>
+                                </FormItem>)}
+                            />
+
+                        </div>
+
 
                         <div  className="lg:col-span-2">
                             <FormLabel className="mb-2">Choose an Avatar</FormLabel>

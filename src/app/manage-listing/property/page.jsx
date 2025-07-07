@@ -9,6 +9,8 @@ import ListingCard from "@/app/_components/PropertyListingCard";
 import Image from "next/image";
 import PropertyListingCard from "@/app/_components/PropertyListingCard";
 import ProjectListingCard from "@/app/_components/ProjectListingCard";
+import Link from "next/link";
+import {Button} from "@/components/ui/button";
 
 
 export default function PropertyListingForm() {
@@ -73,10 +75,19 @@ export default function PropertyListingForm() {
     return (
         <div className="p-4">
             <Card className="border-0 bg-muted/50  bg-rose-600 text-white ">
-                <CardHeader>
+
+                <CardHeader className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
                     <CardTitle className="text-lg sm:text-xl font-bold  tracking-wider">
-                        MANAGE PROPERTY LISTING
+                        MANAGE PROPERTY LISTINGS
                     </CardTitle>
+                    <div className="sm:ml-auto">
+                        <Link href={`/manage-listing/create-property`} target="_blank" >
+                            <Button
+                                className=" gap-1 cursor-pointer"
+                                variant="secondary"
+                            >Create</Button>
+                        </Link>
+                    </div>
                 </CardHeader>
             </Card>
 

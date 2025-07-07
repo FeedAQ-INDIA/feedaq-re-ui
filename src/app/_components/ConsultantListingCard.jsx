@@ -9,7 +9,7 @@ import {useUser} from "@/lib/useUser";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 
 
-function AgentListingCard({listing, active}) {
+function ConsultantListingCard({listing, active}) {
     const [screenNo, setScreenNo] = useState(true);
 
     const {user, refreshUser} = useUser();
@@ -115,4 +115,4 @@ function AgentListingCard({listing, active}) {
     );
 }
 
-export default AgentListingCard;
+export default ConsultantListingCard;

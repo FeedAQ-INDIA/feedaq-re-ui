@@ -9,7 +9,7 @@ import {Button} from "@/components/ui/button";
 import Image from "next/image";
 import {ChevronLeft, ChevronRight, CircleEllipsis, Ellipsis, Plus} from "lucide-react";
 import {apiClient} from "@/lib/apiClient.mjs";
-import AgentListingCard from "@/app/_components/AgentListingCard";
+import ConsultantListingCard from "@/app/_components/ConsultantListingCard";
  import useLocationStore from "@/lib/locationStore";
 import Link from "next/link";
 import PropertyListingCard from "@/app/_components/PropertyListingCard";

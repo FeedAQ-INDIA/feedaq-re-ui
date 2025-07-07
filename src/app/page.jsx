@@ -9,7 +9,7 @@ import React from "react";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
 import {apiClient} from "@/lib/apiClient.mjs";
-import AgentListingCard from "@/app/_components/AgentListingCard";
+import ConsultantListingCard from "@/app/_components/ConsultantListingCard";
 import HomeAgentView from "@/app/_components/HomeAgentView";
 import HomeProjectView from "@/app/_components/HomeProjectView";
 import TransformationText from "@/app/_components/TransformationText";

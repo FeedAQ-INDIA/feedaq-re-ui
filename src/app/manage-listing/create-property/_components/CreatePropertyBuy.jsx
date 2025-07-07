@@ -19,6 +19,7 @@ import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandL
 import axios from "axios";
 import {apiClient} from "@/lib/apiClient.mjs";
 import MultiImageUpload from "@/app/manage-listing/_components/MultiImageUpload";
+import {toast} from "sonner";
 
 
 export default function CreatePropertyBuy() {
@@ -151,6 +152,13 @@ export default function CreatePropertyBuy() {
                         console.log(err)
                     }
                 }
+                toast("Property Listing has been created : #"+devData?.data?.id, {
+                    description: new Date().toLocaleDateString('en-US', {weekday: 'long', year: 'numeric', month: 'long', day: '2-digit', hour: 'numeric', minute: '2-digit', hour12: true}),
+                    action: {
+                        label: "Copy Id",
+                        onClick: () => navigator.clipboard.writeText(devData?.data?.id)
+                    },
+                })
             }
         } catch (err) {
             console.error("User tracking error", err);

@@ -122,7 +122,7 @@ async function AgentDetail({params}) {
 
                                         <div className="flex overflow-x-auto gap-2 mt-1">
                                             <p className="text-xs text-muted-foreground tracking-normal">
-                                                {listing?.agentLocality?.toUpperCase()} - {listing?.agentCity?.toUpperCase()} - {listing?.agentState?.toUpperCase()} - {listing?.agentCountry?.toUpperCase()}
+                                                {listing?.locality?.toUpperCase()} - {listing?.city?.toUpperCase()} - {listing?.state?.toUpperCase()} - {listing?.country?.toUpperCase()}
                                             </p>
                                         </div>
                                         <p className="text-xs text-muted-foreground">#{listing?.agentId}</p>

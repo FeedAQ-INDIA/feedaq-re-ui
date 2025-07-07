@@ -94,7 +94,7 @@ function Header() {
                                         <Link href={"/account/fav"} onClick={handleClose} className="w-full text-left cursor-pointer"><Button variant="secondary" className="w-full text-left cursor-pointer">Saved Items</Button></Link>
                                         <Link href={"/account"} onClick={handleClose} className="w-full text-left cursor-pointer"><Button variant="secondary" className="w-full text-left cursor-pointer">Account Settings</Button></Link>
                                         <Link href={"/manage-listing"} onClick={handleClose} className="w-full text-left cursor-pointer"><Button variant="secondary" className="w-full text-left cursor-pointer">Manage Listing</Button></Link>
-                                        {!user?.data?.isAgent ?   <Link href={"/register-as-agent"} onClick={handleClose} className="w-full text-left cursor-pointer"><Button variant="secondary" className="w-full text-left cursor-pointer">Register as Agent</Button></Link> :<></>}
+                                        {!user?.data?.isAgent ?   <Link href={"/register-as-consultant"} onClick={handleClose} className="w-full text-left cursor-pointer"><Button variant="secondary" className="w-full text-left cursor-pointer">Register as Agent</Button></Link> :<></>}
                                         <Link href={`http://localhost:8080/auth/logout?redirectUri=${window.location.href}`} onClick={handleClose} className="w-full text-left cursor-pointer"><Button variant="secondary" className="w-full text-left cursor-pointer">Sign Out</Button></Link>
                                     </div>
                                   </SheetDescription>

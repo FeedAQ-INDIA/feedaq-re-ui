@@ -17,6 +17,7 @@ import {Card, CardHeader, CardTitle} from "@/components/ui/card";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {apiClient} from "@/lib/apiClient.mjs";
 import MultiImageUpload from "@/app/manage-listing/_components/MultiImageUpload";
+import {toast} from "sonner";
 
 function AddNewListing() {
     const [selectedAddress, setSelectedAddress] = useState("");
@@ -148,7 +149,13 @@ function AddNewListing() {
                         console.log(err)
                     }
                 }
-
+                toast("PG-Coliving has been created : #"+projectData?.data?.data?.id, {
+                    description: new Date().toLocaleDateString('en-US', {weekday: 'long', year: 'numeric', month: 'long', day: '2-digit', hour: 'numeric', minute: '2-digit', hour12: true}),
+                    action: {
+                        label: "Copy Id",
+                        onClick: () => navigator.clipboard.writeText(projectData?.data?.data?.id)
+                    },
+                })
 
             }
         } catch (err) {
@@ -192,7 +199,7 @@ function AddNewListing() {
             formData.append(`meta[${index}][order]`, String(item.order))
         })
         formData.append('pgId', pgId)
-        formData.append('pgRoomId', null)
+        // formData.append('pgRoomId', null)
 
         try {
             const res = await fetch('/api/upload/pg-colive', {
@@ -200,9 +207,10 @@ function AddNewListing() {
                 body: formData,
             })
 
-            const data = await res.json()
-            console.log(data?.data)
+
             if (res.ok) {
+                const data = await res.json()
+                console.log(data)
                 setMessage('Images uploaded successfully!')
                 setPreviews([]) // Clear preview after upload
             } else {

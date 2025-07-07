@@ -9,7 +9,7 @@ import {Button} from "@/components/ui/button";
  import Image from "next/image";
 import {ChevronLeft, ChevronRight, CircleEllipsis, Ellipsis} from "lucide-react";
 import {apiClient} from "@/lib/apiClient.mjs";
-import AgentListingCard from "@/app/_components/AgentListingCard";
+import ConsultantListingCard from "@/app/_components/ConsultantListingCard";
 
 export default function AgentSearchPage({reference, initialPage, lim}) {
 console.log(reference)
@@ -92,7 +92,7 @@ console.log(reference)
 
             <div className="px-2 md:px-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-6 gap-4">
-                    {listingData?.map((a, index) => (<><AgentListingCard listing={a}/>
+                    {listingData?.map((a, index) => (<><ConsultantListingCard listing={a}/>
                         {index % 4 == 0 && <div className="col-span-1">
                             <Image
                                 src={'https://cdn.vectorstock.com/i/1000v/40/01/vertical-banner-04-vector-29244001.jpg'}

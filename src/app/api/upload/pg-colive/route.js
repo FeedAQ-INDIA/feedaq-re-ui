@@ -7,7 +7,7 @@ export async function POST(req) {
         const formData = await req.formData();
         const files = formData.getAll('files');
         const pgId = formData.get('pgId');
-        const pgRoomId = formData.get('pgRoomId');
+        // const pgRoomId = formData.get('pgRoomId');
 
         // Extract meta from formData
         const metaEntries = Array.from(formData.entries()).filter(([key]) =>
@@ -64,7 +64,7 @@ export async function POST(req) {
                 order: parseInt(metaInfo.order) || i + 1,
                 type: 'IMAGE',
                 pgId: pgId,
-                pgRoomId: pgRoomId,
+                pgRoomId: null,
             });
         }
 
