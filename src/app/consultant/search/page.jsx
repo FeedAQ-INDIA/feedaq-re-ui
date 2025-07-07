@@ -1,7 +1,8 @@
 // app/signin/page.jsx
 
 
- import AgentSearchPage from "@/app/agent/_components/AgentSearchPage";
+
+import AgentSearchPage from "@/app/consultant/search/_components/AgentSearchPage";
 
 export default function Page({ searchParams }) {
 

@@ -1,73 +1,76 @@
 // app/api/upload/route.ts
-import { NextRequest, NextResponse } from 'next/server'
-import {supabase} from "@/util/supabase/client";
+import { NextRequest, NextResponse } from 'next/server';
+import { supabase } from "@/util/supabase/client";
 
 export async function POST(req) {
     try {
-        const formData = await req.formData()
-        const files = formData.getAll('files')
-        const { pgId, pgRoomId } = req.body
-         const meta = req.body;
+        const formData = await req.formData();
+        const files = formData.getAll('files');
+        const pgId = formData.get('pgId');
+        const pgRoomId = formData.get('pgRoomId');
 
-        const parsedMeta = Object.keys(meta)
-            .filter(key => key.startsWith('meta['))
-            .reduce((acc, key) => {
-                const match = key.match(/meta\[(\d+)\]\[(.+)\]/)
-                if (match) {
-                    const [_, index, field] = match
-                    acc[index] = acc[index] || {}
-                    acc[index][field] = meta[key]
-                }
-                return acc
-            }, {})
+        // Extract meta from formData
+        const metaEntries = Array.from(formData.entries()).filter(([key]) =>
+            key.startsWith('meta[')
+        );
 
-        console.log('Reached POST')
+        const parsedMeta = metaEntries.reduce((acc, [key, value]) => {
+            const match = key.match(/meta\[(\d+)\]\[(.+)\]/);
+            if (match) {
+                const [, index, field] = match;
+                acc[index] = acc[index] || {};
+                acc[index][field] = value;
+            }
+            return acc;
+        }, {} );
 
         if (!files || files.length === 0) {
-            return NextResponse.json({ error: 'No files uploaded' }, { status: 400 })
+            return NextResponse.json({ error: 'No files uploaded' }, { status: 400 });
         }
 
-        const urls = []
-        let pgAttachList = []
-        for (const file of files) {
-            const arrayBuffer = await file.arrayBuffer()
-            const buffer = Buffer.from(arrayBuffer)
-            console.log(buffer)
-            const ext = file.name.split('.').pop()
-            const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
+        const urls = [];
+        const pgAttachmentList = [];
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const arrayBuffer = await file.arrayBuffer();
+            const buffer = Buffer.from(arrayBuffer);
+            const ext = file.name.split('.').pop();
+            const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
             const { error } = await supabase.storage
                 .from('pg-colive')
                 .upload(fileName, buffer, {
                     contentType: file.type,
-                })
-            console.log("Reach 1", error)
+                });
+
             if (error) {
-                return NextResponse.json({ error: error.message }, { status: 500 })
+                console.error('Supabase upload error:', error);
+                return NextResponse.json({ error: error.message }, { status: 500 });
             }
 
             const { data } = supabase.storage
                 .from('pg-colive')
-                .getPublicUrl(fileName)
+                .getPublicUrl(fileName);
 
             urls.push(data.publicUrl);
-            const metaInfo = parsedMeta[i] || {}
-            pgAttachList.push({
+
+            const metaInfo = parsedMeta[i] || {};
+
+            pgAttachmentList.push({
                 url: data.publicUrl,
-                caption: metaInfo.caption,
+                caption: metaInfo.caption || '',
                 isPrimary: metaInfo.isPrimary === 'true',
-                order: parseInt(metaInfo.order),
+                order: parseInt(metaInfo.order) || i + 1,
                 type: 'IMAGE',
-                pgId: parseInt(pgId),
-                pgRoomId: pgRoomId ? parseInt(pgRoomId) : null,
-            })
+                pgId: pgId,
+                pgRoomId: pgRoomId,
+            });
         }
 
-        console.log(pgAttachList)
-
-        return NextResponse.json({ pgAttachList })
+        return NextResponse.json({ pgAttachmentList });
     } catch (err) {
-        console.error('API upload error:', err)
-        return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+        console.error('API upload error:', err);
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }
 }

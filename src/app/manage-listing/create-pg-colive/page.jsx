@@ -97,9 +97,9 @@ function AddNewListing() {
 
 
             if (projectRes.ok) {
-                const devData = await projectRes.json();
-                console.log(devData);
-                console.log(devData?.data?.data?.id)
+                const projectData = await projectRes.json();
+                console.log(projectData);
+                console.log(projectData?.data?.data?.id)
                 const pgRoomRes = await apiClient("http://localhost:8080/savePGRoom", {
                     method: "POST", credentials: "include", headers: {
                         "Content-Type": "application/json",
@@ -115,17 +115,40 @@ function AddNewListing() {
                         area: a?.area,
                         areaUnit: a?.areaUnit,
                         roomType: a?.roomType,
-                        pgId: devData?.data?.data?.id         // add new key-value pair
+                        pgId: projectData?.data?.data?.id         // add new key-value pair
                     }))),
 
 
                 }, window.location.pathname);
                 if (pgRoomRes.ok) {
-                    console.log(await pgRoomRes.json())
+                    const devData = await pgRoomRes.json();
+                    console.log(devData)
+
+                }
+                if(previews.length>0){
+                    let uploadData = await handleUpload(projectData?.data?.data?.id);
+                    console.log(uploadData);
+                    try {
+                        const pgAttachRes = await apiClient("http://localhost:8080/savePGAttachment", {
+                            method: "POST",
+                            credentials: "include",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(uploadData)
+
+                        }, window.location.pathname);
+
+                        if (pgAttachRes.ok) {
+                            console.log(pgAttachRes);
+                        } else {
+                            console.log('Error Occured')
+                        }
+                    }catch(err){
+                        console.log(err)
+                    }
                 }
 
-
-                const urls = await handleUpload();
 
             }
         } catch (err) {
@@ -152,7 +175,7 @@ function AddNewListing() {
     const [previews, setPreviews] = useState([]) // [{ file, url, caption, isPrimary, order }]
     const [uploading, setUploading] = useState(false)
     const [message, setMessage] = useState('')
-    const handleUpload = async () => {
+    const handleUpload = async (pgId) => {
         if (previews.length === 0) {
             setMessage('Please select images before uploading.')
             return
@@ -168,6 +191,8 @@ function AddNewListing() {
             formData.append(`meta[${index}][isPrimary]`, String(item.isPrimary))
             formData.append(`meta[${index}][order]`, String(item.order))
         })
+        formData.append('pgId', pgId)
+        formData.append('pgRoomId', null)
 
         try {
             const res = await fetch('/api/upload/pg-colive', {

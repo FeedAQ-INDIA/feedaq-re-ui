@@ -68,29 +68,63 @@ function RegisterAsAgent() {
 
     async function onSubmit(data) {
         console.log(data);
-        const res = await apiClient("http://localhost:8080/registerAgent", {
-            method: "POST", credentials: "include", body: JSON.stringify({
-                agentBio: data.agentBio,
-                agentPhoneNumber: data.agentPhoneNumber,
-                agentEmail: data.agentEmail,
-                agentLicenseNumber: data.agentLicenseNumber,
-                agentExperience: data.agentExperience,
-                agentAgencyName: data.agentAgencyName,
-                agentWebsite: data.agentWebsite,
-                agentOfficeAddress: data.agentOfficeAddress,
-                agentCity: data.agentCity,
-                agentState: data.agentState,
-                agentCountry: data.agentCountry,
-                agentAreasServed: data.agentAreasServed,
-                agentSpecializations: data.agentSpecializations,
-                agentLanguagesSpoken: data.agentLanguagesSpoken,
-                latitude: data.latitude,
-                longitude: data.longitude,
-            }),
-        }, window.location.pathname);
-        if (res.ok) {
-            console.log("Agent profile updated successfully");
-            await refreshUser();
+        try {
+            let avatarUrl = null;
+            if (previews.length>0) {
+                let formData = new FormData()
+                previews.forEach((item, index) => {
+                    formData.append('file', item.file)
+                    formData.append('type', 'agent-avatar')
+                })
+
+                try {
+                    const res = await fetch('/api/upload/avatar', {
+                        method: 'POST',
+                        body: formData,
+                    })
+
+                    const data = await res.json()
+                    console.log(data)
+                    if (res.ok) {
+                        // setPreviews([]) // Clear preview after upload
+                        avatarUrl = data?.file?.url
+                    } else {
+                        console.log(data.error || 'Upload failed.')
+                    }
+                } catch (err) {
+                    console.error('Upload error:', err)
+                    throw err;
+                } finally {
+
+                }
+            }
+            console.log(avatarUrl);
+            const res = await apiClient("http://localhost:8080/registerAgent", {
+                method: "POST", credentials: "include", body: JSON.stringify({
+                    agentBio: data.agentBio,
+                    agentPhoneNumber: data.agentPhoneNumber,
+                    agentEmail: data.agentEmail,
+                    agentLicenseNumber: data.agentLicenseNumber,
+                    agentExperience: data.agentExperience,
+                    agentAgencyName: data.agentAgencyName,
+                    agentWebsite: data.agentWebsite,
+                    agentOfficeAddress: data.agentOfficeAddress,
+                    agentCity: data.agentCity,
+                    agentState: data.agentState,
+                    agentCountry: data.agentCountry,
+                    agentAreasServed: data.agentAreasServed,
+                    agentSpecializations: data.agentSpecializations,
+                    agentLanguagesSpoken: data.agentLanguagesSpoken,
+                    latitude: data.latitude,
+                    longitude: data.longitude,
+                }),
+            }, window.location.pathname);
+            if (res.ok) {
+                console.log("Agent profile updated successfully");
+                await refreshUser();
+            }
+        }catch (err) {
+
         }
     }
 
