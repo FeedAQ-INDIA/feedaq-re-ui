@@ -1,24 +1,16 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
-import React, {useEffect, useState} from "react";
-import axios from "axios";
+import {useForm} from 'react-hook-form';
+import {z} from 'zod';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
+import {Input} from '@/components/ui/input';
+import {Textarea} from '@/components/ui/textarea';
+import {Button} from '@/components/ui/button';
+import React, {useState} from "react";
 import {apiClient} from "@/lib/apiClient.mjs";
-import MultiImageUpload from "@/app/manage-listing/_components/MultiImageUpload";
 import AvatarImageUpload from "@/app/manage-listing/_components/AvatarImageUpload";
+import {toast} from "sonner";
 
 // --- Zod Schema ---
 const developerSchema = z.object({
@@ -29,7 +21,7 @@ const developerSchema = z.object({
     description: z.string().optional(),
 });
 
-export function CreateDeveloper({ onSubmit }) {
+export function CreateDeveloper({onSubmit}) {
     const form = useForm({
         resolver: zodResolver(developerSchema),
         defaultValues: {
@@ -45,10 +37,10 @@ export function CreateDeveloper({ onSubmit }) {
     const [uploading, setUploading] = useState(false)
     const [message, setMessage] = useState('')
 
-    async function onSubmit(data){
+    async function onSubmit(data) {
         try {
             let avatarUrl = null;
-            if (previews.length>0) {
+            if (previews.length > 0) {
                 let formData = new FormData()
                 previews.forEach((item, index) => {
                     formData.append('file', item.file)
@@ -69,14 +61,14 @@ export function CreateDeveloper({ onSubmit }) {
                     } else {
                         console.log(data.error || 'Upload failed.')
                     }
-                 } catch (err) {
+                } catch (err) {
                     console.error('Upload error:', err)
-                     throw err;
+                    throw err;
                 } finally {
 
                 }
             }
-console.log(avatarUrl)
+            console.log(avatarUrl)
             const devRes = await apiClient("http://localhost:8080/saveDeveloper", {
                 method: "POST",
                 credentials: "include",
@@ -84,11 +76,11 @@ console.log(avatarUrl)
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    name : data.name,
-                    website : data.website,
-                    email : data.email,
-                    contactNumber : data.contactNumber,
-                    description : data.description,
+                    name: data.name,
+                    website: data.website,
+                    email: data.email,
+                    contactNumber: data.contactNumber,
+                    description: data.description,
                     avatar: avatarUrl
                 }),
             }, window.location.pathname);
@@ -97,8 +89,16 @@ console.log(avatarUrl)
             if (devRes.ok) {
                 const devData = await devRes.json();
                 console.log(devData);
-                form.reset()
-             }
+                form.reset();
+                setPreviews([]);
+                toast("Developer has been created : #"+devData?.data?.id, {
+                    description: "Sunday, December 03, 2023 at 9:00 AM",
+                    action: {
+                        label: "Copy Id",
+                        onClick: () => navigator.clipboard.writeText(devData?.data?.id)
+                    },
+                })
+            }
         } catch (err) {
             console.error("User tracking error", err);
         }
@@ -114,7 +114,8 @@ console.log(avatarUrl)
 
                 <div className="  ">
                     <FormLabel className="mb-2">Choose an Avatar</FormLabel>
-                    <AvatarImageUpload previews={previews} setPreviews={setPreviews} setMessage={setMessage} message={message}/>
+                    <AvatarImageUpload previews={previews} setPreviews={setPreviews} setMessage={setMessage}
+                                       message={message}/>
                     {message && (
                         <div
                             className={`mt-4 p-3 rounded-lg text-center ${
@@ -131,13 +132,13 @@ console.log(avatarUrl)
                 <FormField
                     control={form.control}
                     name="name"
-                    render={({ field }) => (
+                    render={({field}) => (
                         <FormItem>
                             <FormLabel>Name</FormLabel>
                             <FormControl>
                                 <Input placeholder="Developer Name" {...field} />
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage/>
                         </FormItem>
                     )}
                 />
@@ -145,13 +146,13 @@ console.log(avatarUrl)
                 <FormField
                     control={form.control}
                     name="website"
-                    render={({ field }) => (
+                    render={({field}) => (
                         <FormItem>
                             <FormLabel>Website</FormLabel>
                             <FormControl>
                                 <Input placeholder="https://example.com" {...field} />
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage/>
                         </FormItem>
                     )}
                 />
@@ -159,13 +160,13 @@ console.log(avatarUrl)
                 <FormField
                     control={form.control}
                     name="email"
-                    render={({ field }) => (
+                    render={({field}) => (
                         <FormItem>
                             <FormLabel>Email</FormLabel>
                             <FormControl>
                                 <Input placeholder="developer@example.com" {...field} />
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage/>
                         </FormItem>
                     )}
                 />
@@ -173,13 +174,13 @@ console.log(avatarUrl)
                 <FormField
                     control={form.control}
                     name="contactNumber"
-                    render={({ field }) => (
+                    render={({field}) => (
                         <FormItem>
                             <FormLabel>Contact Number</FormLabel>
                             <FormControl>
                                 <Input placeholder="+91-XXXXXXXXXX" {...field} />
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage/>
                         </FormItem>
                     )}
                 />
@@ -187,13 +188,13 @@ console.log(avatarUrl)
                 <FormField
                     control={form.control}
                     name="description"
-                    render={({ field }) => (
+                    render={({field}) => (
                         <FormItem>
                             <FormLabel>Description</FormLabel>
                             <FormControl>
                                 <Textarea placeholder="Brief about the developer..." {...field} />
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage/>
                         </FormItem>
                     )}
                 />

@@ -45,7 +45,7 @@ export default function AvatarImageUpload({ previews, setPreviews, message, setM
             />
 
             {previews.length > 0 && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 my-6">
+                <div className="w-fit my-6">
                     {previews.map((item, index) => (
                         <div
                             key={index}
@@ -55,7 +55,7 @@ export default function AvatarImageUpload({ previews, setPreviews, message, setM
                                 src={item.url}
                                 alt={`Preview ${index}`}
                                 onClick={() => setModalImage(item.url)}
-                                className="w-full h-32 object-cover rounded mb-3 cursor-pointer hover:opacity-90"
+                                className="w-20 h-20 object-cover rounded  cursor-pointer hover:opacity-90"
                             />
 
                             {/* Remove button */}

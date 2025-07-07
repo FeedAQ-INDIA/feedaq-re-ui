@@ -8,6 +8,7 @@ import {apiClient} from "@/lib/apiClient.mjs";
 import ListingCard from "@/app/_components/PropertyListingCard";
 import Image from "next/image";
 import PropertyListingCard from "@/app/_components/PropertyListingCard";
+import ProjectListingCard from "@/app/_components/ProjectListingCard";
 
 
 export default function PropertyListingForm() {
@@ -72,12 +73,10 @@ export default function PropertyListingForm() {
                         MANAGE PROJECT LISTING
                     </CardTitle>
                 </CardHeader>
-
-
             </Card>
 
                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-6 gap-4">
-                    {listingData?.map(a => (<PropertyListingCard listing={a}/>))}
+                    {listingData?.map(a => (<ProjectListingCard listing={a}/>))}
                     {/*<div className="col-span-1">*/}
                     {/*    <Image*/}
                     {/*        src={'https://cdn.vectorstock.com/i/1000v/40/01/vertical-banner-04-vector-29244001.jpg'}*/}

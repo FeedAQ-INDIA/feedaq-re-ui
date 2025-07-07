@@ -67,7 +67,7 @@ export default function Search() {
     return (<div className=" ">
 
 
-        <div className="p-2 md:p-6">
+        <div className="p-2 md:p-4">
 
             <Card className="border-0 bg-muted/50  bg-rose-600 text-white ">
                 <CardHeader>
