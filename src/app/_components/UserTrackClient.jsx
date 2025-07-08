@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-export default function UserTrackClient({ propertyId }) {
+export default function UserTrackClient({ propertyId, projectId, agentId, pgId }) {
     useEffect(() => {
         const trackUser = async () => {
             try {
@@ -22,7 +22,10 @@ export default function UserTrackClient({ propertyId }) {
                             "Content-Type": "application/json",
                         },
                         body: JSON.stringify({
-                            propertyId,
+                            ...(propertyId && {propertyId}),
+                            ...(projectId && {projectId}),
+                             ...(pgId && {pgId}),
+                             consultantId: agentId,
                             userId,
                         }),
                     });

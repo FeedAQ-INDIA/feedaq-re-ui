@@ -74,8 +74,8 @@ function Header() {
                       <Sheet open={open} onOpenChange={setOpen}>
                           <SheetTrigger asChild>
                               <Button
-                                  variant="secondary"
-                                  className="flex gap-2 items-center cursor-pointer"
+                                  // variant="secondary"
+                                  className="flex gap-2 items-center cursor-pointer bg-rose-500 text-white hover:bg-gray-100 hover:text-black"
 
                               >
                                   <span>{user?.data?.nameInitial}</span>
@@ -116,8 +116,8 @@ function Header() {
                   <Sheet open={open} onOpenChange={setOpen}>
                       <SheetTrigger asChild>
                           <Button
-                              variant="secondary"
-                              className="flex gap-2 items-center cursor-pointer"
+                              // variant="secondary"
+                              className="flex gap-2 items-center cursor-pointer bg-rose-500 text-white hover:bg-gray-100 hover:text-black"
 
                           >
                               <span>{user?.data?.nameInitial}</span>

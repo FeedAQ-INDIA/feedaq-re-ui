@@ -49,7 +49,7 @@ export default function PropertyListingForm() {
             <Link href='/manage-listing/project' target="_blank" className=" cursor-pointer transition-transform duration-300 ease-in-out hover:scale-101 hover:shadow-amber-100 relative">
                 {/* Background image + overlay for visual impact */}
                 <div
-                    className="absolute inset-0 bg-center"
+                    className="absolute inset-0 bg-center "
                     style={{
                         backgroundImage:
                             "url('https://visor.gumlet.io//public/assets/home/desktop/hero-img.png?compress=true&format=auto&quality=75&dpr=auto&h=480&w=522&ar=unset')",
@@ -58,7 +58,7 @@ export default function PropertyListingForm() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/80 to-black/70" />
                 </div>
                 {/* PG stays content */}
-                <Card className="relative rounded-sm bg-transparent text-white border-none shadow-none">
+                <Card className="relative rounded-sm bg-transparent text-white border-none shadow-none ">
                     <CardHeader>
                         <div>
                             <h4 className="font-bold tracking-wider text-2xl">

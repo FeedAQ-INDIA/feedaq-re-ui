@@ -15,6 +15,7 @@ import HomeProjectView from "@/app/_components/HomeProjectView";
 import TransformationText from "@/app/_components/TransformationText";
 import HomePGView from "@/app/_components/HomePGView";
 import HomePropertyView from "@/app/_components/HomePropertyView";
+import HomeDeveloperView from "@/app/_components/HomeDeveloperView";
 
 export default function Home() {
 
@@ -74,6 +75,22 @@ export default function Home() {
                 <h4 className="font-bold tracking-wider text-2xl">Attractive Projects in the Town</h4>
               </div>
               <HomeProjectView/>
+
+            </CardHeader>
+          </Card>
+        </section>
+
+
+        <section className="my-8">
+
+
+          <Card className="rounded-sm bg-black text-white ">
+            <CardHeader  >
+
+              <div className="">
+                <h4 className="font-bold tracking-wider text-2xl">Prominent Developers</h4>
+              </div>
+              <HomeDeveloperView/>
 
             </CardHeader>
           </Card>
