@@ -45,15 +45,15 @@ function DeveloperListingCard({ listing, active }) {
                         </h3>
                     )}
                     {email && (
-                        <p className="font-medium text-muted-foreground text-md  ">{email}</p>
+                        <p className=" text-muted-foreground text-md  ">{email}</p>
                     )}
                     {contactNumber && (
-                        <p className="font-medium text-muted-foreground text-md  ">
+                        <p className=" text-muted-foreground text-md  ">
                             {contactNumber}
                         </p>
                     )}
                     {description && (
-                        <p className="font-medium text-muted-foreground text-md line-clamp-2">
+                        <p className=" text-muted-foreground text-md line-clamp-2">
                             {description}
                         </p>
                     )}

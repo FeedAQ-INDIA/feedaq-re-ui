@@ -67,10 +67,9 @@ async function AgentDetail({params}) {
             </Head>
             <div className="px-2 md:px-6  my-3 mt-6 ">
 
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 my-4">
-                    <div className=" lg:col-span-3">
-                        <Card className="rounded-sm bg-muted/50 border-none">
-                            <CardHeader>
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 my-4  items-stretch">
+                    <div className=" lg:col-span-3 flex flex-col h-full ">
+
                                 <div className="flex overflow-x-auto gap-2">
                                     {listing?.agentPartnerType ? (<Badge
                                             className={`tracking-wider rounded-xs ${decideColorBadgeBGForPartType()?.bg} text-white flex gap-1 animate-blink`}>
@@ -168,35 +167,22 @@ async function AgentDetail({params}) {
                                 </div>
 
 
-                                {/*<div className="mt-2 flex flex-wrap gap-2 items-center">*/}
-                                {/*    <p className="text-xs text-muted-foreground">Partner Id : {listing?.agentId}</p>*/}
-                                {/*    <div className=" sm:ml-auto">*/}
-                                {/*        {listing?.agentIsVerified ?*/}
-                                {/*            <Badge*/}
-                                {/*                className="tracking-wider rounded-xs bg-green-600 text-white flex gap-1 animate-blink"><CheckLine*/}
-                                {/*                size={14}/><span>Verified</span></Badge>*/}
-                                {/*            : <></>}*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
-
-                            </CardHeader>
-                        </Card>
                     </div>
-                    <div className="hidden lg:block">
+                    <div className="hidden lg:block flex flex-col h-full">
                         <MapMarker
                             lat={listing?.geom?.coordinates?.[0]}
                             lng={listing?.geom?.coordinates?.[1]}
                             detail={listing?.title}
-                            cutsomClassName={"w-full h-[300px] rounded-md"} // Fully rounded corners
+                            cutsomClassName={"w-full h-full rounded-md"} // Fully rounded corners
                         />
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 my-4">
-                    <div className=" lg:col-span-3">
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 my-4  items-stretch">
+                    <div className=" lg:col-span-3 flex flex-col h-full ">
                         <div className="my-2">
                             <h2 className="font-bold text-xl tracking-wide">Overview</h2>
-                            <p className="my-4 whitespace-pre w-full overflow-hidden  ">{listing?.agentBio}</p>
+                            <p className="my-4 whitespace-pre-wrap w-full overflow-hidden  ">{listing?.agentBio}</p>
 
                         </div>
 
@@ -256,7 +242,7 @@ async function AgentDetail({params}) {
                         </div>
 
                     </div>
-                    <div className="hidden lg:block">
+                    <div className="hidden lg:block flex flex-col h-full ">
                         <Image
                             src={'https://cdn.vectorstock.com/i/1000v/40/01/vertical-banner-04-vector-29244001.jpg'}
                             alt="Picture of the author"

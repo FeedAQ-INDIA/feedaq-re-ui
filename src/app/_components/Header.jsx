@@ -65,8 +65,8 @@ function Header() {
 
 
                   {!user? <Link href={`/signin?redirectUri=${window.location.href}`}><Button
-                      variant="secondary"
-                      className="flex gap-2 items-center cursor-pointer"
+                      // variant="secondary"
+                      className="flex gap-2 items-center cursor-pointer rounded-sm  bg-rose-500 text-white hover:bg-gray-200 hover:text-black"
 
                   >
                       <span>LOGIN / SIGNUP</span>
@@ -75,7 +75,7 @@ function Header() {
                           <SheetTrigger asChild>
                               <Button
                                   // variant="secondary"
-                                  className="flex gap-2 items-center cursor-pointer bg-rose-500 text-white hover:bg-gray-100 hover:text-black"
+                                  className="flex gap-2 items-center cursor-pointer rounded-sm  bg-rose-500 text-white hover:bg-gray-200 hover:text-black"
 
                               >
                                   <span>{user?.data?.nameInitial}</span>
@@ -107,8 +107,8 @@ function Header() {
           {/* Mobile Hamburger */}
           <div className="flex md:hidden ml-auto">
               {!user? <Link href={`/signin?redirectUri=${window.location.href}`}><Button
-                      variant="secondary"
-                      className="flex gap-2 items-center cursor-pointer"
+                      // variant="secondary"
+                      className="flex gap-2 items-center cursor-pointer rounded-sm   bg-rose-500 text-white hover:bg-gray-200 hover:text-black"
 
                   >
                       <span>LOGIN / SIGNUP</span>
@@ -117,8 +117,7 @@ function Header() {
                       <SheetTrigger asChild>
                           <Button
                               // variant="secondary"
-                              className="flex gap-2 items-center cursor-pointer bg-rose-500 text-white hover:bg-gray-100 hover:text-black"
-
+                              className="flex gap-2 items-center cursor-pointer rounded-sm  bg-rose-500 text-white hover:bg-gray-200 hover:text-black"
                           >
                               <span>{user?.data?.nameInitial}</span>
                           </Button>
