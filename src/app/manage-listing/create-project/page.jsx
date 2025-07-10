@@ -22,7 +22,7 @@ export default function PropertyListingForm() {
 
     return (
         <div className="p-4">
-            <Card className="border-0 bg-muted/50  bg-rose-600 text-white rounded-sm">
+            <Card className="border-0 bg-muted/50  bg-rose-600 text-white ">
                 <CardHeader>
                     <CardTitle className="text-lg sm:text-xl font-bold  tracking-wider">
                         CREATE PROJECT

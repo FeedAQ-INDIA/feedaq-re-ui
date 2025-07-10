@@ -263,12 +263,7 @@ async function PGColiveDetail({params}) {
 
 
                                             </div>
-
-                                            <p className="rounded-sm text-sm text-black">
-                                                {room.description}
-                                            </p>
                                         </div>
-
                                     ))}
                                 </div>
                             )}

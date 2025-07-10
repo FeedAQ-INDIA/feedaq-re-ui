@@ -5,12 +5,14 @@ import React, {useEffect, useState} from "react";
 import {Card, CardHeader, CardTitle} from "@/components/ui/card";
 import {useUser} from "@/lib/useUser";
 import {apiClient} from "@/lib/apiClient.mjs";
-
+import ListingCard from "@/app/_components/PropertyListingCard";
+import Image from "next/image";
+import PropertyListingCard from "@/app/_components/PropertyListingCard";
+import ProjectListingCard from "@/app/_components/ProjectListingCard";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
 import {Pagination, PaginationContent, PaginationItem} from "@/components/ui/pagination";
 import {ChevronLeft, ChevronRight} from "lucide-react";
-import PGListingCard from "@/app/pg-colive/_components/PGListingCard";
 
 
 export default function PGColiveListingForm() {
@@ -42,17 +44,21 @@ export default function PGColiveListingForm() {
     const findListedprop = async () => {
         await apiClient(`http://localhost:8080/search-v2`, {
             method: "POST", credentials: true, body: JSON.stringify({
-                limit: limit, offset: offset,
-                getThisData: {
-                    datasource: "PG",
-                    attributes: [],
-                    where: {userId:  user?.data?.userId},
+                limit: limit, offset: offset, getThisData:     {
+                    datasource: "Property",
+                    as: "property",
+                    required: false,
+                    where: {userId: user?.data?.userId},
                     include: [
-                        {datasource: "PGFeature", as: "features", required: false},
-                        {datasource: "PGRoom", as: "pgroomdetail", required: false},
-                        {datasource: "PGAttachment", as: "attachment", required: false},
-                    ]
-                }
+                        {datasource: "PropertyFeature", as: "features", required: false},
+                        {
+                            datasource: "Project", as: "project", required: false,
+                            include: [{datasource: "Developer", as: "developer", required: false}]
+                        },
+                        {datasource: "PropertyAttachment", as: "attachment", required: false},
+                        {datasource: "UserFav", as: "fav", required: false}]
+
+                },
             }),
         }, window.location.pathname)
             .then(res => res.json())               // ✅ Parse the response and return the Promise
@@ -91,7 +97,7 @@ export default function PGColiveListingForm() {
             </Card>
 
                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-6 gap-4">
-                    {listingData?.map(a => (<PGListingCard listing={a}/>))}
+                    {listingData?.map(a => (<PropertyListingCard listing={a}/>))}
                     {/*<div className="col-span-1">*/}
                     {/*    <Image*/}
                     {/*        src={'https://cdn.vectorstock.com/i/1000v/40/01/vertical-banner-04-vector-29244001.jpg'}*/}
