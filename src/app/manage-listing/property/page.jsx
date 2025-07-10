@@ -52,7 +52,7 @@ export default function PropertyListingForm() {
                         {datasource: "PropertyFeature", as: "features", required: false},
                         {
                             datasource: "Project", as: "project", required: false,
-                            include: [{datasource: "Developer", as: "developer", required: false}]
+                            include: [{datasource: "developer", as: "developer", required: false}]
                         },
                         {datasource: "PropertyAttachment", as: "attachment", required: false},
                         {datasource: "UserFav", as: "fav", required: false}]

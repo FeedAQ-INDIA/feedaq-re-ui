@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"; // assuming you use a cn util for class mergin
 function DeveloperListingCard({ listing, active }) {
     const {
         avatar,
-        name = "Unknown Developer",
+        name = "Unknown developer",
         website,
         email,
         contactNumber,
@@ -25,7 +25,7 @@ function DeveloperListingCard({ listing, active }) {
     return (
         <div
             className={cn(
-                "p-3 border rounded-md shadow bg-white hover:shadow-lg hover:bg-rose-50 cursor-pointer overflow-x-hidden text-black",
+                "p-3 border rounded-md shadow bg-white hover:shadow-lg hover:bg-rose-50 cursor-pointer overflow-x-hidden text-black h-full",
                 active && "ring-2 ring-rose-500"
             )}
         >
@@ -52,12 +52,15 @@ function DeveloperListingCard({ listing, active }) {
                             {contactNumber}
                         </p>
                     )}
-                    {description && (
-                        <p className=" text-muted-foreground text-md line-clamp-2">
-                            {description}
-                        </p>
-                    )}
+
                 </div>
+            </div>
+            <div>
+                {description && (
+                    <p className=" text-muted-foreground text-md line-clamp-2">
+                        {description}
+                    </p>
+                )}
             </div>
         </div>
     );

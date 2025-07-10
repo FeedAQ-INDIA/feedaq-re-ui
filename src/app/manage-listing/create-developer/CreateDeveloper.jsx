@@ -1,209 +1,221 @@
 'use client';
 
-import {useForm} from 'react-hook-form';
-import {z} from 'zod';
-import {zodResolver} from '@hookform/resolvers/zod';
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
-import {Input} from '@/components/ui/input';
-import {Textarea} from '@/components/ui/textarea';
-import {Button} from '@/components/ui/button';
-import React, {useState} from "react";
-import {apiClient} from "@/lib/apiClient.mjs";
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
+import React, { useCallback, useMemo, useState } from 'react';
+import { apiClient } from "@/lib/apiClient.mjs";
 import AvatarImageUpload from "@/app/manage-listing/_components/AvatarImageUpload";
-import {toast} from "sonner";
+import { toast } from "sonner";
+import { Loader2 } from 'lucide-react';
 
-// --- Zod Schema ---
+// Constants
+const API_ENDPOINT = 'http://localhost:8080/saveDeveloper';
+const UPLOAD_ENDPOINT = '/api/upload/avatar';
+
+// Zod Schema
 const developerSchema = z.object({
-    name: z.string().min(1, 'Name is required'),
-    website: z.string().url('Invalid URL').optional().or(z.literal('')),
-    email: z.string().email('Invalid email').optional().or(z.literal('')),
-    contactNumber: z.string().optional(),
-    description: z.string().optional(),
+  name: z.string().min(1, 'Name is required'),
+  website: z.string().url('Invalid URL').optional().or(z.literal('')),
+  email: z.string().email('Invalid email').optional().or(z.literal('')),
+  contactNumber: z.string().optional(),
+  description: z.string().optional(),
 });
 
-export function CreateDeveloper({onSubmit}) {
-    const form = useForm({
-        resolver: zodResolver(developerSchema),
-        defaultValues: {
-            name: '',
-            website: '',
-            email: '',
-            contactNumber: '',
-            description: '',
-        },
-    });
+const defaultFormValues = {
+  name: '',
+  website: '',
+  email: '',
+  contactNumber: '',
+  description: '',};
 
-    const [previews, setPreviews] = useState([]) // [{ file, url, caption, isPrimary, order }]
-    const [uploading, setUploading] = useState(false)
-    const [message, setMessage] = useState('')
+export function CreateDeveloper() {
+  const [previews, setPreviews] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState({ text: '', type: '' });
 
-    async function onSubmit(data) {
-        try {
-            let avatarUrl = null;
-            if (previews.length > 0) {
-                let formData = new FormData()
-                previews.forEach((item, index) => {
-                    formData.append('file', item.file)
-                    formData.append('type', 'developer-avatar')
-                })
+  const form = useForm({
+    resolver: zodResolver(developerSchema),
+    defaultValues: defaultFormValues,
+  });
 
-                try {
-                    const res = await fetch('/api/upload/avatar', {
-                        method: 'POST',
-                        body: formData,
-                    })
+  const handleUploadAvatar = useCallback(async () => {
+    if (!previews.length) return null;
 
-                    const data = await res.json()
-                    console.log(data)
-                    if (res.ok) {
-                        // setPreviews([]) // Clear preview after upload
-                        avatarUrl = data?.file?.url
-                    } else {
-                        console.log(data.error || 'Upload failed.')
-                    }
-                } catch (err) {
-                    console.error('Upload error:', err)
-                    throw err;
-                } finally {
+    const formData = new FormData();
+    formData.append('file', previews[0].file);
+    formData.append('type', 'developer-avatar');
 
-                }
-            }
-            console.log(avatarUrl)
-            const devRes = await apiClient("http://localhost:8080/saveDeveloper", {
-                method: "POST",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    name: data.name,
-                    website: data.website,
-                    email: data.email,
-                    contactNumber: data.contactNumber,
-                    description: data.description,
-                    avatar: avatarUrl
-                }),
-            }, window.location.pathname);
+    try {
+      const res = await fetch(UPLOAD_ENDPOINT, {
+        method: 'POST',
+        body: formData,
+      });
 
+      const data = await res.json();
+      
+      if (!res.ok) {
+        throw new Error(data.error || 'Upload failed');
+      }
 
-            if (devRes.ok) {
-                const devData = await devRes.json();
-                console.log(devData);
-                form.reset();
-                setPreviews([]);
-                toast("Developer has been created : #"+devData?.data?.id, {
-                    description: new Date().toLocaleDateString('en-US', {weekday: 'long', year: 'numeric', month: 'long', day: '2-digit', hour: 'numeric', minute: '2-digit', hour12: true}),
-                    action: {
-                        label: "Copy Id",
-                        onClick: () => navigator.clipboard.writeText(devData?.data?.id)
-                    },
-                })
-            }
-        } catch (err) {
-            console.error("User tracking error", err);
-        }
+      return data?.file?.url;
+    } catch (error) {
+      console.error('Upload error:', error);
+      setMessage({ text: 'Failed to upload avatar', type: 'error' });
+      throw error;
     }
+  }, [previews]);
 
+  const onSubmit = useCallback(async (formData) => {
+    try {
+      setIsSubmitting(true);
+      setMessage({ text: '', type: '' });
 
-    return (
-        <Form {...form}>
-            <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="grid gap-6"
-            >
+      const avatarUrl = await handleUploadAvatar();
 
-                <div className="  ">
-                    <FormLabel className="mb-2">Choose an Avatar</FormLabel>
-                    <AvatarImageUpload previews={previews} setPreviews={setPreviews} setMessage={setMessage}
-                                       message={message}/>
-                    {message && (
-                        <div
-                            className={`mt-4 p-3 rounded-lg text-center ${
-                                message.includes('success')
-                                    ? 'bg-green-100 text-green-800'
-                                    : 'bg-red-100 text-red-800'
-                            }`}
-                        >
-                            {message}
-                        </div>
-                    )}
-                </div>
+      const response = await apiClient(
+        API_ENDPOINT,
+        {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            ...formData,
+            avatar: avatarUrl,
+          }),
+        },
+        window.location.pathname
+      );
 
-                <FormField
-                    control={form.control}
-                    name="name"
-                    render={({field}) => (
-                        <FormItem>
-                            <FormLabel>Name</FormLabel>
-                            <FormControl>
-                                <Input placeholder="Developer Name" {...field} />
-                            </FormControl>
-                            <FormMessage/>
-                        </FormItem>
-                    )}
+      if (!response.ok) {
+        throw new Error('Failed to save developer');
+      }
+
+      const responseData = await response.json();
+      
+      form.reset();
+      setPreviews([]);
+      
+      toast.success('developer created successfully', {
+        description: `#${responseData?.data?.id}`,
+        action: {
+          label: 'Copy ID',
+          onClick: () => navigator.clipboard.writeText(responseData?.data?.id)
+        },
+      });
+
+    } catch (error) {
+      console.error('Submission error:', error);
+      setMessage({
+        text: error.message || 'An error occurred',
+        type: 'error'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  }, [form, handleUploadAvatar]);
+
+  const handleReset = useCallback(() => {
+    form.reset(defaultFormValues);
+    setPreviews([]);
+    setMessage({ text: '', type: '' });
+  }, [form]);
+
+  const messageClass = useMemo(() => {
+    return message.type === 'success' 
+      ? 'bg-green-100 text-green-800' 
+      : 'bg-red-100 text-red-800';
+  }, [message.type]);
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-6">
+        <div>
+          <FormLabel className="mb-2 block">Choose an Avatar</FormLabel>
+          <AvatarImageUpload 
+            previews={previews} 
+            setPreviews={setPreviews} 
+            setMessage={setMessage}
+            message={message.text}
+          />
+          {message.text && (
+            <div className={`mt-4 p-3 rounded-lg text-center ${messageClass}`}>
+              {message.text}
+            </div>
+          )}
+        </div>
+
+        {['name', 'website', 'email', 'contactNumber'].map((field) => (
+          <FormField
+            key={field}
+            control={form.control}
+            name={field}
+            render={({ field: fieldProps }) => (
+              <FormItem>
+                <FormLabel>{field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, ' $1')}</FormLabel>
+                <FormControl>
+                  <Input 
+                    placeholder={
+                      field === 'name' ? 'developer Name' :
+                      field === 'website' ? 'https://example.com' :
+                      field === 'email' ? 'developer@example.com' :
+                      '+91-XXXXXXXXXX'
+                    } 
+                    type={field === 'email' ? 'email' : 'text'}
+                    {...fieldProps} 
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        ))}
+
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea 
+                  placeholder="Brief about the developer..." 
+                  rows={4}
+                  {...field} 
                 />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-                <FormField
-                    control={form.control}
-                    name="website"
-                    render={({field}) => (
-                        <FormItem>
-                            <FormLabel>Website</FormLabel>
-                            <FormControl>
-                                <Input placeholder="https://example.com" {...field} />
-                            </FormControl>
-                            <FormMessage/>
-                        </FormItem>
-                    )}
-                />
-
-                <FormField
-                    control={form.control}
-                    name="email"
-                    render={({field}) => (
-                        <FormItem>
-                            <FormLabel>Email</FormLabel>
-                            <FormControl>
-                                <Input placeholder="developer@example.com" {...field} />
-                            </FormControl>
-                            <FormMessage/>
-                        </FormItem>
-                    )}
-                />
-
-                <FormField
-                    control={form.control}
-                    name="contactNumber"
-                    render={({field}) => (
-                        <FormItem>
-                            <FormLabel>Contact Number</FormLabel>
-                            <FormControl>
-                                <Input placeholder="+91-XXXXXXXXXX" {...field} />
-                            </FormControl>
-                            <FormMessage/>
-                        </FormItem>
-                    )}
-                />
-
-                <FormField
-                    control={form.control}
-                    name="description"
-                    render={({field}) => (
-                        <FormItem>
-                            <FormLabel>Description</FormLabel>
-                            <FormControl>
-                                <Textarea placeholder="Brief about the developer..." {...field} />
-                            </FormControl>
-                            <FormMessage/>
-                        </FormItem>
-                    )}
-                />
-
-                <div className="flex gap-4">
-                    <Button type="submit">Save</Button>
-                    <Button type="button" variant="outline" onClick={() => form.reset()}>Reset</Button>
-                </div>
-            </form>
-        </Form>
-    );
+        <div className="flex gap-4">
+          <Button 
+            type="submit" 
+            disabled={isSubmitting}
+            className="min-w-[100px]"
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Saving...
+              </>
+            ) : 'Save'}
+          </Button>
+          <Button 
+            type="button" 
+            variant="outline" 
+            onClick={handleReset}
+            disabled={isSubmitting}
+          >
+            Reset
+          </Button>
+        </div>
+      </form>
+    </Form>
+  );
 }
